@@ -29,7 +29,9 @@ public class TeleopTurretCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run                                          
     protected void execute() {
-    	TurretSubsystem.getInstance().setMotorPower(OI.getRightXValue());
+    	if(Math.abs(OI.getRightXValue())>.1){
+        	TurretSubsystem.getInstance().setMotorPower(OI.getRightXValue());
+    	}
     	
     	TurretSubsystem.getInstance().resetEncoder();
     	

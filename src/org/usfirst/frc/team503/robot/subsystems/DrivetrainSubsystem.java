@@ -50,20 +50,16 @@ public class DrivetrainSubsystem extends Subsystem {
 	   	leftSlave.set(Robot.bot.leftMasterID);
 	   	rightSlave.set(Robot.bot.rightMasterID);
 		
-	   	setDriveDirectionForward();
-	   	setBrakeMode(true);
-	   	
-	   	    	
-	   	trapThread = new TrapezoidThread(leftMaster, rightMaster);	
-   }
-   
-   public void setDriveDirectionForward(){
 	   leftMaster.reverseSensor(Robot.bot.REVERSE_LEFT_SENSOR);
 	   rightMaster.reverseSensor(Robot.bot.REVERSE_RIGHT_SENSOR);
 	   leftMaster.reverseOutput(Robot.bot.REVERSE_LEFT_OUTPUT);
 	   rightMaster.reverseOutput(Robot.bot.REVERSE_RIGHT_OUTPUT);
+	   setBrakeMode(true);
+	   	
+	   	    	
+	   	trapThread = new TrapezoidThread(leftMaster, rightMaster);	
    }
-   
+
    public void setBrakeMode(boolean value){
 	   rightMaster.enableBrakeMode(value);
 	   leftMaster.enableBrakeMode(value);	
@@ -126,6 +122,8 @@ public class DrivetrainSubsystem extends Subsystem {
    public void percentVoltageMode(){
 	   leftMaster.changeControlMode(TalonControlMode.PercentVbus);
 	   rightMaster.changeControlMode(TalonControlMode.PercentVbus);
+	   leftMaster.setVoltageRampRate(6);
+	   rightMaster.setVoltageRampRate(6);
    }
    
    public void initDefaultCommand() {
