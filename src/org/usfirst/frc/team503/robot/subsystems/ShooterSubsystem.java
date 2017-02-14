@@ -25,7 +25,7 @@ public class ShooterSubsystem extends Subsystem {
 		 
 	public ShooterSubsystem() {
 		shooterMotor = new CANTalon(Robot.bot.shooterID);
-		shooterMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		shooterMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 		shooterMotor.changeControlMode(TalonControlMode.PercentVbus);
 		shooterMotor.setPID(Robot.bot.SHOOT_P, Robot.bot.SHOOT_I, Robot.bot.SHOOT_D);
 		shooterMotor.setF(Robot.bot.SHOOT_F);

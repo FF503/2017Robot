@@ -2,6 +2,7 @@ package org.usfirst.frc.team503.robot.commands;
 
 import org.usfirst.frc.team503.robot.OI;
 import org.usfirst.frc.team503.robot.subsystems.DrivetrainSubsystem;
+import org.usfirst.frc.team503.robot.utils.Constants;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
@@ -24,7 +25,12 @@ public class ArcadeDriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	DrivetrainSubsystem.getInstance().arcadeDrive(OI.getLeftYValue(), OI.getLeftXValue(),false);
+    	if(Math.abs(OI.getLeftXValue())>Constants.JOYSTICK_TOLERANCE && Math.abs(OI.getLeftYValue())>Constants.JOYSTICK_TOLERANCE){
+        	DrivetrainSubsystem.getInstance().arcadeDrive(OI.getLeftYValue(), OI.getLeftXValue(),false);
+    	}
+    	else{
+    		DrivetrainSubsystem.getInstance().tankDrive(0, 0, false);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

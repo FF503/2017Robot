@@ -44,7 +44,7 @@ public class TurretSubsystem extends Subsystem {
 		turretMotor.setPID(kTurretKp, kTurretKi, kTurretKd);  
 		turretMotor.setProfile(0);
 		turretMotor.reverseSensor(true);
-		turretMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		turretMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 		turretMotor.setAllowableClosedLoopErr((int)(kTurretOnTargetTolerance /kTurretDegreesPerTick));
 	}                 
 	
@@ -123,6 +123,10 @@ public class TurretSubsystem extends Subsystem {
 	
 	public double getEncoderPosition(){
 		return -turretMotor.getEncPosition();
+	}
+	
+	public double getPosition(){
+		return -turretMotor.getPosition();
 	}
 
 	private void resetEncAtRightLimitSwitch(){ 

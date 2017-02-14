@@ -2,7 +2,7 @@
 package org.usfirst.frc.team503.robot;
 
 import org.usfirst.frc.team503.auton.LeftPegLeftStartAuton;
-import org.usfirst.frc.team503.auton.SteamworksChoosers;
+import org.usfirst.frc.team503.auton.SteamworksChooser;
 import org.usfirst.frc.team503.robot.commands.ArcadeDriveCommand;
 import org.usfirst.frc.team503.robot.commands.TeleopTurretCommand;
 import org.usfirst.frc.team503.robot.subsystems.DrivetrainSubsystem;
@@ -26,7 +26,7 @@ public class Robot extends IterativeRobot {
 
 	public static RobotHardwarePracticeBot bot = null;
 	private static double startTime;
-	public static SteamworksChoosers chooser;
+	public static SteamworksChooser chooser;
 
 
 	
@@ -43,7 +43,7 @@ public class Robot extends IterativeRobot {
 		bot.logSmartDashboard();         /*put name of selected bot on smartdashboard */
 		OI.initialize();
 		
-		chooser = SteamworksChoosers.getInstance();
+		chooser = SteamworksChooser.getInstance();
 		chooser.autonInitChooser();
 
 	}
@@ -110,9 +110,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Shooter Motor Speed", ShooterSubsystem.getInstance().getSpeed());
 		SmartDashboard.putBoolean("Turret Right Limit", TurretSubsystem.getInstance().getRightLimitSwitch());
 		SmartDashboard.putBoolean("Turret Left Limit", TurretSubsystem.getInstance().getLeftLimitSwitch());
-		SmartDashboard.putNumber("Turret Encoder Position", TurretSubsystem.getInstance().getAngle());
-		SmartDashboard.putNumber("Turret error", TurretSubsystem.getInstance().getAngle());
-		
+		SmartDashboard.putNumber("Turret Encoder Position", TurretSubsystem.getInstance().getEncoderPosition());
+		SmartDashboard.putNumber("Turret getPosition", TurretSubsystem.getInstance().getPosition());
+		SmartDashboard.putNumber("Turret angle", TurretSubsystem.getInstance().getAngle());
+		SmartDashboard.putNumber("Turret error", TurretSubsystem.getInstance().getError());
 	}
 	
 	/**

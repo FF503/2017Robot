@@ -5,6 +5,7 @@ import org.usfirst.frc.team503.robot.OI;
 
 import org.usfirst.frc.team503.robot.Robot;
 import org.usfirst.frc.team503.robot.subsystems.TurretSubsystem;
+import org.usfirst.frc.team503.robot.utils.Constants;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
@@ -29,8 +30,11 @@ public class TeleopTurretCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run                                          
     protected void execute() {
-    	if(Math.abs(OI.getRightXValue())>.1){
+    	if(Math.abs(OI.getRightXValue())>Constants.JOYSTICK_TOLERANCE){
         	TurretSubsystem.getInstance().setMotorPower(OI.getRightXValue());
+    	}
+    	else{
+    		TurretSubsystem.getInstance().setMotorPower(0);
     	}
     	
     	TurretSubsystem.getInstance().resetEncoder();

@@ -3,6 +3,7 @@ package org.usfirst.frc.team503.robot.subsystems;
 import org.usfirst.frc.team503.robot.Robot;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -17,6 +18,7 @@ public class DeflectorSubsystem extends Subsystem {
 	public DeflectorSubsystem() {
 		deflectorMotor = new CANTalon(Robot.bot.deflectorID);
 		deflectorMotor.changeControlMode(TalonControlMode.PercentVbus);
+		deflectorMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 	}
 	private static DeflectorSubsystem instance = new DeflectorSubsystem();
 	

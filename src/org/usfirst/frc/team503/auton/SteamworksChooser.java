@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * Comments:
  */
 
-public class SteamworksChoosers {
+public class SteamworksChooser {
 
 	private static SendableChooser<AutonChoices.Alliances> allianceChooser;
 	private static SendableChooser<AutonChoices.GearPosition> gearPosChooser;
@@ -25,7 +25,7 @@ public class SteamworksChoosers {
 	/**
 	 * Constructor for the SteamworksChoosers
 	 */
-	public SteamworksChoosers(){
+	public SteamworksChooser(){
 		//All of the Auton Choosers
 		allianceChooser = new SendableChooser<>();
 		gearPosChooser = new SendableChooser<>();
@@ -37,9 +37,9 @@ public class SteamworksChoosers {
 		testMotorChooser = new SendableChooser<>();
 	}
 	
-	private static SteamworksChoosers instance = new SteamworksChoosers();
+	private static SteamworksChooser instance = new SteamworksChooser();
 	
-	public static SteamworksChoosers getInstance() {
+	public static SteamworksChooser getInstance() {
 		return instance;
 	}
 	/**
