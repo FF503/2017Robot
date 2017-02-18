@@ -17,11 +17,7 @@ public class ShooterSubsystem extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-	CANTalon shooterMotor;
-	//CANTalon indexerMotor; //Change to Spark Motor if applicable.
-	//CANTalon deflectorMotor; //Change to Bag Motor if applicable.
-	
-	//Encoder deflectorEncoder;
+	private CANTalon shooterMotor;
 		 
 	public ShooterSubsystem() {
 		shooterMotor = new CANTalon(Robot.bot.shooterID);
@@ -49,6 +45,14 @@ public class ShooterSubsystem extends Subsystem {
 	
 	public double getSpeed() {
 		return shooterMotor.getSpeed();
+	}
+	
+	public double getError(){
+		return shooterMotor.getClosedLoopError();
+	}
+	
+	public boolean isOnTarget(){
+		return (shooterMotor.getControlMode() == TalonControlMode.Speed && getError() < Robot.bot.SHOOT_TOLERANCE);
 	}
 	
     public void initDefaultCommand() {

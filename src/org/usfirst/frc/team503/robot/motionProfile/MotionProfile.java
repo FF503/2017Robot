@@ -36,7 +36,7 @@ public class MotionProfile {
 		this.talon = talon;
 		
 		this.talon.changeMotionControlFramePeriod((int)(Robot.bot.CYCLE_TIME*500)); //5	
-                notifer.startPeriodic(Robot.bot.CYCLE_TIME/2.0); //.005	
+        notifer.startPeriodic(Robot.bot.CYCLE_TIME/2.0); //.005	
 	}
 	
 	public void setProfile(double [][] points) {
@@ -132,4 +132,3 @@ public class MotionProfile {
 		return setValue;
 	}
 }
-

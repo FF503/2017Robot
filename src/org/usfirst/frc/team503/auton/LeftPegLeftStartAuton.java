@@ -1,5 +1,7 @@
 package org.usfirst.frc.team503.auton;
 
+import org.usfirst.frc.team503.robot.subsystems.DrivetrainSubsystem;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class LeftPegLeftStartAuton extends CommandGroup {
@@ -23,16 +25,18 @@ public class LeftPegLeftStartAuton extends CommandGroup {
         // arm.
     	double[][] leftPinLeftStart = {
 				{2,21.5},
-				{8,21.5},
-				{8.5,23.5}
+				{8.8,21.5},
+				{9.8,21.75}
 		};
     	double[][] leftPinToHopper = {
     			{0,0},
     			{2.29,0},
     			{3,-6}
     	};
-		addSequential(new RunMotionProfileCommand(leftPinLeftStart, 3, 3, true));
-		addSequential(new RunMotionProfileCommand(leftPinToHopper, 2, 3,false));
+    	//DrivetrainSubsystem.getInstance().setDriveDirectionBackward();
+		addSequential(new RunMotionProfileCommand(leftPinLeftStart, 2.7, 10, true));
+		//DrivetrainSubsystem.getInstance().setDriveDirectionForward();
+		//addSequential(new RunMotionProfileCommand(leftPinToHopper, 2, 3,false));
 		
     }
 }

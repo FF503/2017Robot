@@ -1,8 +1,8 @@
+
 package org.usfirst.frc.team503.robot.commands;
 
 import org.usfirst.frc.team503.robot.OI;
-import org.usfirst.frc.team503.robot.subsystems.DrivetrainSubsystem;
-import org.usfirst.frc.team503.robot.utils.Constants;
+import org.usfirst.frc.team503.robot.subsystems.DeflectorSubsystem;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
@@ -10,27 +10,29 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ArcadeDriveCommand extends Command {
+public class DeflectorCommand extends Command {
 
-    public ArcadeDriveCommand() {
+    public DeflectorCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(DrivetrainSubsystem.getInstance());
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	DrivetrainSubsystem.getInstance().stopTrapezoidControl();    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Math.abs(OI.getDriverLeftXValue())>Constants.JOYSTICK_TOLERANCE && Math.abs(OI.getDriverLeftYValue())>Constants.JOYSTICK_TOLERANCE){
-        	DrivetrainSubsystem.getInstance().arcadeDrive(OI.getDriverLeftYValue(), OI.getDriverLeftXValue(),false);
+    /*	if(OI.getDPADUp()){
+    		DeflectorSubsystem.getInstance().setMotorPower(0.2);
+    	}
+    	else if(OI.getDPADDown()){
+    		DeflectorSubsystem.getInstance().setMotorPower(-0.2);
     	}
     	else{
-    		DrivetrainSubsystem.getInstance().tankDrive(0, 0, false);
-    	}
+    		DeflectorSubsystem.getInstance().setMotorPower(0);                 
+		}  */
+    	DeflectorSubsystem.getInstance().setMotorPower(OI.getOperatorLeftYValue());
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -40,7 +42,7 @@ public class ArcadeDriveCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	DrivetrainSubsystem.getInstance().tankDrive(0, 0, false);
+    	DeflectorSubsystem.getInstance().setMotorPower(0);
     }
 
     // Called when another command which requires one or more of the same

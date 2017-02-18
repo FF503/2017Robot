@@ -23,7 +23,7 @@ public class TankDriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	DrivetrainSubsystem.getInstance().tankDrive(OI.getLeftYValue(), OI.getRightYValue(),false);
+    	DrivetrainSubsystem.getInstance().tankDrive(OI.getDriverLeftYValue(), OI.getOperatorRightYValue(),false);
     }
 
     // Make this return true when this Command no longer needs to run execute()

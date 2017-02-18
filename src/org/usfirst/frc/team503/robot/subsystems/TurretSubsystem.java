@@ -17,22 +17,23 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class TurretSubsystem extends Subsystem {
 
-	static CANTalon turretMotor;  
+	private static CANTalon turretMotor;  
 	
-	private static double kTurretKp = 0.15;
+	private static double kTurretKp = 0.1246;
 	private static double kTurretKi = 0.0;
 	private static double kTurretKd = 0.0;
-	private static double turretDiameter = 20.125;
-	private static double degreesOffset = 78.58122431931282;
-	private static double degreesBetweenMagnets = 64.6671663510227;
-	private static double degreesBetweenLimitSwitches = 360 - 337.6136;
-	private static double degreesPerRotation = 360 - degreesBetweenMagnets;
-	private static double kTicksPerRotation = 61486;
-	private static double kTurretDegreesPerTick =  degreesPerRotation / kTicksPerRotation;
+	//private static double rotationsOffset = 11.39501953125;
+	private static double kTurretDiameter = 13.0;
+	private static double degreesBetweenLimitSwitches = 87.692307;
+	private static double degreesInRange = 360 - degreesBetweenLimitSwitches;
+	private static double kRotationsInRange = 9.05712890625;
+	private static double kTurretDegreesPerRotation =  degreesInRange / kRotationsInRange;
 	private static int kTurretOnTargetTolerance = 1;
-	private static double kSoftMaxTurretAngle = degreesPerRotation/2;																			
-	private static double kSoftMinTurretAngle = -degreesPerRotation/2;
-	private static double kTurretSafeTolerance = 2.0;
+	private static double kTurretMaxDegrees = degreesInRange;
+	private static double kTurretMinDegrees = 0;
+	
+	private double prevDegrees;
+	private TurretThread turretThread;
 	
 	public TurretSubsystem(){                               
 		turretMotor = new CANTalon(Robot.bot.turretID);                    
@@ -45,7 +46,13 @@ public class TurretSubsystem extends Subsystem {
 		turretMotor.setProfile(0);
 		turretMotor.reverseSensor(true);
 		turretMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
-		turretMotor.setAllowableClosedLoopErr((int)(kTurretOnTargetTolerance /kTurretDegreesPerTick));
+		//turretMotor.setAllowableClosedLoopErr((int)(kTurretOnTargetTolerance /kTurretDegreesPerRotation));
+		turretMotor.setForwardSoftLimit(kTurretMaxDegrees / kTurretDegreesPerRotation);
+		turretMotor.setReverseSoftLimit(kTurretMinDegrees / kTurretDegreesPerRotation);
+		turretMotor.enableForwardSoftLimit(true);
+		turretMotor.enableReverseSoftLimit(true);
+	
+		//turretThread = new TurretThread();
 	}                 
 	
 	
@@ -54,30 +61,35 @@ public class TurretSubsystem extends Subsystem {
 	public static TurretSubsystem getInstance(){                                          
 		return instance;
 	}
+	
+	public TurretThread getThread(){
+		return turretThread;
+	}
 
 	public synchronized void setSetpoint(double targetAngle) {
 		SmartDashboard.putNumber("turret target angle", targetAngle);
 		
-		if(Math.abs(targetAngle+degreesOffset)>kSoftMaxTurretAngle) {
+		if(Math.abs(targetAngle)>degreesInRange) {
 			System.out.println("BAD TURRET SETPOINT");
 			SmartDashboard.putString("BAD TURRET SETPOINT","CANNOT ATTAIN");
 		}								
 		else{
+			SmartDashboard.putNumber("turret setpoint value", targetAngle / kTurretDegreesPerRotation);
 		    turretMotor.changeControlMode(CANTalon.TalonControlMode.Position);
-			turretMotor.setSetpoint((targetAngle+degreesOffset) / kTurretDegreesPerTick);
+			turretMotor.setSetpoint(targetAngle / kTurretDegreesPerRotation);
 		}
 	}																										
 	
 	public synchronized double getAngle() {
-		return getEncoderPosition() * kTurretDegreesPerTick - degreesOffset;
+		return turretMotor.getPosition() * kTurretDegreesPerRotation;
 	}
 	
 	public synchronized double getSetpoint() {
-	    return turretMotor.getSetpoint() * kTurretDegreesPerTick;
+	    return turretMotor.getSetpoint() * kTurretDegreesPerRotation;
 	}
 	
 	public synchronized double getError() {    
-		return turretMotor.getClosedLoopError() * kTurretDegreesPerTick;
+		return turretMotor.getClosedLoopError() * kTurretDegreesPerRotation;
 	}
 	
 	public synchronized boolean isOnTarget() {
@@ -91,7 +103,7 @@ public class TurretSubsystem extends Subsystem {
 	 */
 	public synchronized boolean isSafe() {
 	    return (turretMotor.getControlMode() == CANTalon.TalonControlMode.Position && turretMotor.getSetpoint() == 0 && Math.abs(
-	            getError()) < kTurretSafeTolerance);
+	            getError()) < kTurretOnTargetTolerance);
 	}										
 	
 	public synchronized void setMotorPower(double turretPower){
@@ -108,33 +120,26 @@ public class TurretSubsystem extends Subsystem {
 		 else{
 			turretMotor.set(turretPower);    
 		 }
+		 prevDegrees = getAngle();
 	}
 	
-	public boolean getLeftLimitSwitch(){                 
+	public boolean getLeftLimitSwitch(){   
 		return turretMotor.isFwdLimitSwitchClosed();
 	}
 	public boolean getRightLimitSwitch(){
 		return turretMotor.isRevLimitSwitchClosed();
 	}
- 	
-	public double getEncoderVelocity(){
-		return turretMotor.getEncVelocity();
-	}
-	
-	public double getEncoderPosition(){
-		return -turretMotor.getEncPosition();
-	}
 	
 	public double getPosition(){
-		return -turretMotor.getPosition();
+		return turretMotor.getPosition();
 	}
 
 	private void resetEncAtRightLimitSwitch(){ 
-		turretMotor.setEncPosition((int)(kSoftMaxTurretAngle / kTurretDegreesPerTick));   
+		turretMotor.setPosition(0); 
 	}		
 	                               
 	private void resetEncAtLeftLimitSwitch(){
-		turretMotor.setEncPosition((int)(kSoftMinTurretAngle / kTurretDegreesPerTick));   
+		turretMotor.setPosition(kRotationsInRange);   
 	}			
 	
 	public void resetEncoder(){												

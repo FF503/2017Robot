@@ -1,10 +1,15 @@
 
 package org.usfirst.frc.team503.robot;
 
+import java.lang.Thread.State;
+
+import org.usfirst.frc.team503.auton.CenterPegCenterStart;
 import org.usfirst.frc.team503.auton.LeftPegLeftStartAuton;
 import org.usfirst.frc.team503.auton.SteamworksChooser;
 import org.usfirst.frc.team503.robot.commands.ArcadeDriveCommand;
+import org.usfirst.frc.team503.robot.commands.DeflectorCommand;
 import org.usfirst.frc.team503.robot.commands.TeleopTurretCommand;
+import org.usfirst.frc.team503.robot.subsystems.DeflectorSubsystem;
 import org.usfirst.frc.team503.robot.subsystems.DrivetrainSubsystem;
 import org.usfirst.frc.team503.robot.subsystems.ShooterSubsystem;
 import org.usfirst.frc.team503.robot.subsystems.TurretSubsystem;
@@ -45,7 +50,7 @@ public class Robot extends IterativeRobot {
 		
 		chooser = SteamworksChooser.getInstance();
 		chooser.autonInitChooser();
-
+		RobotState.getInstance().setState(RobotState.State.DISABLED);
 	}
  
 	/**
@@ -55,6 +60,7 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 		DrivetrainSubsystem.getInstance().stopTrapezoidControl();    	
 		DrivetrainSubsystem.getInstance().percentVoltageMode();
+		RobotState.getInstance().setState(RobotState.State.DISABLED);
 	}
 
 	/**
@@ -72,7 +78,9 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		chooser.executeAuton();
 		startTime = Timer.getFPGATimestamp();
-		(new LeftPegLeftStartAuton()).start();
+		//(new CenterPegCenterStart()).start();
+		RobotState.getInstance().setState(RobotState.State.AUTON);
+		TurretSubsystem.getInstance().getThread().startTurret();
 	}
 
 	/**
@@ -81,6 +89,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		//DrivetrainSubsystem.getInstance()trainSubsystem.getInstance().populateLog(startTime);
+		SmartDashboard.putBoolean("isOnTarget", TurretSubsystem.getInstance().isOnTarget());
 		Scheduler.getInstance().run();
 	}
 
@@ -96,8 +105,15 @@ public class Robot extends IterativeRobot {
 		DrivetrainSubsystem.getInstance().percentVoltageMode();
     	DrivetrainSubsystem.getInstance().resetEncoders();
 	    startTime = Timer.getFPGATimestamp();
+	    
+	    //start commands that use joysticks and dpads manually from Robot.java
     	(new ArcadeDriveCommand()).start();
-    	(new TeleopTurretCommand()).start();
+    	
+    	if (!Robot.bot.getName().equals("ProgrammingBot")){
+    		(new TeleopTurretCommand()).start();
+        	(new DeflectorCommand()).start();
+    	}
+		RobotState.getInstance().setState(RobotState.State.TELEOP);
 	}
 
 	/**
@@ -107,13 +123,19 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 	//	DrivetrainSubsystem.getInstance().populateLog(startTime);		
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Shooter Motor Speed", ShooterSubsystem.getInstance().getSpeed());
-		SmartDashboard.putBoolean("Turret Right Limit", TurretSubsystem.getInstance().getRightLimitSwitch());
-		SmartDashboard.putBoolean("Turret Left Limit", TurretSubsystem.getInstance().getLeftLimitSwitch());
-		SmartDashboard.putNumber("Turret Encoder Position", TurretSubsystem.getInstance().getEncoderPosition());
-		SmartDashboard.putNumber("Turret getPosition", TurretSubsystem.getInstance().getPosition());
-		SmartDashboard.putNumber("Turret angle", TurretSubsystem.getInstance().getAngle());
-		SmartDashboard.putNumber("Turret error", TurretSubsystem.getInstance().getError());
+		DrivetrainSubsystem.getInstance().populateLog(startTime);
+		DrivetrainSubsystem.getInstance().printEncCounts();
+		if (!Robot.bot.getName().equals("ProgrammingBot")){
+			SmartDashboard.putNumber("Shooter Motor Speed", ShooterSubsystem.getInstance().getSpeed());
+			SmartDashboard.putBoolean("Deflector limit switch", DeflectorSubsystem.getInstance().getLimitSwitch());
+			SmartDashboard.putNumber("Deflector encoder", DeflectorSubsystem.getInstance().getPosition());
+			SmartDashboard.putBoolean("Turret Right Limit", TurretSubsystem.getInstance().getRightLimitSwitch());
+			SmartDashboard.putBoolean("Turret Left Limit", TurretSubsystem.getInstance().getLeftLimitSwitch());
+			SmartDashboard.putNumber("Turret get Position", TurretSubsystem.getInstance().getPosition());
+			SmartDashboard.putNumber("Turret Setpoint", TurretSubsystem.getInstance().getSetpoint());
+			SmartDashboard.putNumber("Turret angle", TurretSubsystem.getInstance().getAngle());
+			SmartDashboard.putNumber("Turret error", TurretSubsystem.getInstance().getError());
+		}
 	}
 	
 	/**
@@ -122,6 +144,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testInit(){
 		Logger.froglog("In Roborio Test Mode...initiating Power On Self Test (POST) Diagnostics ...");
+		RobotState.getInstance().setState(RobotState.State.TEST);
 	}
 	
 	/**

@@ -11,7 +11,7 @@ public class RobotHardwareProgrammingBot extends RobotHardware {
 	public final double WHEEL_DIAMETER = 8.0;
 	public final double WHEEL_BASE = 27;
 	public final double CYCLE_TIME = 0.05;
-	public final int COUNTS_PER_REV = 360;
+	public final int DRIVE_COUNTS_PER_REV  = 360;
 
 	public final double DRIVE_P = .00001;
 	public final double DRIVE_I = 0;
@@ -23,6 +23,23 @@ public class RobotHardwareProgrammingBot extends RobotHardware {
 	public final boolean REVERSE_RIGHT_SENSOR = true;
 	public final boolean REVERSE_LEFT_OUTPUT = false;
 	public final boolean REVERSE_RIGHT_OUTPUT = true;
+	
+	public final double SHOOT_P = 0;
+	public final double SHOOT_I = 0;
+	public final double SHOOT_D = 0;
+	public final double SHOOT_F = 0;
+	
+	public int driveSolenoidID1;
+	public int driveSolenoidID2;
+	public int deflectorID;
+	public int outerGearSolenoidID1;
+	public int outerGearSolenoidID2;
+	public int innerGearSolenoidID1;
+	public int innerGearSolenoidID2;
+	public int indexerID;
+	public int upperIntakeID;
+	public int lowerIntakeID;
+	public int turretID;
 	
 	@Override
 	public void initialize(){

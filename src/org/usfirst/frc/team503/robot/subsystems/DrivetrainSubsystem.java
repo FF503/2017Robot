@@ -33,7 +33,10 @@ public class DrivetrainSubsystem extends Subsystem {
 		leftSlave = new CANTalon(Robot.bot.leftSlaveID);
 		rightMaster = new CANTalon(Robot.bot.rightMasterID);
 		rightSlave = new CANTalon(Robot.bot.rightSlaveID);
-		driveSolenoid = new DoubleSolenoid(Robot.bot.driveSolenoidID1, Robot.bot.driveSolenoidID2);
+		if (!Robot.bot.getName().equals("ProgrammingBot")){
+			driveSolenoid = new DoubleSolenoid(Robot.bot.driveSolenoidID1, Robot.bot.driveSolenoidID2);
+		}
+		
 		leftMaster.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		rightMaster.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		
@@ -122,8 +125,8 @@ public class DrivetrainSubsystem extends Subsystem {
    public void percentVoltageMode(){
 	   leftMaster.changeControlMode(TalonControlMode.PercentVbus);
 	   rightMaster.changeControlMode(TalonControlMode.PercentVbus);
-	   leftMaster.setVoltageRampRate(6);
-	   rightMaster.setVoltageRampRate(6);
+	   leftMaster.setVoltageRampRate(0);
+	   rightMaster.setVoltageRampRate(0);
    }
    
    public void initDefaultCommand() {
@@ -141,6 +144,11 @@ public class DrivetrainSubsystem extends Subsystem {
 	
 	public static DrivetrainSubsystem getInstance(){
 		return instance;
+	}
+	
+	public void printEncCounts(){
+		SmartDashboard.putNumber("left master pos", leftMaster.getEncPosition());
+		SmartDashboard.putNumber("right master pos", rightMaster.getEncPosition());
 	}
 	
 	private void setMotorOutputs(double leftSpeed, double rightSpeed, boolean sensitivity){
@@ -255,7 +263,7 @@ public class DrivetrainSubsystem extends Subsystem {
    		leftSpeed = leftMaster.getEncVelocity();
    		rightSpeed = rightMaster.getEncVelocity();
    	
-       	System.out.format("%s\n", "Time," + (curTime-startTime)/1000);
+       	System.out.format("%s\n", "Time," + ((double)(curTime-startTime)/1000.0));
    		System.out.format("%s\n", "Talon left position: " + talonLeftPos);
    		System.out.format("%s\n", "Talon left rpm: " +  talonLeftRPM);
    		System.out.format("%s\n", "Talon right position: " + talonRightPos);

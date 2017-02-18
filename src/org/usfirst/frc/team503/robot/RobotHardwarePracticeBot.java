@@ -19,8 +19,12 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final int indexerID = 3;
 	public final int driveSolenoidID1 = 0;
 	public final int driveSolenoidID2 = 1;
-	public final int outerGearSolenoidID = 2;
-	public final int innerGearSolenoidID = 3;
+	public final int outerGearSolenoidID1 = 2;
+	public final int outerGearSolenoidID2 = 3;
+	public final int innerGearSolenoidID1 = 4;
+	public final int innerGearSolenoidID2 = 5;
+	public final int climberSpark1Port = 1;
+	public final int climberSpark2Port = 2;
 	
 	public final double WHEEL_DIAMETER = 4.0;
 	public final double WHEEL_BASE = 32.5;
@@ -30,19 +34,21 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final double DRIVE_P = 0;
 	public final double DRIVE_I = 0;
 	public final double DRIVE_D = 0;
-	public final double LEFT_DRIVE_F = 0.1040480065;
-	public final double RIGHT_DRIVE_F = 0.101528384;
+	public final double LEFT_DRIVE_F  = 0.1040480065 * 2;
+	public final double RIGHT_DRIVE_F = 0.101528384 * 2;
 	
 	public final boolean REVERSE_LEFT_SENSOR = true;
 	public final boolean REVERSE_RIGHT_SENSOR = false;
 	public final boolean REVERSE_LEFT_OUTPUT = false;
 	public final boolean REVERSE_RIGHT_OUTPUT = true;
 	
-	public final int SHOOT_COUNTS_PER_REV = 1024;
 	public final double SHOOT_P = 0;
 	public final double SHOOT_I = 0;
 	public final double SHOOT_D = 0;
 	public final double SHOOT_F = 0;
+	public final double SHOOT_TOLERANCE = 50;
+	
+	public final double TURRET_CYCLE_TIME = .01; //seconds
 
 	
 	@Override
@@ -58,6 +64,16 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	}
 	
 	public boolean hasIndexer(){
+		return true;
+	}
+	
+	@Override 
+	public boolean hasGearPlacer(){
+		return true;
+	}
+	
+	@Override 
+	public boolean hasClimber(){
 		return true;
 	}
 	

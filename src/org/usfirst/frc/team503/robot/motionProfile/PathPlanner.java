@@ -66,9 +66,7 @@ public class PathPlanner {
 				{15,6},
 				{15, 4}
 		};
-
 		This path goes from {1,1} -> {5,1} -> {9,12} -> {12, 9} -> {15,6} -> {15,4}
-
 		The units of these coordinates are position units assumed by the user (i.e inch, foot, meters) 
 	 * @param path
 	 */
@@ -730,7 +728,5 @@ public class PathPlanner {
 		return profile;
 	}
 }	
-
-
 
 

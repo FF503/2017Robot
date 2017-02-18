@@ -30,8 +30,8 @@ public class TeleopTurretCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run                                          
     protected void execute() {
-    	if(Math.abs(OI.getRightXValue())>Constants.JOYSTICK_TOLERANCE){
-        	TurretSubsystem.getInstance().setMotorPower(OI.getRightXValue());
+    	if(Math.abs(OI.getOperatorRightXValue())>Constants.JOYSTICK_TOLERANCE){
+        	TurretSubsystem.getInstance().setMotorPower(OI.getOperatorRightXValue());
     	}
     	else{
     		TurretSubsystem.getInstance().setMotorPower(0);

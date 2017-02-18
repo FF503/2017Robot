@@ -12,6 +12,11 @@ public class TurnTurretCommand extends Command {
 	double angle;
 	boolean goTo;
 	
+	/**
+	 * 
+	 * @param angle Angle that you pass to the command
+	 * @param goTo If true command will target that angle directly (it will go that many degrees after the right limit switch) if false it will use the angle as the delta
+	 */
     public TurnTurretCommand(double angle, boolean goTo) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);

@@ -70,6 +70,14 @@ public abstract class RobotHardware {
 		return false;
 	}
 	
+	public boolean hasGearPlacer(){
+		return false;
+	}
+	
+	public boolean hasClimber(){
+		return false;
+	}
+	
 	public boolean usesDriveCamera()
 	{
 		return false;
