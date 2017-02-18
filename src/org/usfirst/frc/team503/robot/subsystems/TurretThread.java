@@ -23,7 +23,7 @@ public class TurretThread implements Runnable{
 	public void run(){
 		if(startTurret){
 			//turnTurret(camThread.getAngle(), false);
-			turnTurret(45, true);
+			//turnTurret(45, true);
 			waitForOnTarget();
 			stopTurret();
 		}
