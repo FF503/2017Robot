@@ -99,6 +99,13 @@ public class DeflectorSubsystem extends Subsystem {
     		deflectorMotor.setPosition(0);
     	}
 	}
+	
+	public void sendDashboardData(){
+		SmartDashboard.putBoolean("Deflector limit switch", DeflectorSubsystem.getInstance().getLimitSwitch());
+		SmartDashboard.putNumber("Deflector encoder", DeflectorSubsystem.getInstance().getPosition());
+		SmartDashboard.putNumber("Deflector error", DeflectorSubsystem.getInstance().getError());
+		SmartDashboard.putNumber("Deflector setpoint", DeflectorSubsystem.getInstance().getSetpoint());
+	}
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.

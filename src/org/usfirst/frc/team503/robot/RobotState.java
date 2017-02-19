@@ -20,7 +20,7 @@ public class RobotState extends Subsystem {
 	private boolean climberIsAccelerated;
 	private boolean turretIsRunning;
 	private State robotState;
-	private int turretState;
+	private TurretState turretState;
     	
 	public RobotState() {
 		shooterIsRunning = false; 
@@ -31,6 +31,7 @@ public class RobotState extends Subsystem {
 		climberIsAccelerated = false;
 		turretIsRunning = false;
 		robotState = State.DISABLED;
+		turretState = TurretState.DISABLED;
 	}
 	
 	private static RobotState instance = new RobotState();
@@ -40,7 +41,19 @@ public class RobotState extends Subsystem {
 	}
 	
 	public enum State{
-		DISABLED, AUTON, TELEOP, TEST, ENABLED
+		DISABLED, AUTON, TELEOP, TEST, ENABLED;
+	}
+	
+	public enum TurretState{
+		DISABLED, RUNNING_PID, TARGET_FOUND, ON_TARGET, SEEKING_TARGET;
+	}
+	
+	public TurretState getTurretState(){
+		return turretState;
+	}
+	
+	public void setTurretState(TurretState state){
+		turretState = state;
 	}
 	
 	public State getState(){

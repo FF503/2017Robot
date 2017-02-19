@@ -6,10 +6,10 @@ import org.usfirst.frc.team503.robot.commands.GearPlacerCommand;
 import org.usfirst.frc.team503.robot.commands.GoToDeflectorCommand;
 import org.usfirst.frc.team503.robot.commands.ShiftToHighGear;
 import org.usfirst.frc.team503.robot.commands.ShiftToLowGear;
-import org.usfirst.frc.team503.robot.commands.ShootRPMCommand;
 import org.usfirst.frc.team503.robot.commands.ToggleIndexerCommand;
 import org.usfirst.frc.team503.robot.commands.ToggleIntakeCommand;
 import org.usfirst.frc.team503.robot.commands.ToggleShooterCommand;
+import org.usfirst.frc.team503.robot.commands.TurnTurretCommand;
 import org.usfirst.frc.team503.robot.subsystems.DeflectorSubsystem;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -63,9 +63,8 @@ public class OI {
 	private static JoystickButton climbButton = new JoystickButton(operatorJoystick, 3);
 	private static JoystickButton climbFasterButton = new JoystickButton(operatorJoystick, 4);
 	private static JoystickButton goToDeflectorButton = new JoystickButton(operatorJoystick, 5);
-	private static JoystickButton shootRPMButton = new JoystickButton(operatorJoystick, 6);
-	//delete this button after testing
-	//private static JoystickButton goToTurretPosition = new JoystickButton(operatorJoystick, 6);
+	//private static JoystickButton shootRPMButton = new JoystickButton(operatorJoystick, 6);
+	private static JoystickButton goToTurretPosition = new JoystickButton(operatorJoystick, 6);
 	
 	public static void initialize(){
 		shooterButton.whenPressed(new ToggleShooterCommand());
@@ -79,8 +78,8 @@ public class OI {
 		climbButton.whenPressed(new ClimbCommand());
 		climbFasterButton.whenPressed(new ClimbFasterCommand());
 		goToDeflectorButton.whenPressed(new GoToDeflectorCommand(DeflectorSubsystem.DeflectorHeight.HIGH.height));
-		shootRPMButton.whenPressed(new ShootRPMCommand());
-		//goToTurretPosition.whenPressed(new TurnTurretCommand(45,true));
+		//sshootRPMButton.whenPressed(new ShootRPMCommand());
+		goToTurretPosition.whenPressed(new TurnTurretCommand(10, false));
 		
 	}
 	
