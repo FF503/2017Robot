@@ -20,6 +20,7 @@ public class RobotState extends Subsystem {
 	private boolean climberIsAccelerated;
 	private boolean turretIsRunning;
 	private State robotState;
+	private int turretState;
     	
 	public RobotState() {
 		shooterIsRunning = false; 

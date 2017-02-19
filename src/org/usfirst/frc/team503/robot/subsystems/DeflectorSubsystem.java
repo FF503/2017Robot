@@ -1,9 +1,11 @@
 package org.usfirst.frc.team503.robot.subsystems;
 
+import org.usfirst.frc.team503.robot.OI;
 import org.usfirst.frc.team503.robot.Robot;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,9 +27,9 @@ public class DeflectorSubsystem extends Subsystem {
 		deflectorMotor.enableLimitSwitch(false, true);
 		deflectorMotor.ConfigRevLimitSwitchNormallyOpen(true);
 		deflectorMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-		//deflectorMotor.setPID(kDeflectorKd, kDeflectorKi, kDeflectorKp);  
 		deflectorMotor.setProfile(0);
-		deflectorMotor.reverseSensor(true);
+		deflectorMotor.setPID(Robot.bot.DEFLECTOR_P, Robot.bot.DEFLECTOR_I, Robot.bot.DEFLECTOR_D);  
+		deflectorMotor.reverseSensor(Robot.bot.DEFLECTOR_REVERSE_SENSOR);
 		deflectorMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 		//deflectorMotor.setAllowableClosedLoopErr((int)(kTurretOnTargetTolerance /kTurretDegreesPerTick));
 	}                 
@@ -39,48 +41,39 @@ public class DeflectorSubsystem extends Subsystem {
 		return instance;
 	}
 
-	/*public synchronized void setSetpoint(double targetAngle) {
-		SmartDashboard.putNumber("turret target angle", targetAngle);
+	public synchronized void setSetpoint(double target) {
+		SmartDashboard.putNumber("deflector target", target);
 		
-		if(Math.abs(targetAngle+degreesOffset)>kSoftMaxTurretAngle) {
-			System.out.println("BAD TURRET SETPOINT");
-			SmartDashboard.putString("BAD TURRET SETPOINT","CANNOT ATTAIN");
+		if(target>Robot.bot.DEFLECTOR_MAX) {
+			System.out.println("BAD DEFLECTOR SETPOINT");
+			SmartDashboard.putString("BAD DEFLECTOR SETPOINT","CANNOT ATTAIN");
 		}								
 		else{
 		    deflectorMotor.changeControlMode(CANTalon.TalonControlMode.Position);
-			deflectorMotor.setSetpoint((targetAngle+degreesOffset) / kTurretDegreesPerTick);
+			deflectorMotor.setSetpoint(target);
 		}
-	}							
-	*/																			
+	}					
 	
-	/*public synchronized double getAngle() {
-		return getEncoderPosition() * kTurretDegreesPerTick - degreesOffset;
+	public enum DeflectorHeight{
+		LOW(0.0), MEDIUM(3.0), HIGH(6.0);
+		public double height;
+		private DeflectorHeight(double height){
+			this.height = height;
+		}
 	}
-	*/
 	
-	/*public synchronized double getSetpoint() {
-	    return deflectorMotor.getSetpoint() * kTurretDegreesPerTick;
+	public synchronized double getSetpoint() {
+	    return deflectorMotor.getSetpoint();
 	}
 	
 	public synchronized double getError() {    
-		return deflectorMotor.getClosedLoopError() * kTurretDegreesPerTick;
+		return getSetpoint() - getPosition();
 	}
 	
 	public synchronized boolean isOnTarget() {
-	    return (deflectorMotor.getControlMode() == CANTalon.TalonControlMode.Position && Math.abs(getError()) < kTurretOnTargetTolerance);
+	    return (deflectorMotor.getControlMode() == CANTalon.TalonControlMode.Position && Math.abs(getError()) < Robot.bot.DEFLECTOR_TOLERANCE);
 	}
-*/
-
-	/**
-	 * @return If the turret is within its mechanical limits and in the right
-	 *         state.
-	 */
-	/*public synchronized boolean isSafe() {
-	    return (deflectorMotor.getControlMode() == CANTalon.TalonControlMode.Position && deflectorMotor.getSetpoint() == 0 && Math.abs(
-	            getError()) < kTurretSafeTolerance);
-	}										
-	*/
-	
+										
 	public synchronized void setMotorPower(double deflectorPower){
 		deflectorMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		SmartDashboard.putNumber("deflectorPower", deflectorPower);
@@ -89,7 +82,7 @@ public class DeflectorSubsystem extends Subsystem {
 				resetEncoder();
 		 }
 		 else{
-			deflectorMotor.set(deflectorPower);                                                                     
+			 deflectorMotor.set(deflectorPower);
 		 }
 	}
 	
@@ -98,13 +91,14 @@ public class DeflectorSubsystem extends Subsystem {
 	}
 	
 	public double getPosition(){
-		return deflectorMotor.getPosition();
+		return -deflectorMotor.getPosition();
 	}
 	                               
 	public void resetEncoder(){												
-    	deflectorMotor.setPosition(0);
+    	if(getLimitSwitch()){
+    		deflectorMotor.setPosition(0);
+    	}
 	}
-
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.

@@ -49,6 +49,13 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final double SHOOT_TOLERANCE = 50;
 	
 	public final double TURRET_CYCLE_TIME = .01; //seconds
+	
+	public final double DEFLECTOR_P = .5;
+	public final double DEFLECTOR_I = 0;
+	public final double DEFLECTOR_D = 0;
+	public final double DEFLECTOR_MAX = 12.0;
+	public final double DEFLECTOR_TOLERANCE = 6.6;
+	public final boolean DEFLECTOR_REVERSE_SENSOR = true;
 
 	
 	@Override

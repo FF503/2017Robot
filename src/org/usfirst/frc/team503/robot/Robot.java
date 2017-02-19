@@ -7,8 +7,10 @@ import org.usfirst.frc.team503.auton.CenterPegCenterStart;
 import org.usfirst.frc.team503.auton.LeftPegLeftStartAuton;
 import org.usfirst.frc.team503.auton.SteamworksChooser;
 import org.usfirst.frc.team503.robot.commands.ArcadeDriveCommand;
-import org.usfirst.frc.team503.robot.commands.DeflectorCommand;
+import org.usfirst.frc.team503.robot.commands.CameraCommand;
+import org.usfirst.frc.team503.robot.commands.TeleopDeflectorCommand;
 import org.usfirst.frc.team503.robot.commands.TeleopTurretCommand;
+import org.usfirst.frc.team503.robot.commands.TurnTurretCommand;
 import org.usfirst.frc.team503.robot.subsystems.DeflectorSubsystem;
 import org.usfirst.frc.team503.robot.subsystems.DrivetrainSubsystem;
 import org.usfirst.frc.team503.robot.subsystems.ShooterSubsystem;
@@ -78,9 +80,9 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		chooser.executeAuton();
 		startTime = Timer.getFPGATimestamp();
-		//(new CenterPegCenterStart()).start();
+		(new CenterPegCenterStart()).start();
 		RobotState.getInstance().setState(RobotState.State.AUTON);
-		TurretSubsystem.getInstance().getThread().startTurret();
+		//(new TurnTurretCommand(50.3, true)).start();
 	}
 
 	/**
@@ -91,6 +93,17 @@ public class Robot extends IterativeRobot {
 		//DrivetrainSubsystem.getInstance()trainSubsystem.getInstance().populateLog(startTime);
 		SmartDashboard.putBoolean("isOnTarget", TurretSubsystem.getInstance().isOnTarget());
 		Scheduler.getInstance().run();
+		if (!Robot.bot.getName().equals("ProgrammingBot")){
+			SmartDashboard.putNumber("Shooter Motor Speed", ShooterSubsystem.getInstance().getSpeed());
+			SmartDashboard.putBoolean("Deflector limit switch", DeflectorSubsystem.getInstance().getLimitSwitch());
+			SmartDashboard.putNumber("Deflector encoder", DeflectorSubsystem.getInstance().getPosition());
+			SmartDashboard.putBoolean("Turret Right Limit", TurretSubsystem.getInstance().getRightLimitSwitch());
+			SmartDashboard.putBoolean("Turret Left Limit", TurretSubsystem.getInstance().getLeftLimitSwitch());
+			SmartDashboard.putNumber("Turret get Position", TurretSubsystem.getInstance().getPosition());
+			SmartDashboard.putNumber("Turret Setpoint", TurretSubsystem.getInstance().getSetpoint());
+			SmartDashboard.putNumber("Turret angle", TurretSubsystem.getInstance().getAngle());
+			SmartDashboard.putNumber("Turret error", TurretSubsystem.getInstance().getError());
+		}
 	}
 
 	/**
@@ -110,8 +123,9 @@ public class Robot extends IterativeRobot {
     	(new ArcadeDriveCommand()).start();
     	
     	if (!Robot.bot.getName().equals("ProgrammingBot")){
-    		(new TeleopTurretCommand()).start();
-        	(new DeflectorCommand()).start();
+    		//(new TeleopTurretCommand()).start();
+        	(new TeleopDeflectorCommand()).start();
+        	(new CameraCommand()).start();
     	}
 		RobotState.getInstance().setState(RobotState.State.TELEOP);
 	}
@@ -129,12 +143,15 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putNumber("Shooter Motor Speed", ShooterSubsystem.getInstance().getSpeed());
 			SmartDashboard.putBoolean("Deflector limit switch", DeflectorSubsystem.getInstance().getLimitSwitch());
 			SmartDashboard.putNumber("Deflector encoder", DeflectorSubsystem.getInstance().getPosition());
+			SmartDashboard.putNumber("Deflector error", DeflectorSubsystem.getInstance().getError());
+			SmartDashboard.putNumber("Deflector setpoint", DeflectorSubsystem.getInstance().getSetpoint());
 			SmartDashboard.putBoolean("Turret Right Limit", TurretSubsystem.getInstance().getRightLimitSwitch());
 			SmartDashboard.putBoolean("Turret Left Limit", TurretSubsystem.getInstance().getLeftLimitSwitch());
 			SmartDashboard.putNumber("Turret get Position", TurretSubsystem.getInstance().getPosition());
 			SmartDashboard.putNumber("Turret Setpoint", TurretSubsystem.getInstance().getSetpoint());
 			SmartDashboard.putNumber("Turret angle", TurretSubsystem.getInstance().getAngle());
 			SmartDashboard.putNumber("Turret error", TurretSubsystem.getInstance().getError());
+			SmartDashboard.putNumber("left operator trigger", OI.getOperatorLeftTrigger());
 		}
 	}
 	

@@ -28,7 +28,7 @@ public class ClimbCommand extends Command {
 			ClimberSubsystem.getInstance().setPower(-0.4);
 			RobotState.getInstance().setClimberStatus(true);
 		} else {
-			ClimberSubsystem.getInstance().setPower(-0.0);
+			ClimberSubsystem.getInstance().setPower(0.0);
 			RobotState.getInstance().setClimberStatus(false);
 		}
 	}

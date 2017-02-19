@@ -2,8 +2,11 @@ package org.usfirst.frc.team503.robot.subsystems;
 
 import org.usfirst.frc.team503.robot.Robot;
 
+
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.TalonControlMode;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,16 +27,17 @@ public class TurretSubsystem extends Subsystem {
 	private static double kTurretKd = 0.0;
 	//private static double rotationsOffset = 11.39501953125;
 	private static double kTurretDiameter = 13.0;
-	private static double degreesBetweenLimitSwitches = 87.692307;
-	private static double degreesInRange = 360 - degreesBetweenLimitSwitches;
-	private static double kRotationsInRange = 9.05712890625;
-	private static double kTurretDegreesPerRotation =  degreesInRange / kRotationsInRange;
-	private static int kTurretOnTargetTolerance = 1;
-	private static double kTurretMaxDegrees = degreesInRange;
-	private static double kTurretMinDegrees = 0;
+	public static double degreesBetweenLimitSwitches = 87.692307;
+	public static double degreesInRange = 360 - degreesBetweenLimitSwitches;
+	public static double kRotationsInRange = 9.05712890625;
+	public static double kTurretDegreesPerRotation =  degreesInRange / kRotationsInRange;
+	public static int kTurretOnTargetTolerance = 1;
+	public static double kTurretMaxDegrees = degreesInRange;
+	public static double kTurretMinDegrees = 0;
+	
 	
 	private double prevDegrees;
-	private TurretThread turretThread;
+
 	
 	public TurretSubsystem(){                               
 		turretMotor = new CANTalon(Robot.bot.turretID);                    
@@ -52,7 +56,6 @@ public class TurretSubsystem extends Subsystem {
 		turretMotor.enableForwardSoftLimit(true);
 		turretMotor.enableReverseSoftLimit(true);
 	
-		//turretThread = new TurretThread();
 	}                 
 	
 	
@@ -62,10 +65,10 @@ public class TurretSubsystem extends Subsystem {
 		return instance;
 	}
 	
-	public TurretThread getThread(){
-		return turretThread;
+	public CANTalon getMotor(){
+		return turretMotor;
 	}
-
+	
 	public synchronized void setSetpoint(double targetAngle) {
 		SmartDashboard.putNumber("turret target angle", targetAngle);
 		
@@ -76,6 +79,7 @@ public class TurretSubsystem extends Subsystem {
 		else{
 			SmartDashboard.putNumber("turret setpoint value", targetAngle / kTurretDegreesPerRotation);
 		    turretMotor.changeControlMode(CANTalon.TalonControlMode.Position);
+		    SmartDashboard.putBoolean("turret is in position mode", TalonControlMode.Position == turretMotor.getControlMode());
 			turretMotor.setSetpoint(targetAngle / kTurretDegreesPerRotation);
 		}
 	}																										
@@ -106,6 +110,7 @@ public class TurretSubsystem extends Subsystem {
 	            getError()) < kTurretOnTargetTolerance);
 	}										
 	
+
 	public synchronized void setMotorPower(double turretPower){
 		SmartDashboard.putNumber("turrerPower", turretPower);
 		
@@ -130,7 +135,7 @@ public class TurretSubsystem extends Subsystem {
 		return turretMotor.isRevLimitSwitchClosed();
 	}
 	
-	public double getPosition(){
+	public synchronized double getPosition(){
 		return turretMotor.getPosition();
 	}
 

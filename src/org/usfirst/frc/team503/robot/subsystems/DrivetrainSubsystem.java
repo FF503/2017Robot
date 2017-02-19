@@ -104,7 +104,7 @@ public class DrivetrainSubsystem extends Subsystem {
 		System.out.println("Time: " + Timer.getFPGATimestamp());		
 	}
    
-	public void startTrapezoidControl(double[][] leftPoints, double[][] rightPoints,int trapID) {	
+	private void startTrapezoidControl(double[][] leftPoints, double[][] rightPoints,int trapID) {	
 		System.out.println("startTrapezoidControl");
 		trapThread.activateTrap(leftPoints, rightPoints, trapID);
 	}

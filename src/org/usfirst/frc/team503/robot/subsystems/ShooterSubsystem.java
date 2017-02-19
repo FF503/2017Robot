@@ -21,8 +21,10 @@ public class ShooterSubsystem extends Subsystem {
 		 
 	public ShooterSubsystem() {
 		shooterMotor = new CANTalon(Robot.bot.shooterID);
+		shooterMotor.enableBrakeMode(true);
 		shooterMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 		shooterMotor.changeControlMode(TalonControlMode.PercentVbus);
+		shooterMotor.setProfile(0);
 		shooterMotor.setPID(Robot.bot.SHOOT_P, Robot.bot.SHOOT_I, Robot.bot.SHOOT_D);
 		shooterMotor.setF(Robot.bot.SHOOT_F);
 	}
@@ -44,6 +46,7 @@ public class ShooterSubsystem extends Subsystem {
 	}
 	
 	public double getSpeed() {
+		System.out.println(shooterMotor.getSpeed());
 		return shooterMotor.getSpeed();
 	}
 	

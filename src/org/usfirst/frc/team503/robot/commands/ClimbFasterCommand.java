@@ -9,9 +9,9 @@ import org.usfirst.frc.team503.robot.RobotState;
 /**
  *
  */
-public class ClimbAccelerateCommand extends Command {
+public class ClimbFasterCommand extends Command {
 	
-	public ClimbAccelerateCommand() {
+	public ClimbFasterCommand() {
 		// Use requires() here to declare subsystem dependencies
 		requires(ClimberSubsystem.getInstance());
 	}
