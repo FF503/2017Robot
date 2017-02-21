@@ -1,8 +1,8 @@
 package org.usfirst.frc.team503.auton;
 
+import org.usfirst.frc.team503.motionProfile.PathPlanner;
 import org.usfirst.frc.team503.robot.Robot;
-import org.usfirst.frc.team503.robot.motionProfile.PathPlanner;
-import org.usfirst.frc.team503.robot.subsystems.DrivetrainSubsystem;
+import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 

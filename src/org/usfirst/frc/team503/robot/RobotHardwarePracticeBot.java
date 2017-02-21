@@ -2,6 +2,7 @@ package org.usfirst.frc.team503.robot;
 
 import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.Solenoid;
 
 
@@ -48,7 +49,7 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final double SHOOT_F = 0;
 	public final double SHOOT_TOLERANCE = 50;
 	
-	public final double TURRET_CYCLE_TIME = .01; //seconds
+	public final double TURRET_CYCLE_TIME = .005; //seconds
 	
 	public final double DEFLECTOR_P = .5;
 	public final double DEFLECTOR_I = 0;
@@ -57,6 +58,12 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final double DEFLECTOR_TOLERANCE = 6.6;
 	public final boolean DEFLECTOR_REVERSE_SENSOR = true;
 
+	public final double GYRO_P = 0;
+	public final double GYRO_I = 0;
+	public final double GYRO_D = 0;
+	public final double GYRO_TOLERANCE = 0;
+	
+	public final double REVERSE_INDEXER = -1;
 	
 	@Override
 	public void initialize(){

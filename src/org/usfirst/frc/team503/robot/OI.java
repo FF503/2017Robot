@@ -1,16 +1,16 @@
 package org.usfirst.frc.team503.robot;
 
-import org.usfirst.frc.team503.robot.commands.ClimbCommand;
-import org.usfirst.frc.team503.robot.commands.ClimbFasterCommand;
-import org.usfirst.frc.team503.robot.commands.GearPlacerCommand;
-import org.usfirst.frc.team503.robot.commands.GoToDeflectorCommand;
-import org.usfirst.frc.team503.robot.commands.ShiftToHighGear;
-import org.usfirst.frc.team503.robot.commands.ShiftToLowGear;
-import org.usfirst.frc.team503.robot.commands.ToggleIndexerCommand;
-import org.usfirst.frc.team503.robot.commands.ToggleIntakeCommand;
-import org.usfirst.frc.team503.robot.commands.ToggleShooterCommand;
-import org.usfirst.frc.team503.robot.commands.TurnTurretCommand;
-import org.usfirst.frc.team503.robot.subsystems.DeflectorSubsystem;
+import org.usfirst.frc.team503.commands.ClimbCommand;
+import org.usfirst.frc.team503.commands.ClimbFasterCommand;
+import org.usfirst.frc.team503.commands.GearPlacerCommand;
+import org.usfirst.frc.team503.commands.GoToDeflectorCommand;
+import org.usfirst.frc.team503.commands.ShiftToHighGear;
+import org.usfirst.frc.team503.commands.ShiftToLowGear;
+import org.usfirst.frc.team503.commands.ToggleIndexerCommand;
+import org.usfirst.frc.team503.commands.ToggleIntakeCommand;
+import org.usfirst.frc.team503.commands.ToggleShooterCommand;
+import org.usfirst.frc.team503.commands.TurnTurretCommand;
+import org.usfirst.frc.team503.subsystems.DeflectorSubsystem;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -62,8 +62,8 @@ public class OI {
 	private static JoystickButton gearCloseButton = new JoystickButton(operatorJoystick, 2);
 	private static JoystickButton climbButton = new JoystickButton(operatorJoystick, 3);
 	private static JoystickButton climbFasterButton = new JoystickButton(operatorJoystick, 4);
-	private static JoystickButton goToDeflectorButton = new JoystickButton(operatorJoystick, 5);
-	//private static JoystickButton shootRPMButton = new JoystickButton(operatorJoystick, 6);
+	private static JoystickButton cameraTrackButton = new JoystickButton(operatorJoystick, 5);
+	private static JoystickButton shootRPMButton = new JoystickButton(operatorJoystick, 6);
 	private static JoystickButton goToTurretPosition = new JoystickButton(operatorJoystick, 6);
 	
 	public static void initialize(){
@@ -77,9 +77,8 @@ public class OI {
 		gearOpenButton.whenPressed(new GearPlacerCommand());
 		climbButton.whenPressed(new ClimbCommand());
 		climbFasterButton.whenPressed(new ClimbFasterCommand());
-		goToDeflectorButton.whenPressed(new GoToDeflectorCommand(DeflectorSubsystem.DeflectorHeight.HIGH.height));
-		//sshootRPMButton.whenPressed(new ShootRPMCommand());
-		goToTurretPosition.whenPressed(new TurnTurretCommand(10, false));
+		//shootRPMButton.whenPressed(new ShootRPMCommand());
+		//goToTurretPosition.whenPressed(new TurnTurretCommand(15, false));
 		
 	}
 	
@@ -115,12 +114,12 @@ public class OI {
 		return operatorJoystick.getRawAxis(0);
 	}
 	
-	public static double getOperatorLeftTrigger(){
-		return operatorJoystick.getRawAxis(2);
+	public static boolean getOperatorLeftTrigger(){
+		return operatorJoystick.getRawAxis(2) == 1.0;
 	}
 	
-	public static double getOperatorRightTrigger(){
-		return operatorJoystick.getRawAxis(3);
+	public static boolean getOperatorRightTrigger(){
+		return operatorJoystick.getRawAxis(3) == 1.0;
 	}
 	
 	public static boolean getDPADUp(){
@@ -155,14 +154,16 @@ public class OI {
 		return gearCloseButton.get();
 	}
 	
-	public static boolean getClimb(){
+	public static boolean getClimbButton(){
 		return climbButton.get();
 	}
 	
-	public static boolean getAccelerate(){
+	public static boolean getClimbFastButton(){
 		return climbFasterButton.get();
 	}
 	
-
+	public static boolean getCameraTrackButton(){
+		return cameraTrackButton.get();
+	}
 }
 

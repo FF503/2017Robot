@@ -1,6 +1,6 @@
 package org.usfirst.frc.team503.auton;
 
-import org.usfirst.frc.team503.robot.subsystems.DrivetrainSubsystem;
+import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

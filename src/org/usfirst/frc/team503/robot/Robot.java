@@ -1,15 +1,16 @@
 
 package org.usfirst.frc.team503.robot;
 
-import org.usfirst.frc.team503.robot.commands.ArcadeDriveCommand;
-import org.usfirst.frc.team503.robot.commands.TeleopDeflectorCommand;
-import org.usfirst.frc.team503.robot.commands.TeleopTurretCommand;
-import org.usfirst.frc.team503.robot.commands.TurnTurretCommand;
-import org.usfirst.frc.team503.robot.subsystems.DeflectorSubsystem;
-import org.usfirst.frc.team503.robot.subsystems.DrivetrainSubsystem;
-import org.usfirst.frc.team503.robot.subsystems.ShooterSubsystem;
-import org.usfirst.frc.team503.robot.subsystems.TurretSubsystem;
-import org.usfirst.frc.team503.robot.utils.Logger;
+import org.usfirst.frc.team503.commands.ArcadeDriveCommand;
+import org.usfirst.frc.team503.commands.TeleopDeflectorCommand;
+import org.usfirst.frc.team503.commands.TeleopTurretCommand;
+import org.usfirst.frc.team503.commands.TurnTurretCommand;
+import org.usfirst.frc.team503.subsystems.DeflectorSubsystem;
+import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
+import org.usfirst.frc.team503.subsystems.IndexerSubsystem;
+import org.usfirst.frc.team503.subsystems.ShooterSubsystem;
+import org.usfirst.frc.team503.subsystems.TurretSubsystem;
+import org.usfirst.frc.team503.utils.Logger;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -53,6 +54,9 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 		DrivetrainSubsystem.getInstance().stopTrapezoidControl();    	
 		DrivetrainSubsystem.getInstance().percentVoltageMode();
+		ShooterSubsystem.getInstance().setMotorPower(0);
+		IndexerSubsystem.getInstance().setMotorPower(0);
+		DeflectorSubsystem.getInstance().setMotorPower(0);
 		TurretSubsystem.getInstance().getThread().stopTurret();
 		RobotState.getInstance().setState(RobotState.State.DISABLED);
 	}
@@ -104,15 +108,12 @@ public class Robot extends IterativeRobot {
 		OI.initialize();
 		RobotState.getInstance().setState(RobotState.State.TELEOP);
 	    startTime = Timer.getFPGATimestamp();
-	    
-	    TurretSubsystem.getInstance().getThread().startTurret();
 	    //start commands that use joysticks and dpads manually from Robot.java
     	(new ArcadeDriveCommand()).start();
-    	
     	if (!Robot.bot.getName().equals("ProgrammingBot")){
+    	    TurretSubsystem.getInstance().getThread().startTurret();
     		//(new TeleopTurretCommand()).start();
-        	(new TeleopDeflectorCommand()).start();
-        	//(new CameraTurnCommand()).start();
+        	//(new TeleopDeflectorCommand()).start();
     	}
 	}
 
@@ -121,13 +122,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-	//	DrivetrainSubsystem.getInstance().populateLog(startTime);		
 		Scheduler.getInstance().run();
-		DrivetrainSubsystem.getInstance().populateLog(startTime);
-		DrivetrainSubsystem.getInstance().printEncCounts();
+		//DrivetrainSubsystem.getInstance().populateLog(startTime);
 		if (!Robot.bot.getName().equals("ProgrammingBot")){
 			SmartDashboard.putNumber("Shooter Motor Speed", ShooterSubsystem.getInstance().getSpeed());
-			SmartDashboard.putNumber("left operator trigger", OI.getOperatorLeftTrigger());
 			DeflectorSubsystem.getInstance().sendDashboardData();
 			TurretSubsystem.getInstance().sendDashboardData();
 		}

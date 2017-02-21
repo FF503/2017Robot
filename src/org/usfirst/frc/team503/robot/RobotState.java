@@ -45,7 +45,7 @@ public class RobotState extends Subsystem {
 	}
 	
 	public enum TurretState{
-		DISABLED, RUNNING_PID, TARGET_FOUND, ON_TARGET, SEEKING_TARGET;
+		DISABLED, ROBOT_MOVING, SEEKING_TARGET, TARGET_FOUND, RUNNING_PID, ON_TARGET;
 	}
 	
 	public TurretState getTurretState(){

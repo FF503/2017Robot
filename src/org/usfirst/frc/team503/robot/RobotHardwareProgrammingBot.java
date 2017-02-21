@@ -1,6 +1,14 @@
 package org.usfirst.frc.team503.robot;
 
 public class RobotHardwareProgrammingBot extends RobotHardware {	
+	public static final double SHOOT_TOLERANCE = 0;
+	public static final double DEFLECTOR_P = 0;
+	public static final double DEFLECTOR_I = 0;
+	public static final double DEFLECTOR_D = 0;
+	public static final boolean DEFLECTOR_REVERSE_SENSOR = false;
+	public static final double DEFLECTOR_TOLERANCE = 0;
+	public static final double DEFLECTOR_MAX = 0;
+	public static final double TURRET_CYCLE_TIME = 0;
 	public final int leftMasterID = 2;  //front left
 	public final int leftSlaveID = 1;	//back left
 	public final int rightMasterID = 4;	//front right
@@ -39,7 +47,7 @@ public class RobotHardwareProgrammingBot extends RobotHardware {
 	public int indexerID;
 	public int upperIntakeID;
 	public int lowerIntakeID;
-	public int turretID;
+	public int turretID = 6;
 	
 	@Override
 	public void initialize(){
