@@ -42,7 +42,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  	
  	public synchronized void startTurret(){
  		RobotState.getInstance().setTurretStatus(true);
- 		RobotState.getInstance().setTurretState(RobotState.TurretState.ROBOT_MOVING);
+ 		RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
  		startTurret = true;
  	}
  	
@@ -52,87 +52,53 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  		startTurret = false;
  	}
  	
+ 	//Automatic tracking with discarding images
 	private synchronized void turretControl(){
 		table.putBoolean("Discard", discardImage);
-		if(!discardImage){
-			cameraOffset = getCameraAngle();
-		}
+		cameraOffset = getCameraAngle();
 		SmartDashboard.putNumber("get camera angle", getCameraAngle());
 		SmartDashboard.putNumber("camera offset", cameraOffset);
+		SmartDashboard.putBoolean("discard image", discardImage);
 		SmartDashboard.putString("Turret state", RobotState.getInstance().getTurretState().toString());
 		System.out.println("Time: " + Timer.getFPGATimestamp() + " Angle: " + cameraOffset + " " + isRobotMoving());
-		turretSpeed = TurretSubsystem.getInstance().getMotor().getSpeed();
 		switch(RobotState.getInstance().getTurretState()){
 			case DISABLED:
 				TurretSubsystem.getInstance().setMotorPower(0);
 				break;
-			case ROBOT_MOVING:
-				cameraOffset = 0.0;
-				if(discardImage == false){
-					System.out.println("discard image was false setting to to true");
-					discardImage = true;
-				}
-				if(RobotState.getInstance().getState() == RobotState.State.TELEOP){
-					TurretSubsystem.getInstance().setMotorPower(OI.getOperatorRightXValue());
-					TurretSubsystem.getInstance().resetEncoder();
-				}
-				if(!isRobotMoving() &&  turretSpeed == 0){
-					System.out.println("robot not moving setting discard image to false. going to seeking target");
-					discardImage = false;
-					RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
-				}
-				break;
 			case SEEKING_TARGET:
-				if(isRobotMoving()){
-					System.out.println("Robot was moving while seeking target going back to robot moving state");
-					RobotState.getInstance().setTurretState(RobotState.TurretState.ROBOT_MOVING);
+				if(discardImage){
+					discardImage = false;
 				}
-				else{
-					Timer.delay(2);
-					cameraOffset = getCameraAngle();
-					if(cameraOffset == 503){
-						System.out.println("found 503 in table turning discard image off");
-						cameraOffset = 0.0;
-						discardImage = false;
-					}
-					else if(cameraOffset != 0.0){
-						System.out.println("found a camera target setting state to target found and discard image to true");
-						RobotState.getInstance().setTurretState(RobotState.TurretState.TARGET_FOUND);
-						discardImage = true;
-					}
-					else {
-						System.out.println("lost target going back to robot moving state");
-						RobotState.getInstance().setTurretState(RobotState.TurretState.ROBOT_MOVING);
-					}
+				if(cameraOffset == 503){
+					cameraOffset = 0.0;
+				}
+				else if(cameraOffset != 0.0){
+					RobotState.getInstance().setTurretState(RobotState.TurretState.TARGET_FOUND);
+				}
+				else {
+					TurretSubsystem.getInstance().setMotorPower(OI.getOperatorRightXValue());
 				}
 				break;
 			case TARGET_FOUND:
-				if(isRobotMoving()) {
-					System.out.println("robot moving after we found target");
-					RobotState.getInstance().setTurretState(RobotState.TurretState.ROBOT_MOVING);
-				}
-				else if(cameraOffset != 0.0){
-					System.out.println("target aquired starting PID");
+				Timer.delay(.3);
+				cameraOffset = getCameraAngle();
+				if(cameraOffset != 0.0){
+					discardImage = true;
 					double angle = TurretSubsystem.getInstance().getAngle();
 					TurretSubsystem.getInstance().setSetpoint(angle + cameraOffset);
 					RobotState.getInstance().setTurretState(RobotState.TurretState.RUNNING_PID);
 					PIDStartTime = Timer.getFPGATimestamp();
 				}
 				else {
-					System.out.println("somehow lost target after we found it, going back to robot moving");
-					RobotState.getInstance().setTurretState(RobotState.TurretState.ROBOT_MOVING);
+					RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
 				}
 				break;
 			case RUNNING_PID:
 		 		TurretSubsystem.getInstance().resetEncoder();
 		 		PIDCurrTime = Timer.getFPGATimestamp();
-		 		if(isRobotMoving()){
-		 			System.out.println("robot moving while running PID go back to robot moving state");
-					RobotState.getInstance().setTurretState(RobotState.TurretState.ROBOT_MOVING);
-				}
-		 		else if ((PIDCurrTime - PIDStartTime) > 0.5){
+		 		if ((PIDCurrTime - PIDStartTime) > 0.5){
 		 			System.out.println("PID Timed out. going back to seeking target setting discard image to false");
-		 			RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
+		 			RobotState.getInstance().setTurretState(RobotState.TurretState.ON_TARGET);
 		 			cameraOffset = 503;
 		 			discardImage = false;
 		 		}
@@ -140,37 +106,27 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 		 				System.out.println("PID is on target setting discard image to false");
 						cameraOffset = 503;
 						RobotState.getInstance().setTurretState(RobotState.TurretState.ON_TARGET);
-						discardImage = true;
+						discardImage = false;
 				}
 				else if(cameraOffset == 0.0){
 					System.out.println("lost target while running PID going back to robot moving");
-					RobotState.getInstance().setTurretState(RobotState.TurretState.ROBOT_MOVING);
-				}
-				else{
-					System.out.println("running PID normally");
+					RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
 				}
 				break;
 			case ON_TARGET:
-				if(isRobotMoving()){
-					System.out.println("robot moved after getting on target going to robot moving");
-					RobotState.getInstance().setTurretState(RobotState.TurretState.ROBOT_MOVING);
-				}
-				else if (cameraOffset == 0.0) {
+				if (cameraOffset == 0.0) {
 					System.out.println("lost target after getting on target going to robot moving");
-					RobotState.getInstance().setTurretState(RobotState.TurretState.ROBOT_MOVING);
+					RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
 				}
-				else if(cameraOffset != 503){
-					System.out.println("camera offset is updated");
-					if (Math.abs(cameraOffset) >= TurretSubsystem.kTurretOnTargetTolerance){
-						RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
+				else{
+					if((cameraOffset != 503) && (Math.abs(cameraOffset) >= TurretSubsystem.kTurretOnTargetTolerance)){
+						RobotState.getInstance().setTurretState(RobotState.TurretState.TARGET_FOUND);
 						System.out.println("camera offset was valid going to target found state");
-					}
-					else{
-						System.out.println("camera offset was less than tolerance");
 					}
 				}
 				break;
-				
+			default:
+				break;
 		}
 	}
 	
@@ -197,4 +153,5 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 		}
 		return 0.0;
 	}
- } 
+}
+ 

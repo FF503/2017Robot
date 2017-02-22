@@ -43,10 +43,10 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final boolean REVERSE_LEFT_OUTPUT = false;
 	public final boolean REVERSE_RIGHT_OUTPUT = true;
 	
-	public final double SHOOT_P = 0;
+	public final double SHOOT_P = 0.0;
 	public final double SHOOT_I = 0;
 	public final double SHOOT_D = 0;
-	public final double SHOOT_F = 0;
+	public final double SHOOT_F = 0.1092;
 	public final double SHOOT_TOLERANCE = 50;
 	
 	public final double TURRET_CYCLE_TIME = .005; //seconds

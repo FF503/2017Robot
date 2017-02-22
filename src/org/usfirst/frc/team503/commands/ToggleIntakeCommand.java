@@ -26,10 +26,8 @@ public class ToggleIntakeCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//if intake toggle is requested 
     	if (OI.getIntake()) {
 			if (RobotState.getInstance().getIntakeStatus()){
-				//intake is running - turn it off 
 				IntakeSubsystem.getInstance().setMotorPower(0.0);
 				RobotState.getInstance().setIntakeStatus(false);
 			} else {
@@ -52,7 +50,7 @@ public class ToggleIntakeCommand extends Command {
      
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    		return true;
+    	return true;
     }
 
     // Called once after isFinished returns true

@@ -126,6 +126,7 @@ public class Robot extends IterativeRobot {
 		//DrivetrainSubsystem.getInstance().populateLog(startTime);
 		if (!Robot.bot.getName().equals("ProgrammingBot")){
 			SmartDashboard.putNumber("Shooter Motor Speed", ShooterSubsystem.getInstance().getSpeed());
+			SmartDashboard.putNumber("Shooter position", ShooterSubsystem.getInstance().getPosition());
 			DeflectorSubsystem.getInstance().sendDashboardData();
 			TurretSubsystem.getInstance().sendDashboardData();
 		}

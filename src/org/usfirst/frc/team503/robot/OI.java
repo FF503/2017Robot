@@ -3,14 +3,12 @@ package org.usfirst.frc.team503.robot;
 import org.usfirst.frc.team503.commands.ClimbCommand;
 import org.usfirst.frc.team503.commands.ClimbFasterCommand;
 import org.usfirst.frc.team503.commands.GearPlacerCommand;
-import org.usfirst.frc.team503.commands.GoToDeflectorCommand;
 import org.usfirst.frc.team503.commands.ShiftToHighGear;
 import org.usfirst.frc.team503.commands.ShiftToLowGear;
+import org.usfirst.frc.team503.commands.ToggleShootRPMCommand;
 import org.usfirst.frc.team503.commands.ToggleIndexerCommand;
 import org.usfirst.frc.team503.commands.ToggleIntakeCommand;
 import org.usfirst.frc.team503.commands.ToggleShooterCommand;
-import org.usfirst.frc.team503.commands.TurnTurretCommand;
-import org.usfirst.frc.team503.subsystems.DeflectorSubsystem;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -64,7 +62,7 @@ public class OI {
 	private static JoystickButton climbFasterButton = new JoystickButton(operatorJoystick, 4);
 	private static JoystickButton cameraTrackButton = new JoystickButton(operatorJoystick, 5);
 	private static JoystickButton shootRPMButton = new JoystickButton(operatorJoystick, 6);
-	private static JoystickButton goToTurretPosition = new JoystickButton(operatorJoystick, 6);
+	//private static JoystickButton goToTurretPosition = new JoystickButton(operatorJoystick, 6);
 	
 	public static void initialize(){
 		shooterButton.whenPressed(new ToggleShooterCommand());
@@ -77,7 +75,7 @@ public class OI {
 		gearOpenButton.whenPressed(new GearPlacerCommand());
 		climbButton.whenPressed(new ClimbCommand());
 		climbFasterButton.whenPressed(new ClimbFasterCommand());
-		//shootRPMButton.whenPressed(new ShootRPMCommand());
+		shootRPMButton.whenPressed(new ToggleShootRPMCommand());
 		//goToTurretPosition.whenPressed(new TurnTurretCommand(15, false));
 		
 	}
@@ -164,6 +162,10 @@ public class OI {
 	
 	public static boolean getCameraTrackButton(){
 		return cameraTrackButton.get();
+	}
+	
+	public static boolean getShootRPMButton(){
+		return shootRPMButton.get();
 	}
 }
 

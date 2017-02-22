@@ -44,6 +44,10 @@ public class ShooterSubsystem extends Subsystem {
 		shooterMotor.changeControlMode(TalonControlMode.Speed);
 		shooterMotor.set(rpm);
 	}
+
+	public double getPosition(){
+		return shooterMotor.getPosition();
+	}
 	
 	public double getSpeed() {
 		return shooterMotor.getSpeed();
