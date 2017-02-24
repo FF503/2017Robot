@@ -55,18 +55,26 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  	
  	//Automatic tracking with discarding images
 	private synchronized void turretControl(){
+		//checks to see if rasberry pi is still alive by checking heart beat
 		piIsAlive = isPiAlive();
+		//Tells pi if it wants angle values or not
 		table.putBoolean("Discard", discardImage);
-		cameraOffset = getCameraAngle(); 
+		//gets camera angle from pi
+		cameraOffset = getCameraAngle();
+		//populate smart dashboard with some useful data
 		SmartDashboard.putNumber("get camera angle", getCameraAngle());
 		SmartDashboard.putNumber("camera offset", cameraOffset);
 		SmartDashboard.putBoolean("discard image", discardImage);
 		SmartDashboard.putString("Turret state", RobotState.getInstance().getTurretState().toString());
 		System.out.println("Time: " + Timer.getFPGATimestamp() + " Angle: " + cameraOffset + " " + isRobotMoving());
+		
+		//state machine
 		switch(RobotState.getInstance().getTurretState()){
+			//disabled state
 			case DISABLED:
 				TurretSubsystem.getInstance().setMotorPower(0);
 				break;
+			//Turret is in teleop control and is looking to find a target
 			case SEEKING_TARGET:
 				if(discardImage){
 					discardImage = false;
@@ -81,7 +89,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 					TurretSubsystem.getInstance().setMotorPower(OI.getOperatorRightXValue());
 				}
 				break;
+			//Turret finds target and finds a new more accurate angle
 			case TARGET_FOUND:
+				//delay to account for pi lag
 				Timer.delay(.3);
 				cameraOffset = getCameraAngle();
 				if(cameraOffset != 0.0){
