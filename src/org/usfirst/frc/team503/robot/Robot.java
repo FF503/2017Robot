@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team503.robot;
 
+import org.usfirst.frc.team503.auton.CenterPegCenterStart;
 import org.usfirst.frc.team503.commands.ArcadeDriveCommand;
 import org.usfirst.frc.team503.commands.TeleopDeflectorCommand;
 import org.usfirst.frc.team503.commands.TeleopTurretCommand;
@@ -77,7 +78,7 @@ public class Robot extends IterativeRobot {
 		//SteamworksChooser.getInstance().executeAuton();
 		startTime = Timer.getFPGATimestamp();
 		RobotState.getInstance().setState(RobotState.State.AUTON);
-		//(new CenterPegCenterStart()).start();
+		(new CenterPegCenterStart()).start();
 	}
 
 	/**
@@ -123,7 +124,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		//DrivetrainSubsystem.getInstance().populateLog(startTime);
+		DrivetrainSubsystem.getInstance().populateLog(startTime);
 		if (!Robot.bot.getName().equals("ProgrammingBot")){
 			SmartDashboard.putNumber("Shooter Motor Speed", ShooterSubsystem.getInstance().getSpeed());
 			SmartDashboard.putNumber("Shooter position", ShooterSubsystem.getInstance().getPosition());

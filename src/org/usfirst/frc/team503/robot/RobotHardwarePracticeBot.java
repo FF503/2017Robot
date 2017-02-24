@@ -32,18 +32,18 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final double CYCLE_TIME = 0.05;	
 	public final int DRIVE_COUNTS_PER_REV = 512;
 	
-	public final double DRIVE_P = 0;
+	public final double DRIVE_P = 0.00012;
 	public final double DRIVE_I = 0;
 	public final double DRIVE_D = 0;
-	public final double LEFT_DRIVE_F  = 0.1040480065 * 2;
-	public final double RIGHT_DRIVE_F = 0.101528384 * 2;
+	public final double LEFT_DRIVE_F  = 0.2221;
+	public final double RIGHT_DRIVE_F = 0.2222;
 	
 	public final boolean REVERSE_LEFT_SENSOR = true;
 	public final boolean REVERSE_RIGHT_SENSOR = false;
 	public final boolean REVERSE_LEFT_OUTPUT = false;
 	public final boolean REVERSE_RIGHT_OUTPUT = true;
 	
-	public final double SHOOT_P = 0.0;
+	public final double SHOOT_P = 0;
 	public final double SHOOT_I = 0;
 	public final double SHOOT_D = 0;
 	public final double SHOOT_F = 0.1092;

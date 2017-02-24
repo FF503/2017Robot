@@ -1,10 +1,6 @@
 package org.usfirst.frc.team503.turret;
  
- import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import org.usfirst.frc.team503.robot.OI;
+ import org.usfirst.frc.team503.robot.OI;
 import org.usfirst.frc.team503.robot.Robot;
 import org.usfirst.frc.team503.robot.RobotState;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
@@ -17,6 +13,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  
   public class TurretThread implements Runnable{
 	private NetworkTable table;
+	private double lastHeartBeat;
+	private double curHeartBeat;
+	private double heartBeatUpdateStartTime;
+	private double heartBeatUpdateCurTime;
 	private double cameraOffset;
  	private double PIDStartTime, PIDCurrTime;
  	private double leftSpeed, rightSpeed, turretSpeed;
@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 	private double startTime;
  	private Notifier handler;
  	private boolean startTurret;
+ 	private boolean piIsAlive;
  	
  	public TurretThread (){
  		handler = new Notifier(this);
@@ -54,8 +55,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  	
  	//Automatic tracking with discarding images
 	private synchronized void turretControl(){
+		piIsAlive = isPiAlive();
+		if ((!piIsAlive)&&(RobotState.getInstance().getTurretState()!=RobotState.TurretState.SEEKING_TARGET)){
+			RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
+		}
 		table.putBoolean("Discard", discardImage);
-		cameraOffset = getCameraAngle();
+		cameraOffset = getCameraAngle(); 
 		SmartDashboard.putNumber("get camera angle", getCameraAngle());
 		SmartDashboard.putNumber("camera offset", cameraOffset);
 		SmartDashboard.putBoolean("discard image", discardImage);
@@ -72,7 +77,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 				if(cameraOffset == 503){
 					cameraOffset = 0.0;
 				}
-				else if(cameraOffset != 0.0){
+				else if((cameraOffset != 0.0)&&piIsAlive){
 					RobotState.getInstance().setTurretState(RobotState.TurretState.TARGET_FOUND);
 				}
 				else {
@@ -152,6 +157,25 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 			return offset;
 		}
 		return 0.0;
+	}
+	private synchronized boolean isPiAlive(){
+		lastHeartBeat = curHeartBeat;
+		curHeartBeat = table.getNumber("Heartbeat", 0.0);
+		
+		if (curHeartBeat != lastHeartBeat){
+			heartBeatUpdateStartTime = Timer.getFPGATimestamp();
+		}
+		else{
+			heartBeatUpdateCurTime = Timer.getFPGATimestamp() - heartBeatUpdateStartTime;
+		}
+		
+		if (heartBeatUpdateCurTime >= 2.0){
+			return false;
+		}
+		else{
+			table.putNumber("Degrees", 503);
+			return true;
+		}
 	}
 }
  

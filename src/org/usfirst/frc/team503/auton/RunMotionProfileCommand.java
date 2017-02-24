@@ -5,6 +5,7 @@ import org.usfirst.frc.team503.robot.Robot;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RunMotionProfileCommand extends Command {
 	private PathPlanner planner;
@@ -16,6 +17,7 @@ public class RunMotionProfileCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	SmartDashboard.putNumber("left target", planner.getLeftProfile()[planner.getLeftProfile().length-1][0]);
     	DrivetrainSubsystem.getInstance().runProfileLeftRight(planner.getLeftProfile(), planner.getRightProfile());
     }
 
