@@ -13,10 +13,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  
   public class TurretThread implements Runnable{
 	private NetworkTable table;
-	private double lastHeartBeat;
-	private double curHeartBeat;
-	private double heartBeatUpdateStartTime;
-	private double heartBeatUpdateCurTime;
+	private double lastHeartbeat, curHeartbeat;
+	private double heartbeatUpdateStartTime, heartbeatUpdateTime;
 	private double cameraOffset;
  	private double PIDStartTime, PIDCurrTime;
  	private double leftSpeed, rightSpeed, turretSpeed;
@@ -33,6 +31,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 		startTime = Timer.getFPGATimestamp();
 		startTurret = false;
 		discardImage = false;
+		lastHeartbeat = 0;
+		curHeartbeat = 0;
  	}
  	
  	public void run(){
@@ -56,9 +56,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  	//Automatic tracking with discarding images
 	private synchronized void turretControl(){
 		piIsAlive = isPiAlive();
-		if ((!piIsAlive)&&(RobotState.getInstance().getTurretState()!=RobotState.TurretState.SEEKING_TARGET)){
-			RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
-		}
 		table.putBoolean("Discard", discardImage);
 		cameraOffset = getCameraAngle(); 
 		SmartDashboard.putNumber("get camera angle", getCameraAngle());
@@ -77,7 +74,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 				if(cameraOffset == 503){
 					cameraOffset = 0.0;
 				}
-				else if((cameraOffset != 0.0)&&piIsAlive){
+				else if((cameraOffset != 0.0) && piIsAlive){
 					RobotState.getInstance().setTurretState(RobotState.TurretState.TARGET_FOUND);
 				}
 				else {
@@ -102,35 +99,31 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 		 		TurretSubsystem.getInstance().resetEncoder();
 		 		PIDCurrTime = Timer.getFPGATimestamp();
 		 		if ((PIDCurrTime - PIDStartTime) > 0.5){
-		 			System.out.println("PID Timed out. going back to seeking target setting discard image to false");
 		 			RobotState.getInstance().setTurretState(RobotState.TurretState.ON_TARGET);
 		 			cameraOffset = 503;
 		 			discardImage = false;
 		 		}
 		 		else if(TurretSubsystem.getInstance().isOnTarget()){
-		 				System.out.println("PID is on target setting discard image to false");
-						cameraOffset = 503;
-						RobotState.getInstance().setTurretState(RobotState.TurretState.ON_TARGET);
-						discardImage = false;
+					cameraOffset = 503;
+					RobotState.getInstance().setTurretState(RobotState.TurretState.ON_TARGET);
+					discardImage = false;
 				}
 				else if(cameraOffset == 0.0){
-					System.out.println("lost target while running PID going back to robot moving");
 					RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
 				}
 				break;
 			case ON_TARGET:
 				if (cameraOffset == 0.0) {
-					System.out.println("lost target after getting on target going to robot moving");
 					RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
 				}
 				else{
 					if((cameraOffset != 503) && (Math.abs(cameraOffset) >= TurretSubsystem.kTurretOnTargetTolerance)){
 						RobotState.getInstance().setTurretState(RobotState.TurretState.TARGET_FOUND);
-						System.out.println("camera offset was valid going to target found state");
 					}
 				}
 				break;
 			default:
+				RobotState.getInstance.setTurretState(RobotState.TurretState.SEEKING_TARGET);
 				break;
 		}
 	}
@@ -158,22 +151,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 		}
 		return 0.0;
 	}
+	  
 	private synchronized boolean isPiAlive(){
-		lastHeartBeat = curHeartBeat;
-		curHeartBeat = table.getNumber("Heartbeat", 0.0);
+		lastHeartbeat = curHeartbeat;
+		curHeartbeat = table.getNumber("Heartbeat", 0.0);
 		
-		if (curHeartBeat != lastHeartBeat){
-			heartBeatUpdateStartTime = Timer.getFPGATimestamp();
+		if (curHeartbeat != lastHeartbeat){
+			heartbeatUpdateStartTime = Timer.getFPGATimestamp();
 		}
-		else{
-			heartBeatUpdateCurTime = Timer.getFPGATimestamp() - heartBeatUpdateStartTime;
-		}
+		heartbeatUpdateTime = Timer.getFPGATimestamp() - heartbeatUpdateStartTime;
 		
-		if (heartBeatUpdateCurTime >= 2.0){
+		if (heartbeatUpdateTime >= 2.0){
+			table.putNumber("Degrees", 503);
+			RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
 			return false;
 		}
 		else{
-			table.putNumber("Degrees", 503);
 			return true;
 		}
 	}
