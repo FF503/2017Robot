@@ -96,6 +96,7 @@ public class OI {
 		return driverJoystick.getRawAxis(4);
 	}
 	
+	
 	public static double getOperatorRightYValue(){
 		return operatorJoystick.getRawAxis(5);
 	}
@@ -128,6 +129,14 @@ public class OI {
 		return operatorJoystick.getPOV() == 180;
 	}
 	
+	public static boolean getDriverLeftTrigger(){
+		return driverJoystick.getRawAxis(2) == 1.0;
+	}
+	
+	public static boolean getDriverRightTrigger(){
+		return driverJoystick.getRawAxis(3) == 1.0;
+	}
+	
 	public static boolean getIntake(){
 		return intakeButton.get();
 	}
@@ -155,6 +164,8 @@ public class OI {
 	public static boolean getClimbButton(){
 		return climbButton.get();
 	}
+	
+	
 	
 	public static boolean getClimbFastButton(){
 		return climbFasterButton.get();

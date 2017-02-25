@@ -32,12 +32,7 @@ public class GyroTurnCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(GyroSubsystem.getInstance().getTurnToAngleRate() > 0){
-    		DrivetrainSubsystem.getInstance().tankDrive(-GyroSubsystem.getInstance().getTurnToAngleRate() , GyroSubsystem.getInstance().getTurnToAngleRate() , false);
-    	}
-    	else if(GyroSubsystem.getInstance().getTurnToAngleRate()  < 0){
-    		DrivetrainSubsystem.getInstance().tankDrive(GyroSubsystem.getInstance().getTurnToAngleRate()  , -GyroSubsystem.getInstance().getTurnToAngleRate() , false);
-    	}
+    	DrivetrainSubsystem.getInstance().tankDrive(-GyroSubsystem.getInstance().getTurnToAngleRate() , GyroSubsystem.getInstance().getTurnToAngleRate() , false);
     	SmartDashboard.putNumber("Gyro PID RotatetoAngle=", GyroSubsystem.getInstance().getTurnToAngleRate());
     }
 

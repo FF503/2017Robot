@@ -2,7 +2,9 @@
 package org.usfirst.frc.team503.robot;
 
 import org.usfirst.frc.team503.auton.CenterPegCenterStart;
+import org.usfirst.frc.team503.auton.LeftPegLeftStartAuton;
 import org.usfirst.frc.team503.commands.ArcadeDriveCommand;
+import org.usfirst.frc.team503.commands.GyroTurnCommand;
 import org.usfirst.frc.team503.commands.TeleopDeflectorCommand;
 import org.usfirst.frc.team503.commands.TeleopTurretCommand;
 import org.usfirst.frc.team503.commands.TurnTurretCommand;
@@ -78,7 +80,8 @@ public class Robot extends IterativeRobot {
 		//SteamworksChooser.getInstance().executeAuton();
 		startTime = Timer.getFPGATimestamp();
 		RobotState.getInstance().setState(RobotState.State.AUTON);
-		(new CenterPegCenterStart()).start();
+		//(new LeftPegLeftStartAuton()).start();
+		(new GyroTurnCommand(30)).start();
 	}
 
 	/**
@@ -126,8 +129,9 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		DrivetrainSubsystem.getInstance().populateLog(startTime);
 		if (!Robot.bot.getName().equals("ProgrammingBot")){
-			SmartDashboard.putNumber("Shooter Motor Speed", ShooterSubsystem.getInstance().getSpeed());
+			SmartDashboard.putNumber("Shooter Motor Speed", ShooterSubsystem.getInstance().getSpeed()/4);
 			SmartDashboard.putNumber("Shooter position", ShooterSubsystem.getInstance().getPosition());
+			SmartDashboard.putNumber("Shooter Enc Speed", ShooterSubsystem.getInstance().getEncSpeed());
 			DeflectorSubsystem.getInstance().sendDashboardData();
 			TurretSubsystem.getInstance().sendDashboardData();
 		}

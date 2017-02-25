@@ -8,13 +8,17 @@ import edu.wpi.first.wpilibj.Solenoid;
 
 
 public class RobotHardwarePracticeBot extends RobotHardware {	
+	
+	/***
+	 * NEVER CHANGE PORT NUMBERS UNLESS YOU ARE ABSOLUTLY SURE 
+	 */
 	public final int leftMasterID = 3; //front left
 	public final int leftSlaveID = 1;	//back left
 	public final int rightMasterID = 4;	//front right
 	public final int rightSlaveID  = 2; //back right
-	public final int shooterID = 7;
+	public final int shooterID = 5;
 	public final int turretID = 6;
-	public final int deflectorID = 5;
+	public final int deflectorID = 7; 
 	public final int lowerIntakeID = 4;
 	public final int upperIntakeID = 0;
 	public final int indexerID = 3;
@@ -32,11 +36,11 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final double CYCLE_TIME = 0.05;	
 	public final int DRIVE_COUNTS_PER_REV = 512;
 	
-	public final double DRIVE_P = 0.00012;
+	public final double DRIVE_P = 0.000068; // low gear: 0.00014
 	public final double DRIVE_I = 0;
 	public final double DRIVE_D = 0;
-	public final double LEFT_DRIVE_F  = 0.2221;
-	public final double RIGHT_DRIVE_F = 0.2222;
+	public final double LEFT_DRIVE_F  = 0.2157;
+	public final double RIGHT_DRIVE_F = 0.2154;
 	
 	public final boolean REVERSE_LEFT_SENSOR = true;
 	public final boolean REVERSE_RIGHT_SENSOR = false;
@@ -58,10 +62,10 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final double DEFLECTOR_TOLERANCE = 6.6;
 	public final boolean DEFLECTOR_REVERSE_SENSOR = true;
 
-	public final double GYRO_P = 0;
-	public final double GYRO_I = 0;
-	public final double GYRO_D = 0;
-	public final double GYRO_TOLERANCE = 0;
+	public final double GYRO_P = 0.0125;
+	public final double GYRO_I = 0.0;
+	public final double GYRO_D = 0.0;
+	public final double GYRO_TOLERANCE = 1;
 	
 	public final double REVERSE_INDEXER = -1;
 	

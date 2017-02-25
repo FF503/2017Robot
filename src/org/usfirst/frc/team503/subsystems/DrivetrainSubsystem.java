@@ -57,7 +57,7 @@ public class DrivetrainSubsystem extends Subsystem {
 	   rightMaster.reverseSensor(Robot.bot.REVERSE_RIGHT_SENSOR);
 	   leftMaster.reverseOutput(Robot.bot.REVERSE_LEFT_OUTPUT);
 	   rightMaster.reverseOutput(Robot.bot.REVERSE_RIGHT_OUTPUT);
-	   setBrakeMode(true);
+	   setBrakeMode(false);
 	   	
 	   	    	
 	   	trapThread = new TrapezoidThread(leftMaster, rightMaster);	
@@ -96,7 +96,6 @@ public class DrivetrainSubsystem extends Subsystem {
    public void runProfileLeftRight(double[][] leftPoints, double[][] rightPoints){
 	   leftMaster.enableBrakeMode(true);
 	   rightMaster.enableBrakeMode(true);
-   		System.out.println("runProfileLeftRight");
    		profileHasFinished = false;
 		currentProfileID++;
 		startTrapezoidControl(leftPoints, rightPoints, currentProfileID);
@@ -104,12 +103,11 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
    
 	private void startTrapezoidControl(double[][] leftPoints, double[][] rightPoints,int trapID) {	
-		System.out.println("startTrapezoidControl");
 		trapThread.activateTrap(leftPoints, rightPoints, trapID);
 	}
 	
 	public void stopTrapezoidControl() {
-		System.out.println("stopTrapezoidControl");
+		
 		trapThread.resetTrapezoid();
 	}
 	
@@ -124,8 +122,8 @@ public class DrivetrainSubsystem extends Subsystem {
    public void percentVoltageMode(){
 	   leftMaster.changeControlMode(TalonControlMode.PercentVbus);
 	   rightMaster.changeControlMode(TalonControlMode.PercentVbus);
-	   leftMaster.setVoltageRampRate(0);
-	   rightMaster.setVoltageRampRate(0);
+	   leftMaster.setVoltageRampRate(9);   
+	   rightMaster.setVoltageRampRate(9);  
    }
    
    public void initDefaultCommand() {
@@ -225,7 +223,13 @@ public class DrivetrainSubsystem extends Subsystem {
                rightMotorSpeed = -Math.max(-moveValue, -rotateValue);
            }
        }
-       setMotorOutputs(leftMotorSpeed, rightMotorSpeed,sensitivity);
+       if (RobotState.getInstance().getDriveTrainReversed()){
+    	   setMotorOutputs(-leftMotorSpeed, -rightMotorSpeed,sensitivity);
+       }
+       else{
+    	   setMotorOutputs(leftMotorSpeed, rightMotorSpeed,sensitivity);
+       }
+       
    }
 	
    public void tankDrive(double leftValue, double rightValue, boolean sensitivity) {

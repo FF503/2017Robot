@@ -85,6 +85,8 @@ public class TrapezoidThread implements Runnable{
 		System.out.println("initialize talons");
 	 	leftTalon.changeControlMode(TalonControlMode.MotionProfile);
 	 	rightTalon.changeControlMode(TalonControlMode.MotionProfile);
+	 	leftTalon.setVoltageRampRate(0);
+	 	rightTalon.setVoltageRampRate(0);
 	}
 	
 	public void resetTrapezoid() {

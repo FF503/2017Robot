@@ -1,6 +1,7 @@
 package org.usfirst.frc.team503.commands;
 
 import org.usfirst.frc.team503.robot.OI;
+import org.usfirst.frc.team503.robot.RobotState;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 import org.usfirst.frc.team503.utils.Constants;
 
@@ -25,12 +26,10 @@ public class ArcadeDriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Math.abs(OI.getDriverLeftXValue())>Constants.JOYSTICK_TOLERANCE && Math.abs(OI.getDriverLeftYValue())>Constants.JOYSTICK_TOLERANCE){
-        	DrivetrainSubsystem.getInstance().arcadeDrive(OI.getDriverLeftYValue(), OI.getDriverLeftXValue(),false);
+    	if (OI.getDriverLeftTrigger()){
+    		RobotState.getInstance().setDriveTrainReversed(!RobotState.getInstance().getDriveTrainReversed());
     	}
-    	else{
-    		DrivetrainSubsystem.getInstance().tankDrive(0, 0, false);
-    	}
+      	DrivetrainSubsystem.getInstance().arcadeDrive(OI.getDriverLeftYValue(), OI.getDriverLeftXValue(),false);
     }
 
     // Make this return true when this Command no longer needs to run execute()

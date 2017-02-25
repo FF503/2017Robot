@@ -19,6 +19,7 @@ public class RobotState extends Subsystem {
 	private boolean climberIsRunning;
 	private boolean climberIsAccelerated;
 	private boolean turretIsRunning;
+	private boolean driveTrainIsReversed;
 	private State robotState;
 	private TurretState turretState;
     	
@@ -68,6 +69,10 @@ public class RobotState extends Subsystem {
 		turretIsRunning = status;
 	}
 	
+	public void setDriveTrainReversed(boolean reverse){
+		driveTrainIsReversed = reverse;
+	}
+	
 	public boolean getTurreStatus(){
 		return turretIsRunning;
 	}
@@ -102,6 +107,10 @@ public class RobotState extends Subsystem {
 	
 	public boolean getCurrentGear() {
 		return currentGear; 
+	}
+	
+	public boolean getDriveTrainReversed(){
+		return driveTrainIsReversed;
 	}
 	
 	public void setIntakeStatus(boolean status) {
