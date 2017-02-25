@@ -30,29 +30,24 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final int innerGearSolenoidID2 = 5;
 	public final int climberSpark1Port = 1;
 	public final int climberSpark2Port = 2;
-	
 	public final double WHEEL_DIAMETER = 4.0;
 	public final double WHEEL_BASE = 32.5;
 	public final double CYCLE_TIME = 0.05;	
 	public final int DRIVE_COUNTS_PER_REV = 512;
-	
 	public final double DRIVE_P = 0.000068; // low gear: 0.00014
 	public final double DRIVE_I = 0;
 	public final double DRIVE_D = 0;
 	public final double LEFT_DRIVE_F  = 0.2157;
 	public final double RIGHT_DRIVE_F = 0.2154;
-	
 	public final boolean REVERSE_LEFT_SENSOR = true;
 	public final boolean REVERSE_RIGHT_SENSOR = false;
 	public final boolean REVERSE_LEFT_OUTPUT = false;
 	public final boolean REVERSE_RIGHT_OUTPUT = true;
-	
 	public final double SHOOT_P = 0;
 	public final double SHOOT_I = 0;
 	public final double SHOOT_D = 0;
 	public final double SHOOT_F = 0.1092;
 	public final double SHOOT_TOLERANCE = 50;
-	
 	public final double TURRET_CYCLE_TIME = .005; //seconds
 	
 	public final double DEFLECTOR_P = .5;
