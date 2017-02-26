@@ -425,7 +425,7 @@ public class PathPlanner {
 			double pointsTotal = 0;
 
 
-			for (int i=4; i<=6; i++)
+			for (int i=4; i<=6; i++){
 				for (int j=1; j<=8; j++)
 				{
 					pointsFirst = i *(numNodeOnlyPoints-1) + numNodeOnlyPoints;
@@ -439,6 +439,7 @@ public class PathPlanner {
 						oldPointsTotal=pointsTotal;
 					}
 				}
+			}
 
 			ret = new int[] {first, second, third};
 		}
@@ -655,13 +656,13 @@ public class PathPlanner {
 		smoothLeftVelocity = velocityFix(smoothLeftVelocity, origLeftVelocity, /*0.000000000000001 */0.00000000002);
 		smoothRightVelocity = velocityFix(smoothRightVelocity, origRightVelocity, /* 0.000000000000001*/ 0.00000000002);
 		
-		smoothCenterVelocity = feetPerSecondToRPM(smoothCenterVelocity);
-		smoothLeftVelocity = feetPerSecondToRPM(smoothLeftVelocity);
-		smoothRightVelocity = feetPerSecondToRPM(smoothRightVelocity);
+		//smoothCenterVelocity = feetPerSecondToRPM(smoothCenterVelocity);
+		//smoothLeftVelocity = feetPerSecondToRPM(smoothLeftVelocity);
+		//smoothRightVelocity = feetPerSecondToRPM(smoothRightVelocity);
 		
-		smoothCenterPosition = RPMtoEncoderPosition(smoothCenterVelocity);
-		smoothRightPosition = RPMtoEncoderPosition(smoothRightVelocity);
-		smoothLeftPosition = RPMtoEncoderPosition(smoothLeftVelocity);
+		smoothCenterPosition = RPMtoEncoderPosition(feetPerSecondToRPM(smoothCenterVelocity));
+		smoothRightPosition = RPMtoEncoderPosition(feetPerSecondToRPM(smoothRightVelocity));
+		smoothLeftPosition = RPMtoEncoderPosition(feetPerSecondToRPM(smoothLeftVelocity));
 		
 		rightProfile = mergeToProfile(smoothRightVelocity, smoothRightPosition, runReverse);
 		leftProfile = mergeToProfile(smoothLeftVelocity, smoothLeftPosition, runReverse); 
