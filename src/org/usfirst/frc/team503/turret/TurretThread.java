@@ -132,9 +132,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 					}
 				}
 				break;
-			default:
-				RobotState.getInstance.setTurretState(RobotState.TurretState.SEEKING_TARGET);
-				break;
 		}
 	}
 	

@@ -28,7 +28,7 @@ public class ToggleShooterCommand extends Command {
 				RobotState.getInstance().setShooterStatus(false);
 			}
 			else{
-				ShooterSubsystem.getInstance().setMotorPower(1.0);
+				ShooterSubsystem.getInstance().setMotorPower(1); //.75
 				RobotState.getInstance().setShooterStatus(true);
 			}
     	}

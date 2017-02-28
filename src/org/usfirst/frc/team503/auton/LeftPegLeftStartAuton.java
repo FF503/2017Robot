@@ -1,5 +1,6 @@
 package org.usfirst.frc.team503.auton;
 
+import org.usfirst.frc.team503.motionProfile.RunMotionProfileCommand;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;

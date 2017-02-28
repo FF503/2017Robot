@@ -57,7 +57,7 @@ public class DrivetrainSubsystem extends Subsystem {
 	   rightMaster.reverseSensor(Robot.bot.REVERSE_RIGHT_SENSOR);
 	   leftMaster.reverseOutput(Robot.bot.REVERSE_LEFT_OUTPUT);
 	   rightMaster.reverseOutput(Robot.bot.REVERSE_RIGHT_OUTPUT);
-	   setBrakeMode(false);
+	   setBrakeMode(true);
 	   	
 	   	    	
 	   	trapThread = new TrapezoidThread(leftMaster, rightMaster);	
@@ -143,25 +143,16 @@ public class DrivetrainSubsystem extends Subsystem {
 		return instance;
 	}
 	
-	private void setMotorOutputs(double leftSpeed, double rightSpeed, boolean sensitivity){
-		if(sensitivity){
-			//leftSpeed = setDriveSensitivity(leftSpeed);
-			//rightSpeed = setDriveSensitivity(rightSpeed);
-		}		
-		leftMaster.set(-leftSpeed); 
-		rightMaster.set(rightSpeed); 
-	}
-	
-	/*private static double setDriveSensitivity(double input){
-		if (!Robot.bot.getName().equals("ProgrammingBot")){
-			input = RobotMap.DRIVE_SENSITIVITY*Math.pow(input, 3) + (1-RobotMap.DRIVE_SENSITIVITY)*input;
-			return input;
+	private void setMotorOutputs(double leftSpeed, double rightSpeed, boolean reverse){		
+		if(reverse){
+			leftMaster.set(leftSpeed);
+			rightMaster.set(-rightSpeed);
 		}
 		else{
-			return (Double) null;
+			leftMaster.set(-leftSpeed); 
+			rightMaster.set(rightSpeed); 
 		}
-		
-	}*/
+	}
 	
 	public void shiftGears(boolean high){
 		//true is high, false is low  
@@ -240,6 +231,7 @@ public class DrivetrainSubsystem extends Subsystem {
 
        setMotorOutputs(leftValue, rightValue, sensitivity);
    }    
+   
    public TrapezoidThread getTrapThread() {
 		return trapThread;
 	}

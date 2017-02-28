@@ -1,31 +1,24 @@
 package org.usfirst.frc.team503.robot;
 
-import com.ctre.CANTalon;
-
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.Solenoid;
-
-
-
 public class RobotHardwareCompBot extends RobotHardware {	
 	public final int leftMasterID = 3; //front left
 	public final int leftSlaveID = 1;	//back left
 	public final int rightMasterID = 4;	//front right
 	public final int rightSlaveID  = 2; //back right
-	public final int shooterID = 7;
+	public final int shooterID = 5;
 	public final int turretID = 6;
-	public final int deflectorID = 5;
-	public final int lowerIntakeID = 4;
+	public final int deflectorID = 7;
+	public final int lowerIntakeID = 1;   //was 4 
 	public final int upperIntakeID = 0;
-	public final int indexerID = 3;
+	public final int indexerID = 4; //was 3 
 	public final int driveSolenoidID1 = 0;
 	public final int driveSolenoidID2 = 1;
 	public final int outerGearSolenoidID1 = 2;
 	public final int outerGearSolenoidID2 = 3;
 	public final int innerGearSolenoidID1 = 4;
 	public final int innerGearSolenoidID2 = 5;
-	public final int climberSpark1Port = 1;
-	public final int climberSpark2Port = 2;
+	public final int climberSpark1Port = 2;     // was 1 
+	public final int climberSpark2Port = 3;     // was 2 
 	
 	public final double WHEEL_DIAMETER = 4.0;
 	public final double WHEEL_BASE = 32.5;
@@ -35,8 +28,8 @@ public class RobotHardwareCompBot extends RobotHardware {
 	public final double DRIVE_P = 0;
 	public final double DRIVE_I = 0;
 	public final double DRIVE_D = 0;
-	public final double LEFT_DRIVE_F  = 0.1040480065 * 2;
-	public final double RIGHT_DRIVE_F = 0.101528384 * 2;
+	public final double LEFT_DRIVE_F  = 0.2291;
+	public final double RIGHT_DRIVE_F = 0.2205;
 	
 	public final boolean REVERSE_LEFT_SENSOR = true;
 	public final boolean REVERSE_RIGHT_SENSOR = false;
@@ -49,7 +42,7 @@ public class RobotHardwareCompBot extends RobotHardware {
 	public final double SHOOT_F = 0;
 	public final double SHOOT_TOLERANCE = 50;
 	
-	public final double TURRET_CYCLE_TIME = .005; //seconds
+	public final double TURRET_CYCLE_TIME = .01; //seconds
 	
 	public final double DEFLECTOR_P = .5;
 	public final double DEFLECTOR_I = 0;
@@ -57,13 +50,8 @@ public class RobotHardwareCompBot extends RobotHardware {
 	public final double DEFLECTOR_MAX = 12.0;
 	public final double DEFLECTOR_TOLERANCE = 6.6;
 	public final boolean DEFLECTOR_REVERSE_SENSOR = true;
-	
-	public final double GYRO_P = 0;
-	public final double GYRO_I = 0;
-	public final double GYRO_D = 0;
-	public final double GYRO_TOLERANCE = 0;
 
-	public final double REVERSE_INDEXER = 1;
+	
 	@Override
 	public void initialize(){
 	}
@@ -92,6 +80,6 @@ public class RobotHardwareCompBot extends RobotHardware {
 	
 	@Override
 	public String getName(){
-		return "CompBot";
+		return "Competition Bot";
 	}
 }

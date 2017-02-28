@@ -712,7 +712,7 @@ public class PathPlanner {
 	
 	//Position, Velocity(RPM), Time(ms)
 	public double[][] mergeToProfile(double[][] velocity, double[][] position, boolean runReverse){
-		double[][] profile = new double[velocity.length][3];
+		double[][] profile = new double[velocity.length][3]; 
 		for (int i = 0; i < profile.length; i ++){
 			if (runReverse){
 				profile[i][0] = -position[i][1];

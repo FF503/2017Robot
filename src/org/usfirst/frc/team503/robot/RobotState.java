@@ -14,23 +14,26 @@ public class RobotState extends Subsystem {
     // Put methods for controlling this subsystem
 	private boolean shooterIsRunning;
 	private boolean intakeIsRunning;
-	private boolean currentGear;
+	private boolean currentDriveGear;
 	private boolean indexerIsRunning;
 	private boolean climberIsRunning;
 	private boolean climberIsAccelerated;
 	private boolean turretIsRunning;
 	private boolean driveTrainIsReversed;
+	private boolean gearPlacer;
 	private State robotState;
 	private TurretState turretState;
     	
 	public RobotState() {
 		shooterIsRunning = false; 
 		intakeIsRunning = false;
-		currentGear = false;    //low gear
+		currentDriveGear = false;    //low gear
 		indexerIsRunning = false;
 		climberIsRunning = false;
 		climberIsAccelerated = false;
 		turretIsRunning = false;
+		driveTrainIsReversed = false;
+		gearPlacer = false; //closed
 		robotState = State.DISABLED;
 		turretState = TurretState.DISABLED;
 	}
@@ -46,7 +49,15 @@ public class RobotState extends Subsystem {
 	}
 	
 	public enum TurretState{
-		DISABLED, ROBOT_MOVING, SEEKING_TARGET, TARGET_FOUND, RUNNING_PID, ON_TARGET;
+		DISABLED, SEEKING_TARGET, TARGET_FOUND, RUNNING_PID, ON_TARGET;
+	}
+	
+	public boolean getGearPlacer(){
+		return gearPlacer;
+	}
+	
+	public void setGearPlacer(boolean gearPlacer){
+		this.gearPlacer = gearPlacer;
 	}
 	
 	public TurretState getTurretState(){
@@ -69,12 +80,16 @@ public class RobotState extends Subsystem {
 		turretIsRunning = status;
 	}
 	
+	public boolean getTurreStatus(){
+		return turretIsRunning;
+	}
+	
 	public void setDriveTrainReversed(boolean reverse){
 		driveTrainIsReversed = reverse;
 	}
 	
-	public boolean getTurreStatus(){
-		return turretIsRunning;
+	public boolean getDriveTrainReversed(){
+		return driveTrainIsReversed;
 	}
 	
 	public void setShooterStatus(boolean status) {
@@ -102,15 +117,11 @@ public class RobotState extends Subsystem {
 	}
 	
 	public void setcurrentGear(boolean status) {
-		currentGear = status; 
+		currentDriveGear = status; 
 	}
 	
 	public boolean getCurrentGear() {
-		return currentGear; 
-	}
-	
-	public boolean getDriveTrainReversed(){
-		return driveTrainIsReversed;
+		return currentDriveGear; 
 	}
 	
 	public void setIntakeStatus(boolean status) {

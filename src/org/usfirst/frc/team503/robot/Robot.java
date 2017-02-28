@@ -2,12 +2,8 @@
 package org.usfirst.frc.team503.robot;
 
 import org.usfirst.frc.team503.auton.CenterPegCenterStart;
-import org.usfirst.frc.team503.auton.LeftPegLeftStartAuton;
 import org.usfirst.frc.team503.commands.ArcadeDriveCommand;
-import org.usfirst.frc.team503.commands.GyroTurnCommand;
-import org.usfirst.frc.team503.commands.TeleopDeflectorCommand;
 import org.usfirst.frc.team503.commands.TeleopTurretCommand;
-import org.usfirst.frc.team503.commands.TurnTurretCommand;
 import org.usfirst.frc.team503.subsystems.DeflectorSubsystem;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 import org.usfirst.frc.team503.subsystems.IndexerSubsystem;
@@ -17,6 +13,7 @@ import org.usfirst.frc.team503.utils.Logger;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -31,6 +28,7 @@ public class Robot extends IterativeRobot {
 
 	public static RobotHardwarePracticeBot bot = null;
 	private static double startTime;
+	private Command autonCommand = null;
 
 
 	
@@ -55,6 +53,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
+		if (autonCommand != null){
+			autonCommand.cancel();
+		}
 		DrivetrainSubsystem.getInstance().stopTrapezoidControl();    	
 		DrivetrainSubsystem.getInstance().percentVoltageMode();
 		ShooterSubsystem.getInstance().setMotorPower(0);
@@ -80,8 +81,9 @@ public class Robot extends IterativeRobot {
 		//SteamworksChooser.getInstance().executeAuton();
 		startTime = Timer.getFPGATimestamp();
 		RobotState.getInstance().setState(RobotState.State.AUTON);
-		//(new LeftPegLeftStartAuton()).start();
-		(new GyroTurnCommand(30)).start();
+		autonCommand = new CenterPegCenterStart();
+		autonCommand.start();
+		//(new GyroTurnCommand(30)).start();
 	}
 
 	/**
@@ -115,8 +117,8 @@ public class Robot extends IterativeRobot {
 	    //start commands that use joysticks and dpads manually from Robot.java
     	(new ArcadeDriveCommand()).start();
     	if (!Robot.bot.getName().equals("ProgrammingBot")){
-    	    TurretSubsystem.getInstance().getThread().startTurret();
-    		//(new TeleopTurretCommand()).start();
+    	    //TurretSubsystem.getInstance().getThread().startTurret();
+    		(new TeleopTurretCommand()).start();
         	//(new TeleopDeflectorCommand()).start();
     	}
 	}

@@ -1,6 +1,5 @@
-package org.usfirst.frc.team503.auton;
+package org.usfirst.frc.team503.motionProfile;
 
-import org.usfirst.frc.team503.motionProfile.PathPlanner;
 import org.usfirst.frc.team503.robot.Robot;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 
@@ -17,6 +16,7 @@ public class RunMotionProfileCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     	SmartDashboard.putNumber("left target", planner.getLeftProfile()[planner.getLeftProfile().length-1][0]);
     	DrivetrainSubsystem.getInstance().runProfileLeftRight(planner.getLeftProfile(), planner.getRightProfile());
     }
