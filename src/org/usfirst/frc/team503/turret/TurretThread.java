@@ -5,6 +5,7 @@ import org.usfirst.frc.team503.robot.Robot;
 import org.usfirst.frc.team503.robot.RobotState;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 import org.usfirst.frc.team503.subsystems.TurretSubsystem;
+import org.usfirst.frc.team503.utils.Constants;
 
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.Timer;
@@ -31,8 +32,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 		startTime = Timer.getFPGATimestamp();
 		startTurret = false;
 		discardImage = false;
-		lastHeartbeat = 0;
-		curHeartbeat = 0;
+		lastHeartbeat = 0.0;
+		curHeartbeat = 0.0;
  	}
  	
  	public void run(){
@@ -82,7 +83,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 				if(cameraOffset == 503){
 					cameraOffset = 0.0;
 				}
-				else if((cameraOffset != 0.0) && piIsAlive){
+				if((cameraOffset != 0.0) && piIsAlive){
 					RobotState.getInstance().setTurretState(RobotState.TurretState.TARGET_FOUND);
 				}
 				else {
@@ -127,7 +128,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 					RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
 				}
 				else{
-					if((cameraOffset != 503) && (Math.abs(cameraOffset) >= TurretSubsystem.kTurretOnTargetTolerance)){
+					if((cameraOffset != 503) && (Math.abs(cameraOffset) >= Constants.JOYSTICK_TOLERANCE)){
 						RobotState.getInstance().setTurretState(RobotState.TurretState.TARGET_FOUND);
 					}
 				}

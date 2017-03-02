@@ -15,6 +15,12 @@ public class RobotHardwareProgrammingBot extends RobotHardware {
 	public final int rightSlaveID  = 3; //back right
 	public final int shooterID = 5;
 	public final int intakeID = 0;
+	public final int leftUltrasonicPort = 0;
+	public final int rightUltrasonicPort = 1;
+	
+	public final double DISTANCE_BETWEEN_ULTRASONICS = 13.7;
+	public final double LEFT_ULTRASONIC_VOLTS_PER_INCH = 0.00966389875;
+	public final double RIGHT_ULTRASONIC_VOLTS_PER_INCH = 0.0095621735;
 	
 	public final double WHEEL_DIAMETER = 8.0;
 	public final double WHEEL_BASE = 27;

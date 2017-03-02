@@ -26,8 +26,10 @@ public class ToggleShootRPMCommand extends Command {
     		if(RobotState.getInstance().getShooterStatus()){
     			ShooterSubsystem.getInstance().setSetpoint(0);
         		RobotState.getInstance().setShooterStatus(false);
+        		System.out.println("shooter status not right");
         	}
         	else{
+        		System.out.println("setting output");
         		ShooterSubsystem.getInstance().setSetpoint(Constants.SHOOTER_SPEED);
             	RobotState.getInstance().setShooterStatus(true);
         	}

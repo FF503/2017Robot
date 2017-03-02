@@ -2,13 +2,12 @@ package org.usfirst.frc.team503.robot;
 
 import org.usfirst.frc.team503.commands.ClimbCommand;
 import org.usfirst.frc.team503.commands.ClimbFasterCommand;
-import org.usfirst.frc.team503.commands.ToggleGearPlacerCommand;
 import org.usfirst.frc.team503.commands.ShiftToHighGear;
 import org.usfirst.frc.team503.commands.ShiftToLowGear;
+import org.usfirst.frc.team503.commands.ToggleGearPlacerCommand;
 import org.usfirst.frc.team503.commands.ToggleIndexerCommand;
 import org.usfirst.frc.team503.commands.ToggleIntakeCommand;
 import org.usfirst.frc.team503.commands.ToggleShootRPMCommand;
-import org.usfirst.frc.team503.commands.ToggleShooterCommand;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -57,15 +56,14 @@ public class OI {
 
 	private static JoystickButton climbButton = new JoystickButton(operatorJoystick, 1);
 	private static JoystickButton climbFasterButton = new JoystickButton(operatorJoystick, 2);
-	private static JoystickButton shooterButton = new JoystickButton(operatorJoystick, 3);
+	private static JoystickButton shootRPMButton = new JoystickButton(operatorJoystick, 3);
 	private static JoystickButton indexerButton = new JoystickButton(operatorJoystick, 4);
 	
 	//private static JoystickButton goToDeflectorButton = new JoystickButton(operatorJoystick, 2);
-	private static JoystickButton shootRPMButton = new JoystickButton(operatorJoystick, 6);
 	//private static JoystickButton goToTurretPosition = new JoystickButton(operatorJoystick, 7);
 	
 	public static void initialize(){
-		shooterButton.whenPressed(new ToggleShooterCommand());
+		shootRPMButton.whenPressed(new ToggleShootRPMCommand());
 		intakeButton.whenPressed(new ToggleIntakeCommand());
 		intakeReverse.whenPressed(new ToggleIntakeCommand());
 		shiftToLowGearButton.whenPressed(new ShiftToLowGear());
@@ -75,7 +73,6 @@ public class OI {
 		climbButton.whenPressed(new ClimbCommand());
 		climbFasterButton.whenPressed(new ClimbFasterCommand());
 		//goToDeflectorButton.whenPressed(new GoToDeflectorCommand(DeflectorSubsystem.DeflectorHeight.HIGH.height));
-		shootRPMButton.whenPressed(new ToggleShootRPMCommand());
 		//goToTurretPosition.whenPressed(new TurnTurretCommand(10, false));
 		
 	}
@@ -138,10 +135,6 @@ public class OI {
 	
 	public static boolean getIntake(){
 		return intakeButton.get();
-	}
-
-	public static boolean getShooter(){
-		return shooterButton.get();
 	}
 
 	public static boolean getIndexer(){

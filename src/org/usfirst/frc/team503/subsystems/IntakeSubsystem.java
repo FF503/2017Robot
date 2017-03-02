@@ -19,16 +19,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class IntakeSubsystem extends Subsystem {
 	
 	private Spark upperIntakeMotor;
-	private Talon lowerIntakeMotorPractice;
-	private Spark lowerIntakeMotorComp;
+	private Spark lowerIntakeMotor;
 	
 	public IntakeSubsystem(){
 		upperIntakeMotor = new Spark(Robot.bot.upperIntakeID);
-		if(Robot.bot.getName().equals("PracticeBot")){
-			lowerIntakeMotorPractice = new Talon(Robot.bot.lowerIntakeID);
-		}
-		else if(Robot.bot.getName().equals("CompBot")){
-			lowerIntakeMotorComp = new Spark(Robot.bot.lowerIntakeID);
+		if(!Robot.bot.getName().equals("ProgrammingBot")){
+			lowerIntakeMotor = new Spark(Robot.bot.lowerIntakeID);
 		}
 	}
 	
@@ -39,13 +35,9 @@ public class IntakeSubsystem extends Subsystem {
 	}
 	
 	public void setMotorPower(double x){
-		upperIntakeMotor.set(-x);
-		
-		if(Robot.bot.getName().equals("PracticeBot")) {
-			lowerIntakeMotorPractice.set(x);
-		}
-		else if(Robot.bot.getName().equals("CompBot")){
-			lowerIntakeMotorComp.set(x);
+		upperIntakeMotor.set(x);
+		if(!Robot.bot.getName().equals("ProgrammingBot")){
+			lowerIntakeMotor.set(x);
 		}
 	}
 
