@@ -8,17 +8,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RunMotionProfileCommand extends Command {
 	private PathPlanner planner;
-	public RunMotionProfileCommand(double[][] waypoints, double maxTime, double curveExageration, boolean runReverse) {
-    	planner = new PathPlanner(waypoints);
-    	planner.calculate(maxTime, Robot.bot.CYCLE_TIME, Robot.bot.WHEEL_BASE/12.0, curveExageration, runReverse);
+	private ProfileGenerator pathPuller;
+	public RunMotionProfileCommand(String fileName) {
+    	pathPuller = new ProfileGenerator(fileName);
+    	
         requires(DrivetrainSubsystem.getInstance());
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
     	SmartDashboard.putNumber("left target", planner.getLeftProfile()[planner.getLeftProfile().length-1][0]);
-    	DrivetrainSubsystem.getInstance().runProfileLeftRight(planner.getLeftProfile(), planner.getRightProfile());
+    	DrivetrainSubsystem.getInstance().runProfileLeftRight(pathPuller.getLeftProfile(), pathPuller.getRightProfile());
     }
 
     // Called repeatedly when this Command is scheduled to run
