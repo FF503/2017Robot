@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class ProfileGenerator {
 	
-	private static String FILE_PATH = "/Users/ankith/";
+	private static String FILE_PATH = "/home/lvuser/motionProfiles";
 	private static String FILE_NAME = "";
 	private String[] splitProfiles;
 	private double[][] leftProfile;
