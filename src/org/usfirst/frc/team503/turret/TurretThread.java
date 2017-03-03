@@ -163,7 +163,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 	private synchronized boolean isPiAlive(){
 		lastHeartbeat = curHeartbeat;
 		curHeartbeat = table.getNumber("Heartbeat", 0.0);
-		
+		SmartDashboard.putNumber("High goal Pi heartbeat", curHeartbeat);
 		if (curHeartbeat != lastHeartbeat){
 			heartbeatUpdateStartTime = Timer.getFPGATimestamp();
 		}

@@ -3,7 +3,7 @@ import org.usfirst.frc.team503.robot.Robot;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 
-public class LVMaxSonarEZ4 {
+public class UltrasonicSensor {
 	
 	private static enum Sensor {
 		LEFT, RIGHT;
@@ -12,7 +12,7 @@ public class LVMaxSonarEZ4 {
 	private static double VOLTS_PER_INCH;
 	private AnalogInput analogSensor;
 	
-	public LVMaxSonarEZ4(int port){
+	public UltrasonicSensor(int port){
 		analogSensor = new AnalogInput(port);
 		
 		if(port == Robot.bot.leftUltrasonicPort) {

@@ -1,50 +1,57 @@
 package org.usfirst.frc.team503.subsystems;
 
 import org.usfirst.frc.team503.robot.Robot;
-import org.usfirst.frc.team503.utils.LVMaxSonarEZ4;
+import org.usfirst.frc.team503.utils.UltrasonicSensor;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
 public class UltrasonicSubsystem extends Subsystem {
-	private static LVMaxSonarEZ4 leftUltrasonic;
-	private static LVMaxSonarEZ4 rightUltrasonic;
+	private static UltrasonicSensor leftUltrasonic;
+	private static UltrasonicSensor rightUltrasonic;
 	
 //	public final double diff = leftUltrasonic.getDistance() - rightUltrasonic.getDistance();
 
 	public UltrasonicSubsystem(){
-			leftUltrasonic = new LVMaxSonarEZ4(Robot.bot.leftUltrasonicPort);
-			rightUltrasonic = new LVMaxSonarEZ4(Robot.bot.rightUltrasonicPort);
+			leftUltrasonic = new UltrasonicSensor(Robot.bot.leftUltrasonicPort);
+			rightUltrasonic = new UltrasonicSensor(Robot.bot.rightUltrasonicPort);
 	}
-	 private static UltrasonicSubsystem instance = new UltrasonicSubsystem();                                        
-	    
-		public static UltrasonicSubsystem getInstance(){                                          
-			return instance;
-		}
-		public double getLeftUltrasonicDistance(){
+	private static UltrasonicSubsystem instance = new UltrasonicSubsystem();                                        
+    
+	public static UltrasonicSubsystem getInstance(){                                          
+		return instance;
+	}
+	public double getLeftUltrasonicDistance(){
+		return leftUltrasonic.getDistance();
+	}
+	public double getLeftUltrasonicVoltage(){
+		return leftUltrasonic.getVoltage();
+	}
+	public double getRightUltrasonicVoltage(){
+		return rightUltrasonic.getVoltage();
+	}
+	public double getRightUltrasonicDistance(){
+		return rightUltrasonic.getDistance();
+	}
+	
+	public double PreferWhichUltrasonic(){
+		if(leftUltrasonic.getDistance() > rightUltrasonic.getDistance()){
 			return leftUltrasonic.getDistance();
-		}
-		public double getLeftUltrasonicVoltage(){
-			return leftUltrasonic.getVoltage();
-		}
-		public double getRightUltrasonicVoltage(){
-			return rightUltrasonic.getVoltage();
-		}
-		public double getRightUltrasonicDistance(){
+		}else{
 			return rightUltrasonic.getDistance();
 		}
+	}
 		
+	public void sendDashboardData(){
+		SmartDashboard.putNumber("Left ultrasonic distance", getLeftUltrasonicDistance());
+		SmartDashboard.putNumber("Right ultrasonic distance", getRightUltrasonicDistance());
+		SmartDashboard.putNumber("Left ultrasonic voltage", getLeftUltrasonicVoltage());
+		SmartDashboard.putNumber("Right ultrasonic voltage", getRightUltrasonicVoltage());		
+	}
 		
-		public double PreferWhichUltrasonic(){
-			if(leftUltrasonic.getDistance() > rightUltrasonic.getDistance()){
-				return leftUltrasonic.getDistance();
-			}else{
-				return rightUltrasonic.getDistance();
-			}
-			
-		}
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 

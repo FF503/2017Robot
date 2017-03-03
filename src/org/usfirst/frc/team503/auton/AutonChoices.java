@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.tables.ITable;
 /**
  * Name:		 AutonChoices 
  * Purpose:		 This class contains all of the possible choices that an Auton period can consist of.
- * @author:		 Rodrigo Cardenas
+ * Author:		 Rodrigo Cardenas
  * Date:		 February 2017 
  * Comments:
  */
@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.tables.ITable;
 public class AutonChoices{
 	
 	public enum Alliances implements Sendable {
-		RED, BLUE;
+		RED, BLUE,;
 
 		@Override
 		public void initTable(ITable subtable) { }
@@ -24,8 +24,8 @@ public class AutonChoices{
 		public String getSmartDashboardType() { return null; }
 	}
 	
-	public enum GearPosition implements Sendable{
-		LEFT, CENTER, RIGHT;
+	public enum GearPosition implements Sendable {
+		LEFT, CENTER, RIGHT, DO_NOTHING;
 
 		@Override
 		public void initTable(ITable subtable) { }
@@ -35,7 +35,7 @@ public class AutonChoices{
 		public String getSmartDashboardType() { return null; }
 	}
 	
-	public enum DumpBin implements Sendable{
+	public enum DumpBin implements Sendable {
 		DUMP, DONT_DUMP;
 
 		@Override
@@ -58,12 +58,26 @@ public class AutonChoices{
 	}
 	
 	public enum BinPosition implements Sendable {
-		CLOSE_LEFT_BIN, CLOSE_RIGHT_BIN, FAR_LEFT_BIN, FAR_RIGHT_BIN;
+		CLOSE_LEFT_BIN, CLOSE_RIGHT_BIN, FAR_LEFT_BIN, FAR_RIGHT_BIN, NONE;
 
 		@Override
 		public void initTable(ITable subtable) { }
 		@Override
 		public ITable getTable() { return null; }
+		@Override
+		public String getSmartDashboardType() { return null; }
+		
+	}
+	
+	public enum DoNothing implements Sendable {
+		DO_SOMETHING, DO_NOTHING;
+
+		@Override
+		public void initTable(ITable subtable) { }
+
+		@Override
+		public ITable getTable() { return null; }
+
 		@Override
 		public String getSmartDashboardType() { return null; }
 		

@@ -2,13 +2,18 @@
 package org.usfirst.frc.team503.robot;
 
 import org.usfirst.frc.team503.auton.AutonDriveCommand;
+import org.usfirst.frc.team503.auton.CenterPegCenterStart;
 import org.usfirst.frc.team503.commands.ArcadeDriveCommand;
+import org.usfirst.frc.team503.commands.CenterPegAuton;
+import org.usfirst.frc.team503.commands.GyroCommand;
+import org.usfirst.frc.team503.commands.GyroTurnCommand;
 import org.usfirst.frc.team503.subsystems.DeflectorSubsystem;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 import org.usfirst.frc.team503.subsystems.GyroSubsystem;
 import org.usfirst.frc.team503.subsystems.IndexerSubsystem;
 import org.usfirst.frc.team503.subsystems.ShooterSubsystem;
 import org.usfirst.frc.team503.subsystems.TurretSubsystem;
+import org.usfirst.frc.team503.subsystems.UltrasonicSubsystem;
 import org.usfirst.frc.team503.utils.Logger;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -28,9 +33,7 @@ public class Robot extends IterativeRobot {
 
 	public static RobotHardwarePracticeBot bot = null;
 	private static double startTime;
-	private Command autonCommand = null;
-
-
+	private Command autonCommand = null; 
 	
 	/**
 	 * RobotInit - Fires when robot is powered-up 
@@ -43,7 +46,8 @@ public class Robot extends IterativeRobot {
         bot = new RobotHardwarePracticeBot();
 		bot.initialize();
 		bot.logSmartDashboard();         /*put name of selected bot on smartdashboard */
-		
+		OI.initialize();
+				
 		//SteamworksChooser.getInstance().autonInitChooser();
 		RobotState.getInstance().setState(RobotState.State.DISABLED);
 	}
@@ -83,7 +87,10 @@ public class Robot extends IterativeRobot {
 		//SteamworksChooser.getInstance().executeAuton();
 		startTime = Timer.getFPGATimestamp();
 		RobotState.getInstance().setState(RobotState.State.AUTON);
-		autonCommand = new AutonDriveCommand();
+		//autonCommand = new CenterPegCenterStart();
+//		autonCommand = new CenterPegAuton();
+//	    autonCommand = new AutonDriveCommand();
+	    autonCommand = new GyroCommand(90);
 		autonCommand.start();
 	}
 
@@ -97,6 +104,7 @@ public class Robot extends IterativeRobot {
 		if (!Robot.bot.getName().equals("ProgrammingBot")){
 			SmartDashboard.putNumber("Shooter Motor Speed", ShooterSubsystem.getInstance().getSpeed());
 			GyroSubsystem.getInstance().sendDashboardData();
+			UltrasonicSubsystem.getInstance().sendDashboardData();
 			DeflectorSubsystem.getInstance().sendDashboardData();
 			TurretSubsystem.getInstance().sendDashboardData();
 		}
@@ -113,7 +121,7 @@ public class Robot extends IterativeRobot {
 		DrivetrainSubsystem.getInstance().stopTrapezoidControl();    	
 		DrivetrainSubsystem.getInstance().percentVoltageMode();
     	DrivetrainSubsystem.getInstance().resetEncoders();
-		OI.initialize();
+
 		RobotState.getInstance().setState(RobotState.State.TELEOP);
 	    startTime = Timer.getFPGATimestamp();
 	    //start commands that use joysticks and dpads manually from Robot.java
@@ -138,6 +146,7 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putNumber("Shooter Enc Speed", ShooterSubsystem.getInstance().getEncSpeed());
 			DeflectorSubsystem.getInstance().sendDashboardData();
 			TurretSubsystem.getInstance().sendDashboardData();
+			UltrasonicSubsystem.getInstance().sendDashboardData();
 			GyroSubsystem.getInstance().sendDashboardData();
 		}
 	}

@@ -62,14 +62,14 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final double DEFLECTOR_TOLERANCE = 6.6;
 	public final boolean DEFLECTOR_REVERSE_SENSOR = true;
 
-	public final double GYRO_P = 0.0125;
-	public final double GYRO_I = 0.0;
-	public final double GYRO_D = 0.0;
-	public final double GYRO_TOLERANCE = 3.0;
+	public double GYRO_P = 0.0125;
+	public double GYRO_I = 0.0;
+	public double GYRO_D = 0.0;
+	public double GYRO_TOLERANCE = 1.0;
 	
 	public final double DISTANCE_BETWEEN_ULTRASONICS = 13.7;
-	public final double LEFT_ULTRASONIC_VOLTS_PER_INCH = 0.00966389875;
-	public final double RIGHT_ULTRASONIC_VOLTS_PER_INCH = 0.0095621735;
+	public final double LEFT_ULTRASONIC_VOLTS_PER_INCH = 0.01098025385074626865671641791045;//.00966389875
+	public final double RIGHT_ULTRASONIC_VOLTS_PER_INCH = 0.01020072605940594217821782178218;//.0095621735
 	
 	public final double REVERSE_INDEXER = -1;
 	

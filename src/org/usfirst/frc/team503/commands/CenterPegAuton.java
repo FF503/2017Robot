@@ -1,15 +1,22 @@
-package org.usfirst.frc.team503.auton;
+package org.usfirst.frc.team503.commands;
 
-import org.usfirst.frc.team503.motionProfile.RunMotionProfileCommand;
-import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
+import org.usfirst.frc.team503.auton.AutonDriveCommand;
+import org.usfirst.frc.team503.auton.CenterPegCenterStart;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class CenterPegCenterStart extends CommandGroup {
+/**
+ *
+ */
+public class CenterPegAuton extends CommandGroup {
 
-    public CenterPegCenterStart() {
+    public CenterPegAuton() {
         // Add Commands here:
-        // e.g. addSequential(new Command1());
+    		addSequential(new CenterPegCenterStart());
+    		//addSequential(new AutonDriveCommand());
+    	addSequential(new GyroTurnCommand(3.0));
+    	
+    	// e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
 
@@ -24,11 +31,5 @@ public class CenterPegCenterStart extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	double[][] centerPinCenterStart = {
-				{0, 13.5},
-				{-5.0, 13.5}
-		};
-  
-		addSequential(new RunMotionProfileCommand(centerPinCenterStart, 2, 1, true));		
     }
 }

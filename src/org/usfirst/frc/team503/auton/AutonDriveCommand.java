@@ -30,38 +30,31 @@ public class AutonDriveCommand extends Command {
     	
     	timer = new Timer();
     	timer.start();
+    	GyroSubsystem.getInstance().gyro.reset();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	angle = table.getNumber("Degrees", 0.0);
     	SmartDashboard.putNumber("Peg Angle", angle);
-    	GyroSubsystem.getInstance().sendDashboardData();
-    	SmartDashboard.putNumber("auton drive", angle);
-    	SmartDashboard.putNumber("gyro yaw", GyroSubsystem.gyro.getAngle()); 
-    	SmartDashboard.putNumber("Left Ultrasonic Distance", UltrasonicSubsystem.getInstance().getLeftUltrasonicDistance());
-    	if(UltrasonicSubsystem.getInstance().getLeftUltrasonicDistance() > 36.0 ){
-    		SmartDashboard.putNumber("gyro yaw", GyroSubsystem.getInstance().gyro.getYaw());
-    		DrivetrainSubsystem.getInstance().arcadeDrive(.10, angle*.045, false); //.025  .030
-    	} else {
+    	if(UltrasonicSubsystem.getInstance().getLeftUltrasonicDistance() > 12.0 ){   //was 36 
+    		DrivetrainSubsystem.getInstance().arcadeDrive(.10, angle*1.0, false);    //was angle 0.45
+    	} 
+    	else {
 			if(Math.abs(GyroSubsystem.getInstance().gyro.getYaw()) > Robot.bot.GYRO_TOLERANCE){
-				if(GyroSubsystem.getInstance().gyro.getYaw()<-3){
+				if(GyroSubsystem.getInstance().gyro.getYaw()<-Robot.bot.GYRO_TOLERANCE){
 					DrivetrainSubsystem.getInstance().arcadeDrive(0, .3, false);
 				}
-				else if(GyroSubsystem.getInstance().gyro.getYaw() > 3){
+				else if(GyroSubsystem.getInstance().gyro.getYaw() > Robot.bot.GYRO_TOLERANCE){
 					DrivetrainSubsystem.getInstance().arcadeDrive(0, -.3, false);
 				}	
 			}
-			DrivetrainSubsystem.getInstance().arcadeDrive(0, 0, false);
 		}
     }
     	
-    	//DrivetrainSubsystem.instance.arcadeDrive(-.60,angle *.037, false); //.04
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	/*SmartDashboard.putNumber("**ANGLE TO TARGET", VisionProcessor.instance.getAngle());
-    	SmartDashboard.putNumber("**Auton Distance to Target",VisionProcessor.instance.getCameraDistance());*/
     	return (UltrasonicSubsystem.getInstance().getLeftUltrasonicDistance() < 36 && Math.abs(GyroSubsystem.gyro.getYaw()) < 3);
     }	
     			
