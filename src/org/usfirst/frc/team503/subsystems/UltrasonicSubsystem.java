@@ -1,9 +1,11 @@
 package org.usfirst.frc.team503.subsystems;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.usfirst.frc.team503.robot.Robot;
 import org.usfirst.frc.team503.utils.UltrasonicSensor;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -11,14 +13,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class UltrasonicSubsystem extends Subsystem {
-	private static UltrasonicSensor leftUltrasonic;
-	private static UltrasonicSensor rightUltrasonic;
+	private UltrasonicSensor leftUltrasonic;
+	private UltrasonicSensor rightUltrasonic;
+	private double[] values;
 	
 //	public final double diff = leftUltrasonic.getDistance() - rightUltrasonic.getDistance();
 
 	public UltrasonicSubsystem(){
 			leftUltrasonic = new UltrasonicSensor(Robot.bot.leftUltrasonicPort);
 			rightUltrasonic = new UltrasonicSensor(Robot.bot.rightUltrasonicPort);
+			values = new double[8];
 	}
 	private static UltrasonicSubsystem instance = new UltrasonicSubsystem();                                        
     
@@ -37,7 +41,14 @@ public class UltrasonicSubsystem extends Subsystem {
 	public double getRightUltrasonicDistance(){
 		return rightUltrasonic.getDistance();
 	}
-	
+	public double getUltrasonicDistance(){
+		for(int i=0; i<values.length; i++){
+			values[i] = (getRightUltrasonicDistance()+getLeftUltrasonicDistance())/2.0; 
+		}
+		Arrays.sort(values);
+		System.out.println();
+		return values[values.length/2];
+	}
 	public double PreferWhichUltrasonic(){
 		if(leftUltrasonic.getDistance() > rightUltrasonic.getDistance()){
 			return leftUltrasonic.getDistance();
@@ -51,6 +62,7 @@ public class UltrasonicSubsystem extends Subsystem {
 		SmartDashboard.putNumber("Left ultrasonic voltage", getLeftUltrasonicVoltage());
 		SmartDashboard.putNumber("Right ultrasonic voltage", getRightUltrasonicVoltage());		
 		SmartDashboard.putNumber("Left ultrasonic distance", getLeftUltrasonicDistance());	
+		SmartDashboard.putNumber("Average ultrasonic distance", getUltrasonicDistance());
 	}
 		
     // Put methods for controlling this subsystem

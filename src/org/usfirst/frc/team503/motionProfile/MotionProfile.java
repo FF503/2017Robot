@@ -14,7 +14,7 @@ public class MotionProfile {
 	private double [][] profilePoints;
 
 	//state machine setup	
-        private int state = 0;
+    private int state = 0;
 	private int loopTimeout = -1;
 	private CANTalon.SetValueMotionProfile setValue = CANTalon.SetValueMotionProfile.Disable;
 	

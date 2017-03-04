@@ -69,7 +69,7 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	
 	public final double DISTANCE_BETWEEN_ULTRASONICS = 13.7;
 	public final double LEFT_ULTRASONIC_VOLTS_PER_INCH = 0.01064453016;
-	public final double RIGHT_ULTRASONIC_VOLTS_PER_INCH = 0.0080566398;
+	public final double RIGHT_ULTRASONIC_VOLTS_PER_INCH = 0.01035156144;
 	
 	public final double REVERSE_INDEXER = -1;
 	

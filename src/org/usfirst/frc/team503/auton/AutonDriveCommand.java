@@ -14,47 +14,54 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class AutonDriveCommand extends Command {
-	double angle;
+	double angle, difference;
 	NetworkTable table;
+	double count;
 	
     public AutonDriveCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(GyroSubsystem.getInstance());
+    	count = 0;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	table = NetworkTable.getTable("LG_Camera");
+    	SmartDashboard.putBoolean("Auton drive isFinished", false);
     	GyroSubsystem.getInstance().gyro.reset();
     	DrivetrainSubsystem.getInstance().percentVoltageMode();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	count++;
+		SmartDashboard.putNumber("auton drive count", count);
     	angle = -table.getNumber("Degrees", 0.0);
     	SmartDashboard.putNumber("Peg Angle", angle);
-    	if(UltrasonicSubsystem.getInstance().getRightUltrasonicDistance() > 12.0 ){   //was 36 
-    		DrivetrainSubsystem.getInstance().arcadeDrive(.10, angle*.1, false);    //was angle 0.45
+    	if(UltrasonicSubsystem.getInstance().getUltrasonicDistance() > 24.0 && angle != 0.0){   //was 36 
+    		DrivetrainSubsystem.getInstance().arcadeDrive(.20, angle*.05, false);
     	} 
+    	
     	else {
-			/*if(Math.abs(GyroSubsystem.getInstance().gyro.getYaw()) > Robot.bot.GYRO_TOLERANCE){
-				if(GyroSubsystem.getInstance().gyro.getYaw()< -Robot.bot.GYRO_TOLERANCE){
-					DrivetrainSubsystem.getInstance().arcadeDrive(0, .3, false);
-				}
-				else if(GyroSubsystem.getInstance().gyro.getYaw() > Robot.bot.GYRO_TOLERANCE){
-					DrivetrainSubsystem.getInstance().arcadeDrive(0, -.3, false);
-				}	
-			}*/
+    	//	difference = UltrasonicSubsystem.getInstance().getRightUltrasonicDistance() - UltrasonicSubsystem.getInstance().getLeftUltrasonicDistance();
+    	//	DrivetrainSubsystem.getInstance().arcadeDrive(.20, 	difference*.05, false);
+    		DrivetrainSubsystem.getInstance().arcadeDrive(.20, 	0, false);
+    		//	if(Math.abs(GyroSubsystem.getInstance().gyro.getYaw()) > Robot.bot.GYRO_TOLERANCE){
+		//		if(GyroSubsystem.getInstance().gyro.getYaw()< -Robot.bot.GYRO_TOLERANCE){
+		//			DrivetrainSubsystem.getInstance().arcadeDrive(0, .3, false);
+		//		}
+		//		else if(GyroSubsystem.getInstance().gyro.getYaw() > Robot.bot.GYRO_TOLERANCE){
+		//			DrivetrainSubsystem.getInstance().arcadeDrive(0, -.3, false);
+		//		}	
+		//	}
 		}
-    	SmartDashboard.putBoolean("Auton drive isFinished", isFinished());
-    	Timer.delay(.3);
     }
     	
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return (UltrasonicSubsystem.getInstance().getRightUltrasonicDistance() < 12 && Math.abs(GyroSubsystem.getInstance().gyro.getYaw()) < 3);
+    	SmartDashboard.putBoolean("Auton drive isFinished",(UltrasonicSubsystem.getInstance().getUltrasonicDistance() < 12));
+    	return (UltrasonicSubsystem.getInstance().getUltrasonicDistance() < 12.0);
     }	
 
     protected void end(){

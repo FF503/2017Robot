@@ -30,7 +30,7 @@ public class Robot extends IterativeRobot {
 	public static RobotHardwarePracticeBot bot = null;
 	private static double startTime;
 	private Command autonCommand = null; 
-	
+	private NetworkTable table;
 	/**
 	 * RobotInit - Fires when robot is powered-up 
 	 */
@@ -43,7 +43,7 @@ public class Robot extends IterativeRobot {
 		bot.initialize();
 		bot.logSmartDashboard();         /*put name of selected bot on smartdashboard */
 		OI.initialize();
-				
+		table = NetworkTable.getTable("LG_Camera");
 		//SteamworksChooser.getInstance().autonInitChooser();
 		RobotState.getInstance().setState(RobotState.State.DISABLED);
 	}
@@ -112,8 +112,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		// Ensure the autonomous commands are cancelled if not finished 
-		//if (autonomousCommand != null)
-		//	autonomousCommand.cancel();
+		if (autonCommand != null){
+			autonCommand.cancel();
+		}
 		DrivetrainSubsystem.getInstance().stopTrapezoidControl();    	
     	DrivetrainSubsystem.getInstance().resetEncoders();
 
@@ -139,6 +140,7 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putNumber("Shooter Motor Speed", ShooterSubsystem.getInstance().getSpeed());
 			SmartDashboard.putNumber("Shooter position", ShooterSubsystem.getInstance().getPosition());
 			SmartDashboard.putNumber("Shooter Enc Speed", ShooterSubsystem.getInstance().getEncSpeed());
+			SmartDashboard.putNumber("Peg Angle", table.getNumber("Degrees", 0.0));
 			DeflectorSubsystem.getInstance().sendDashboardData();
 			TurretSubsystem.getInstance().sendDashboardData();
 			UltrasonicSubsystem.getInstance().sendDashboardData();

@@ -26,7 +26,7 @@ public class CenterPegCenterStart extends CommandGroup {
         // arm.
     	double[][] centerPinCenterStart = {
 				{0, 13.5},
-				{-5.5, 13.5}
+				{-4.5, 13.5}
 		};
   
 		addSequential(new RunMotionProfileCommand(centerPinCenterStart, 2, 1, true));

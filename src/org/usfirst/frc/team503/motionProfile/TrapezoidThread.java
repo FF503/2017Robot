@@ -96,7 +96,7 @@ public class TrapezoidThread implements Runnable{
 		rightProfile.reset();
 	}
 	
-	public String getStatus(){
+	public synchronized String getStatus(){
 		return status;
 	}
 	
