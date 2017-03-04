@@ -29,6 +29,7 @@ public class LeftPegLeftStartAuton extends CommandGroup {
 				{6.8,21.5},
 				{8.8,22}
 		};
+    	
     	double[][] leftPinToHopper = {
     			{0,0},
     			{2.29,0},
