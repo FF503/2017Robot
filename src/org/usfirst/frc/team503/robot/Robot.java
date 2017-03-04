@@ -2,6 +2,7 @@
 package org.usfirst.frc.team503.robot;
 
 import org.usfirst.frc.team503.auton.CenterPegCenterStart;
+import org.usfirst.frc.team503.auton.LeftPegLeftStart;
 import org.usfirst.frc.team503.commands.ArcadeDriveCommand;
 import org.usfirst.frc.team503.subsystems.DeflectorSubsystem;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
@@ -83,7 +84,8 @@ public class Robot extends IterativeRobot {
 		//SteamworksChooser.getInstance().executeAuton();
 		startTime = Timer.getFPGATimestamp();
 		RobotState.getInstance().setState(RobotState.State.AUTON);
-		autonCommand = new CenterPegCenterStart();
+//		autonCommand = new CenterPegCenterStart();
+		autonCommand = new LeftPegLeftStart();
 //	    autonCommand = new AutonDriveCommand();
 	    //autonCommand = new GyroTurnCommand(90);
 		autonCommand.start();
