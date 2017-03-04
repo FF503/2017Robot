@@ -9,7 +9,7 @@ public class UltrasonicSensor {
 		LEFT, RIGHT;
 	}
 	private Sensor side;
-	private static double VOLTS_PER_INCH;
+	private double VOLTS_PER_INCH;
 	private AnalogInput analogSensor;
 	
 	public UltrasonicSensor(int port){
@@ -33,8 +33,7 @@ public class UltrasonicSensor {
 	public Sensor getSide() {
 		return side;
 	}
-	//This next method has not been tested yet
-	//Double check please!
+
 	public double getDistance(){
 		return analogSensor.getVoltage()/VOLTS_PER_INCH;
 	}

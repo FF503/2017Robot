@@ -3,6 +3,7 @@ package org.usfirst.frc.team503.subsystems;
 import org.usfirst.frc.team503.robot.Robot;
 import org.usfirst.frc.team503.utils.UltrasonicSensor;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -46,10 +47,10 @@ public class UltrasonicSubsystem extends Subsystem {
 	}
 		
 	public void sendDashboardData(){
-		SmartDashboard.putNumber("Left ultrasonic distance", getLeftUltrasonicDistance());
 		SmartDashboard.putNumber("Right ultrasonic distance", getRightUltrasonicDistance());
 		SmartDashboard.putNumber("Left ultrasonic voltage", getLeftUltrasonicVoltage());
 		SmartDashboard.putNumber("Right ultrasonic voltage", getRightUltrasonicVoltage());		
+		SmartDashboard.putNumber("Left ultrasonic distance", getLeftUltrasonicDistance());	
 	}
 		
     // Put methods for controlling this subsystem

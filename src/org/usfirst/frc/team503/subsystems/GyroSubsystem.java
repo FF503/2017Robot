@@ -20,10 +20,10 @@ public class GyroSubsystem extends Subsystem implements PIDOutput{
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	
-	public static AHRS gyro;
+	public AHRS gyro;
 	
-	private static boolean calibration_complete = false;
-	private static double turnToAngleRate;
+	private boolean calibration_complete = false;
+	private double turnToAngleRate;
 	private PIDController turnController;
 	private double angle;
 	

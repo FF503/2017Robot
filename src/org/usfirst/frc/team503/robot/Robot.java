@@ -1,12 +1,8 @@
 
 package org.usfirst.frc.team503.robot;
 
-import org.usfirst.frc.team503.auton.AutonDriveCommand;
 import org.usfirst.frc.team503.auton.CenterPegCenterStart;
 import org.usfirst.frc.team503.commands.ArcadeDriveCommand;
-import org.usfirst.frc.team503.commands.CenterPegAuton;
-import org.usfirst.frc.team503.commands.GyroCommand;
-import org.usfirst.frc.team503.commands.GyroTurnCommand;
 import org.usfirst.frc.team503.subsystems.DeflectorSubsystem;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 import org.usfirst.frc.team503.subsystems.GyroSubsystem;
@@ -87,10 +83,9 @@ public class Robot extends IterativeRobot {
 		//SteamworksChooser.getInstance().executeAuton();
 		startTime = Timer.getFPGATimestamp();
 		RobotState.getInstance().setState(RobotState.State.AUTON);
-		//autonCommand = new CenterPegCenterStart();
-//		autonCommand = new CenterPegAuton();
+		autonCommand = new CenterPegCenterStart();
 //	    autonCommand = new AutonDriveCommand();
-	    autonCommand = new GyroCommand(90);
+	    //autonCommand = new GyroTurnCommand(90);
 		autonCommand.start();
 	}
 
@@ -107,6 +102,7 @@ public class Robot extends IterativeRobot {
 			UltrasonicSubsystem.getInstance().sendDashboardData();
 			DeflectorSubsystem.getInstance().sendDashboardData();
 			TurretSubsystem.getInstance().sendDashboardData();
+			DrivetrainSubsystem.getInstance().sendDashboardData();
 		}
 	}
 
@@ -119,7 +115,6 @@ public class Robot extends IterativeRobot {
 		//if (autonomousCommand != null)
 		//	autonomousCommand.cancel();
 		DrivetrainSubsystem.getInstance().stopTrapezoidControl();    	
-		DrivetrainSubsystem.getInstance().percentVoltageMode();
     	DrivetrainSubsystem.getInstance().resetEncoders();
 
 		RobotState.getInstance().setState(RobotState.State.TELEOP);
@@ -148,6 +143,7 @@ public class Robot extends IterativeRobot {
 			TurretSubsystem.getInstance().sendDashboardData();
 			UltrasonicSubsystem.getInstance().sendDashboardData();
 			GyroSubsystem.getInstance().sendDashboardData();
+			DrivetrainSubsystem.getInstance().sendDashboardData();
 		}
 	}
 	

@@ -21,13 +21,14 @@ public class ArcadeDriveCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	DrivetrainSubsystem.getInstance().stopTrapezoidControl();    	
+    	DrivetrainSubsystem.getInstance().stopTrapezoidControl();  
+    	DrivetrainSubsystem.getInstance().percentVoltageMode();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if (OI.getDriverLeftTrigger()){
-    		RobotState.getInstance().setDriveTrainReversed(!RobotState.getInstance().getDriveTrainReversed());
+          	DrivetrainSubsystem.getInstance().arcadeDrive(OI.getDriverLeftYValue(), OI.getDriverLeftXValue(), true);
     	}
       	DrivetrainSubsystem.getInstance().arcadeDrive(OI.getDriverLeftYValue(), OI.getDriverLeftXValue(),false);
     }

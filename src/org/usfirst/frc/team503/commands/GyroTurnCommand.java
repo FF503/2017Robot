@@ -1,15 +1,9 @@
 package org.usfirst.frc.team503.commands;
 
-import org.usfirst.frc.team503.robot.Robot;
-import org.usfirst.frc.team503.robot.RobotMap;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 import org.usfirst.frc.team503.subsystems.GyroSubsystem;
 
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -26,7 +20,6 @@ public class GyroTurnCommand extends Command {
     protected void initialize() {
     	GyroSubsystem.getInstance().resetGyro();
     	SmartDashboard.putBoolean("turn on target", false);
-	    LiveWindow.addActuator("DriveTurn", "RotateController",GyroSubsystem.getInstance().getController());
 	    GyroSubsystem.getInstance().setSetpoint(angle);
     }
 
@@ -38,7 +31,6 @@ public class GyroTurnCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	
     	SmartDashboard.putBoolean("turn on target", GyroSubsystem.getInstance().isOnTarget());
     	return (GyroSubsystem.getInstance().isOnTarget());
     }

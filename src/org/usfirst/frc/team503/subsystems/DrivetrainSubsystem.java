@@ -82,7 +82,6 @@ public class DrivetrainSubsystem extends Subsystem {
 				break;
 			}
 		}
-		
 	}
    
    public CANTalon getLeftMaster(){
@@ -190,7 +189,7 @@ public class DrivetrainSubsystem extends Subsystem {
 		setMotorOutputs(-1,-1,false);
 	}
    	
-	public void arcadeDrive(double moveValue, double rotateValue, boolean sensitivity) {
+	public void arcadeDrive(double moveValue, double rotateValue, boolean reverse) {
        double leftMotorSpeed;
        double rightMotorSpeed;
 
@@ -214,28 +213,39 @@ public class DrivetrainSubsystem extends Subsystem {
                rightMotorSpeed = -Math.max(-moveValue, -rotateValue);
            }
        }
-       if (RobotState.getInstance().getDriveTrainReversed()){
-    	   setMotorOutputs(-leftMotorSpeed, -rightMotorSpeed,sensitivity);
-       }
-       else{
-    	   setMotorOutputs(leftMotorSpeed, rightMotorSpeed,sensitivity);
-       }
        
+       setMotorOutputs(leftMotorSpeed, rightMotorSpeed, reverse);       
    }
 	
-   public void tankDrive(double leftValue, double rightValue, boolean sensitivity) {
+   public void tankDrive(double leftValue, double rightValue, boolean reverse) {
 
        // square the inputs (while preserving the sign) to increase fine control while permitting full power
        leftValue = limit(leftValue);
        rightValue = limit(rightValue);
 
-       setMotorOutputs(leftValue, rightValue, sensitivity);
+       setMotorOutputs(leftValue, rightValue, reverse);
    }    
    
    public TrapezoidThread getTrapThread() {
 		return trapThread;
 	}
    
+   public void sendDashboardData(){
+      	talonLeftPos = leftMaster.getEncPosition();
+  		talonLeftRPM = leftMaster.getSpeed();
+  		talonRightPos = rightMaster.getEncPosition();
+  		talonRightRPM = rightMaster.getSpeed();
+  		leftSpeed = leftMaster.getEncVelocity();
+  		rightSpeed = rightMaster.getEncVelocity();
+  		  	   	
+		SmartDashboard.putNumber("Talon right velocity", rightSpeed);
+		SmartDashboard.putNumber("Talon left velocity", leftSpeed);
+		SmartDashboard.putNumber("Talon left Position", talonLeftPos);
+		SmartDashboard.putNumber("Talon left rpm", talonLeftRPM);
+		SmartDashboard.putNumber("Talon right Position", -talonRightPos);
+		SmartDashboard.putNumber("Talon right rpm", -talonRightRPM);
+		SmartDashboard.putBoolean("Motion profile is finished", profileHasFinished);
+   }
    
    public void populateLog(double startTime){
    	if (firstLogFileRun){
@@ -261,16 +271,7 @@ public class DrivetrainSubsystem extends Subsystem {
    		System.out.format("%s\n", "Talon right velocity: " + rightSpeed);
    		System.out.format("%s\n", "Talon left velocity: " +  leftSpeed);
    		lastTime = curTime;
-   	}
-   	
-		SmartDashboard.putNumber("Talon right velocity", rightSpeed);
-		SmartDashboard.putNumber("Talon left velocity", leftSpeed);
-		SmartDashboard.putNumber("Talon left Position", talonLeftPos);
-		SmartDashboard.putNumber("Talon left rpm", talonLeftRPM);
-		SmartDashboard.putNumber("Talon right Position", -talonRightPos);
-		SmartDashboard.putNumber("Talon right rpm", -talonRightRPM);
-		SmartDashboard.putNumber("Time", (curTime-startTime)/1000);
-   	
+   	}   	
    }
 }
 
