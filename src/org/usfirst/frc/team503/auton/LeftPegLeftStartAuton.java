@@ -34,8 +34,8 @@ public class LeftPegLeftStartAuton extends CommandGroup {
     			{2.29,0},
     			{3,-6}
     	};
-		addSequential(new RunMotionProfileCommand(leftPinLeftStart, 4, 1, true));
-		addSequential(new RunMotionProfileCommand(leftPinToHopper, 2, 3,false));
+    	addSequential(new RunMotionProfileCommand("leftPinLeftStartAuto", true));
+		//addSequential(new RunMotionProfileCommand(leftPinToHopper, 2, 3,false));
 		
     }
 }

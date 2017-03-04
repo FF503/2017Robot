@@ -13,15 +13,17 @@ import java.util.stream.Collectors;
 
 public class ProfileGenerator {
 	
-	private static String FILE_PATH = "/home/lvuser/motionProfiles";
+	private static String FILE_PATH = "/home/lvuser/motionProfiles/";
 	private static String FILE_NAME = "";
 	private String[] splitProfiles;
+	private boolean reverse;
 	private double[][] leftProfile;
 	private double[][] rightProfile;
 
-	public  ProfileGenerator(String fileName){
+	public  ProfileGenerator(String fileName, boolean reverse){
 		this.FILE_NAME = fileName;
 		this.FILE_PATH += this.FILE_NAME;
+		this.reverse = reverse;
 	}
 
 	private String getFileContentsAsString(String filename) throws IOException {
@@ -60,12 +62,23 @@ public class ProfileGenerator {
 		 return secondOrder;
 	}
 	
-	private double[][] manipulateProfile(double[][] profile){
+	private double[][] manipulateProfile(double[][] profile, boolean reverse){
 		for (int i = 0; i < profile.length; i++){
-			if (i != profile.length - 1){
-				profile[i][2] = profile[i+1][2] - profile[i][2];
+			if (reverse){
+				if (i != profile.length - 1){
+					profile[i][2] = profile[i+1][2] - profile[i][2];
+				}
+				profile[i][0] = -toEncoderPos(profile[i][0]);
+				profile[i][1] = -profile[i][1];
 			}
-			profile[i][0] = toEncoderPos(profile[i][0]);
+			else{
+				if (i != profile.length - 1){
+					profile[i][2] = profile[i+1][2] - profile[i][2];
+				}
+				profile[i][0] = toEncoderPos(profile[i][0]);
+			}
+			
+		
 		}
 		return profile;
 	}
@@ -76,12 +89,14 @@ public class ProfileGenerator {
 	
 	public double[][] getLeftProfile(){
 		try {
-			splitProfiles = splitSides(getFileContentsAsString(FILE_PATH));
+			String fileContents = getFileContentsAsString(FILE_PATH);
+			System.out.println(fileContents);
+			splitProfiles = splitSides(fileContents);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		leftProfile = manipulateProfile(splitSideIntoProfile(splitProfiles[0]));
+		leftProfile = manipulateProfile(splitSideIntoProfile(splitProfiles[0]), reverse);
 		return leftProfile;
 	}
 	
@@ -92,7 +107,7 @@ public class ProfileGenerator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		rightProfile = manipulateProfile(splitSideIntoProfile(splitProfiles[1]));
+		rightProfile = manipulateProfile(splitSideIntoProfile(splitProfiles[1]), reverse);
 		return rightProfile;
 	}
 }
