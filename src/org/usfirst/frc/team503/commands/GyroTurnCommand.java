@@ -4,20 +4,40 @@ import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 import org.usfirst.frc.team503.subsystems.GyroSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class GyroTurnCommand extends Command {
+	NetworkTable table;
 	double angle;
     public GyroTurnCommand(double angle) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);   	
     	this.angle = angle;
     }
+    public GyroTurnCommand(double angle, boolean inRelToCam){
+    	table = NetworkTable.getTable("LG_Camera");
+    	double camOffset = table.getNumber("Degrees",0.0);
+    	
+    	if (inRelToCam){
+    		if (angle != 0.0){
+    			this.angle = angle - camOffset;
+    		}
+    		else{
+    			this.angle = angle;
+    		}
+    		
+    	}
+    	else{
+    		this.angle = angle;
+    	}
+    }
     
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	System.out.println("in gyro");
     	GyroSubsystem.getInstance().resetGyro();
     	SmartDashboard.putBoolean("turn on target", false);
 	    GyroSubsystem.getInstance().setSetpoint(angle);

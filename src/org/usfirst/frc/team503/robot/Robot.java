@@ -1,11 +1,15 @@
 
 package org.usfirst.frc.team503.robot;
 
-import org.usfirst.frc.team503.auton.LeftPegLeftStartAuton;
+import org.usfirst.frc.team503.auton.LeftPegLeftStart;
+import org.usfirst.frc.team503.auton.RightPegRightStart;
+import org.usfirst.frc.team503.auton.BackUpFromLeftPinAndDump;
 import org.usfirst.frc.team503.auton.CenterPegCenterStart;
+import org.usfirst.frc.team503.auton.DumpBinLeftStart;
 import org.usfirst.frc.team503.commands.ArcadeDriveCommand;
 import org.usfirst.frc.team503.subsystems.DeflectorSubsystem;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
+import org.usfirst.frc.team503.subsystems.GyroSubsystem;
 //import org.usfirst.frc.team503.subsystems.GyroSubsystem;
 import org.usfirst.frc.team503.subsystems.IndexerSubsystem;
 import org.usfirst.frc.team503.subsystems.ShooterSubsystem;
@@ -28,7 +32,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static RobotHardwareProgrammingBot bot = null;
+	public static RobotHardwarePracticeBot bot = null;
 	private static double startTime;
 	private Command autonCommand = null; 
 	private NetworkTable table;
@@ -40,7 +44,7 @@ public class Robot extends IterativeRobot {
         NetworkTable.globalDeleteAll(); //Removes unused garbage from SmartDashboard
         NetworkTable.initialize();      //Initialize Network Tables
 		
-        bot = new RobotHardwareProgrammingBot();
+        bot = new RobotHardwarePracticeBot();
 		bot.initialize();
 		bot.logSmartDashboard();         /*put name of selected bot on smartdashboard */
 		OI.initialize();
@@ -85,10 +89,9 @@ public class Robot extends IterativeRobot {
 		startTime = Timer.getFPGATimestamp();
 		RobotState.getInstance().setState(RobotState.State.AUTON);
 
-//		autonCommand = new CenterPegCenterStart();
-		autonCommand = new LeftPegLeftStartAuton();
+	//	autonCommand = new CenterPegCenterStart();
+		autonCommand = new RightPegRightStart();
 
-		autonCommand = new LeftPegLeftStartAuton();
 
 //	    autonCommand = new AutonDriveCommand();
 	    //autonCommand = new GyroTurnCommand(90);
@@ -102,6 +105,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		//DrivetrainSubsystem.getInstance()trainSubsystem.getInstance().populateLog(startTime);
 		Scheduler.getInstance().run();
+		
 		if (!Robot.bot.getName().equals("ProgrammingBot")){
 			SmartDashboard.putNumber("Shooter Motor Speed", ShooterSubsystem.getInstance().getSpeed());
 			//GyroSubsystem.getInstance().sendDashboardData();
@@ -109,6 +113,7 @@ public class Robot extends IterativeRobot {
 			DeflectorSubsystem.getInstance().sendDashboardData();
 			TurretSubsystem.getInstance().sendDashboardData();
 			DrivetrainSubsystem.getInstance().sendDashboardData();
+			GyroSubsystem.getInstance().sendDashboardData();
 		}
 	}
 

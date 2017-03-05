@@ -6,9 +6,9 @@ import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class LeftPegLeftStart extends CommandGroup {
+public class RightPegRightStart extends CommandGroup {
 
-    public LeftPegLeftStart() {
+    public RightPegRightStart() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -25,7 +25,7 @@ public class LeftPegLeftStart extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	double[][] leftPinLeftStart = {
+    	double[][] RightPinRightStart = {
 				{0, 22.5},
 				{-5.9, 22.5}
 		};
@@ -36,13 +36,13 @@ public class LeftPegLeftStart extends CommandGroup {
     	};
     	
   
-		addSequential(new RunMotionProfileCommand(leftPinLeftStart, 2, 1, true));
+		addSequential(new RunMotionProfileCommand(RightPinRightStart, 2, 1, true));
 	
-		addSequential(new GyroTurnCommand(60));
+		addSequential(new GyroTurnCommand(-60));
 		
 		addSequential(new AutonDriveCommand());
 		
-		addSequential(new BackUpFromLeftPinAndDump());
+		//addSequential(new BackUpFromLeftPinAndDump());
 		
 		
     }

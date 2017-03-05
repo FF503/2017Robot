@@ -652,9 +652,9 @@ public class PathPlanner {
 
 		//fix velocity distance error
 
-		smoothCenterVelocity = velocityFix(smoothCenterVelocity, origCenterVelocity, 0.000000000000001 /*0.00000000002*/);
-		smoothLeftVelocity = velocityFix(smoothLeftVelocity, origLeftVelocity, 0.000000000000001 /*0.00000000002*/);
-		smoothRightVelocity = velocityFix(smoothRightVelocity, origRightVelocity,  0.000000000000001 /*0.00000000002*/);
+		smoothCenterVelocity = velocityFix(smoothCenterVelocity, origCenterVelocity, /*0.000000000000001 *//*0.00000000002*/0.0000001);
+		smoothLeftVelocity = velocityFix(smoothLeftVelocity, origLeftVelocity, /*0.000000000000001*/ /*0.00000000002*/0.0000001);
+		smoothRightVelocity = velocityFix(smoothRightVelocity, origRightVelocity, /* 0.000000000000001*/ /*0.00000000002*/0.0000001);
 		
 		//smoothCenterVelocity = feetPerSecondToRPM(smoothCenterVelocity);
 		//smoothLeftVelocity = feetPerSecondToRPM(smoothLeftVelocity);

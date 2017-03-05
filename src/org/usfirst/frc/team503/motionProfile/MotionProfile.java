@@ -95,6 +95,7 @@ public class MotionProfile {
 					}
 
 					if (status.activePointValid && status.activePoint.isLastPoint) {
+						System.out.println("profile finished");
 						setValue = CANTalon.SetValueMotionProfile.Hold;
 						state = 3;
 						loopTimeout = -1;

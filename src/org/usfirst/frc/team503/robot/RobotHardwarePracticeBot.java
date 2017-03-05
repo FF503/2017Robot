@@ -35,11 +35,11 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	
 	public final double WHEEL_DIAMETER = 4.0;
 	public final double WHEEL_BASE = 32.5;
-	public final double CYCLE_TIME = 0.05;	
+	public final double CYCLE_TIME = 0.01;	 //was .05
 	public final int DRIVE_COUNTS_PER_REV = 512;
-	public final double DRIVE_P = 0.00015;//high gear 0.00012; // low gear: 0.00014
-	public final double DRIVE_I = 0.0;
-	public final double DRIVE_D = 1.6;//0.000001;
+	public final double DRIVE_P = 0.00018;//0.00015;
+	public final double DRIVE_I = 0.0000000; //0.0
+	public final double DRIVE_D = 6.5; //1.6
 	public final double LEFT_DRIVE_F  = 0.2157; //.2157
 	public final double RIGHT_DRIVE_F = 0.2154; //.2154
 	
@@ -62,9 +62,9 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final double DEFLECTOR_TOLERANCE = 6.6;
 	public final boolean DEFLECTOR_REVERSE_SENSOR = true;
 
-	public double GYRO_P = 0.0125;
-	public double GYRO_I = 0.0;
-	public double GYRO_D = 0.0;
+	public double GYRO_P = 0.035;     //was 0.0125
+	public double GYRO_I = 0.0;		//was 0.0
+	public double GYRO_D = 0.0600;		//was 0.0
 	public double GYRO_TOLERANCE = 1.0;
 	
 	public final double DISTANCE_BETWEEN_ULTRASONICS = 13.7;

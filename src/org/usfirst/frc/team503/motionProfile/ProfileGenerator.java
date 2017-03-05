@@ -17,6 +17,8 @@ public class ProfileGenerator {
 	private static String FILE_NAME = "";
 	private String[] splitProfiles;
 	private boolean reverse;
+	public double lastEncPosRight;
+	public double lastEncPosLeft;
 	private double[][] leftProfile;
 	private double[][] rightProfile;
 
@@ -97,6 +99,7 @@ public class ProfileGenerator {
 			e.printStackTrace();
 		}
 		leftProfile = manipulateProfile(splitSideIntoProfile(splitProfiles[0]), reverse);
+	
 		return leftProfile;
 	}
 	

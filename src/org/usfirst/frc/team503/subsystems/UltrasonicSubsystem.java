@@ -22,7 +22,7 @@ public class UltrasonicSubsystem extends Subsystem {
 	public UltrasonicSubsystem(){
 			leftUltrasonic = new UltrasonicSensor(Robot.bot.leftUltrasonicPort);
 			rightUltrasonic = new UltrasonicSensor(Robot.bot.rightUltrasonicPort);
-			values = new double[8];
+			values = new double[15];
 	}
 	private static UltrasonicSubsystem instance = new UltrasonicSubsystem();                                        
     
@@ -47,7 +47,7 @@ public class UltrasonicSubsystem extends Subsystem {
 		}
 		Arrays.sort(values);
 		System.out.println();
-		return values[values.length/2];
+		return values[(values.length+1)/2];
 	}
 	public double PreferWhichUltrasonic(){
 		if(leftUltrasonic.getDistance() > rightUltrasonic.getDistance()){

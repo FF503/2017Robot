@@ -6,9 +6,9 @@ import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class LeftPegLeftStart extends CommandGroup {
+public class DumpBinLeftStart extends CommandGroup {
 
-    public LeftPegLeftStart() {
+    public DumpBinLeftStart() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -25,25 +25,20 @@ public class LeftPegLeftStart extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	double[][] leftPinLeftStart = {
+    	double[][] dumpbinForward = {
 				{0, 22.5},
-				{-5.9, 22.5}
+				{-6.6, 22.5}
 		};
     	
-    	double[][] backUpFromPin = {
+    	double[][] hitBin ={
     			{0,0},
-    			{5.5,0}
+    			{3.3,0}
     	};
-    	
   
-		addSequential(new RunMotionProfileCommand(leftPinLeftStart, 2, 1, true));
+		addSequential(new RunMotionProfileCommand(dumpbinForward, 2, 1, true));
 	
-		addSequential(new GyroTurnCommand(60));
+		addSequential(new GyroTurnCommand(90));
 		
-		addSequential(new AutonDriveCommand());
-		
-		addSequential(new BackUpFromLeftPinAndDump());
-		
-		
+		addSequential(new RunMotionProfileCommand(hitBin, 2, 1, false));
     }
 }

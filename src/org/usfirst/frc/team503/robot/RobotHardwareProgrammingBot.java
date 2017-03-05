@@ -13,6 +13,11 @@ public class RobotHardwareProgrammingBot extends RobotHardware {
 	public static final double TURRET_I = 0;
 	public static final double TURRET_D = 0;
 	public static final double REVERSE_INDEXER = 0;
+	public static final double GYRO_P = 0;
+	public static final double GYRO_I = 0;
+	public static final double GYRO_D = 0;
+	public static final double GYRO_TOLERANCE = 0;
+	
 	public final int leftMasterID = 2;  //front left
 	public final int leftSlaveID = 1;	//back left
 	public final int rightMasterID = 4;	//front right

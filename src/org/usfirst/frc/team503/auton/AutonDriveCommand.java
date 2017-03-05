@@ -26,6 +26,7 @@ public class AutonDriveCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	System.out.println("in auton command");
     	table = NetworkTable.getTable("LG_Camera");
     	SmartDashboard.putBoolean("Auton drive isFinished", false);
     	GyroSubsystem.getInstance().gyro.reset();
@@ -39,7 +40,7 @@ public class AutonDriveCommand extends Command {
     	angle = -table.getNumber("Degrees", 0.0);
     	SmartDashboard.putNumber("Peg Angle", angle);
     	if(UltrasonicSubsystem.getInstance().getUltrasonicDistance() > 24.0 && angle != 0.0){   //was 36 
-    		DrivetrainSubsystem.getInstance().arcadeDrive(.20, angle*.05, false);
+    		DrivetrainSubsystem.getInstance().arcadeDrive(.2, angle*.05, false); //0.2 and 0.05
     	} 
     	
     	else {
@@ -65,6 +66,7 @@ public class AutonDriveCommand extends Command {
     }	
 
     protected void end(){
+    	System.out.println("finished auton drive command");
     	DrivetrainSubsystem.getInstance().tankDrive(0, 0, false);
     }
     

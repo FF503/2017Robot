@@ -3,6 +3,8 @@ package org.usfirst.frc.team503.motionProfile;
 import org.usfirst.frc.team503.robot.Robot;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 
+import com.ctre.CANTalon.TalonControlMode;
+
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -17,6 +19,7 @@ public class RunMotionProfileCommand extends Command {
 	
 	public RunMotionProfileCommand(String fileName, boolean reverse) {
 		this.calculatingInHouse = false;
+		
     	pathPuller = new ProfileGenerator(fileName, reverse);
         requires(DrivetrainSubsystem.getInstance());
         
@@ -56,6 +59,8 @@ public class RunMotionProfileCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	DrivetrainSubsystem.getInstance().getLeftMaster().changeControlMode(TalonControlMode.PercentVbus);
+    	DrivetrainSubsystem.getInstance().getRightMaster().changeControlMode(TalonControlMode.PercentVbus);
     	DrivetrainSubsystem.getInstance().stopTrapezoidControl();
     }
 
