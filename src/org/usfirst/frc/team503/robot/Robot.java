@@ -7,6 +7,8 @@ import org.usfirst.frc.team503.auton.BackUpFromLeftPinAndDump;
 import org.usfirst.frc.team503.auton.CenterPegCenterStart;
 import org.usfirst.frc.team503.auton.DumpBinLeftStart;
 import org.usfirst.frc.team503.commands.ArcadeDriveCommand;
+import org.usfirst.frc.team503.commands.TeleopDeflectorCommand;
+import org.usfirst.frc.team503.commands.TeleopTurretCommand;
 import org.usfirst.frc.team503.subsystems.DeflectorSubsystem;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 import org.usfirst.frc.team503.subsystems.GyroSubsystem;
@@ -80,7 +82,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	/**
-	 * autonomousInit - fires when Auto mode is selected  
+	 * autonomousInit - fires when Auto mode is selected   nv
 	 */
 	@Override
 	public void autonomousInit() {
@@ -134,9 +136,9 @@ public class Robot extends IterativeRobot {
 	    //start commands that use joysticks and dpads manually from Robot.java
     	(new ArcadeDriveCommand()).start();
     	if (!Robot.bot.getName().equals("ProgrammingBot")){
-    	    TurretSubsystem.getInstance().getThread().startTurret();
+    	   // TurretSubsystem.getInstance().getThread().startTurret();
     		//(new TeleopTurretCommand()).start();
-        	//(new TeleopDeflectorCommand()).start();
+        	(new TeleopDeflectorCommand()).start();
     	}
 	}
 

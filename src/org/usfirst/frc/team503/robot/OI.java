@@ -8,6 +8,7 @@ import org.usfirst.frc.team503.commands.ToggleGearPlacerCommand;
 import org.usfirst.frc.team503.commands.ToggleIndexerCommand;
 import org.usfirst.frc.team503.commands.ToggleIntakeCommand;
 import org.usfirst.frc.team503.commands.ToggleShootRPMCommand;
+import org.usfirst.frc.team503.commands.ToggleShooterCommand;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
