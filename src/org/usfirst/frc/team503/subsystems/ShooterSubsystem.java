@@ -21,7 +21,7 @@ public class ShooterSubsystem extends Subsystem {
 		 
 	public ShooterSubsystem() {
 		shooterMotor = new CANTalon(Robot.bot.shooterID);
-		shooterMotor.enableBrakeMode(true);
+		shooterMotor.enableBrakeMode(false);
 		shooterMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		shooterMotor.configEncoderCodesPerRev(1024);
 		shooterMotor.changeControlMode(TalonControlMode.PercentVbus);
@@ -50,15 +50,16 @@ public class ShooterSubsystem extends Subsystem {
 		return shooterMotor.getPosition();
 	}
 	
+	public double getSetpoint(){
+		return shooterMotor.getSetpoint();
+	}
+	
 	public double getSpeed() {
 		return shooterMotor.getSpeed();
 	}
 	
-	public double getEncSpeed(){
-		return shooterMotor.getEncPosition();
-	}
 	public double getError(){
-		return shooterMotor.getClosedLoopError();
+		return getSetpoint() - getSpeed();
 	}
 	
 	public boolean isOnTarget(){

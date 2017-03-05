@@ -3,7 +3,7 @@ package org.usfirst.frc.team503.utils;
 public class Constants {
 	public static final double JOYSTICK_TOLERANCE = .0;
 	public static final double TURN_RATIO = .05;
-	public static final double SHOOTER_SPEED = 6500;
+	public static final double SHOOTER_SPEED = 3900;
 	private static final double TURRET_DIAMETER = 13.0;
 	public static final double TURRET_ROTATIONS_IN_RANGE = 257.3056640625;
 	public static final double TURRET_TOLERANCE = 1.0;

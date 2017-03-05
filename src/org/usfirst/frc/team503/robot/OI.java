@@ -2,13 +2,13 @@ package org.usfirst.frc.team503.robot;
 
 import org.usfirst.frc.team503.commands.ClimbCommand;
 import org.usfirst.frc.team503.commands.ClimbFasterCommand;
+import org.usfirst.frc.team503.commands.GoToDeflectorCommand;
 import org.usfirst.frc.team503.commands.ShiftToHighGear;
 import org.usfirst.frc.team503.commands.ShiftToLowGear;
+import org.usfirst.frc.team503.commands.ShootSequenceCommand;
 import org.usfirst.frc.team503.commands.ToggleGearPlacerCommand;
-import org.usfirst.frc.team503.commands.ToggleIndexerCommand;
 import org.usfirst.frc.team503.commands.ToggleIntakeCommand;
-import org.usfirst.frc.team503.commands.ToggleShootRPMCommand;
-import org.usfirst.frc.team503.commands.ToggleShooterCommand;
+import org.usfirst.frc.team503.subsystems.DeflectorSubsystem;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -54,26 +54,28 @@ public class OI {
 	private static JoystickButton gearButton = new JoystickButton(driverJoystick, 3);
 	private static JoystickButton shiftToLowGearButton = new JoystickButton(driverJoystick,5);
 	private static JoystickButton shiftToHighGearButton = new JoystickButton(driverJoystick,6);
+	private static JoystickButton reverseDriveTrainBttn = new JoystickButton(driverJoystick, 8);
 
 	private static JoystickButton climbButton = new JoystickButton(operatorJoystick, 1);
 	private static JoystickButton climbFasterButton = new JoystickButton(operatorJoystick, 2);
 	private static JoystickButton shootRPMButton = new JoystickButton(operatorJoystick, 3);
 	private static JoystickButton indexerButton = new JoystickButton(operatorJoystick, 4);
 	
-	//private static JoystickButton goToDeflectorButton = new JoystickButton(operatorJoystick, 2);
+	private static JoystickButton goToDeflectorButton = new JoystickButton(operatorJoystick, 5);
 	//private static JoystickButton goToTurretPosition = new JoystickButton(operatorJoystick, 7);
 	
 	public static void initialize(){
-		shootRPMButton.whenPressed(new ToggleShootRPMCommand());
+	//	shootRPMButton.whenPressed(new ToggleShootRPMCommand());
+		shootRPMButton.whenPressed(new ShootSequenceCommand());
 		intakeButton.whenPressed(new ToggleIntakeCommand());
 		intakeReverse.whenPressed(new ToggleIntakeCommand());
 		shiftToLowGearButton.whenPressed(new ShiftToLowGear());
 		shiftToHighGearButton.whenPressed(new ShiftToHighGear());
-		indexerButton.whenPressed(new ToggleIndexerCommand());
+		//indexerButton.whenPressed(new ToggleIndexerCommand());
 		gearButton.whenPressed(new ToggleGearPlacerCommand());
 		climbButton.whenPressed(new ClimbCommand());
 		climbFasterButton.whenPressed(new ClimbFasterCommand());
-		//goToDeflectorButton.whenPressed(new GoToDeflectorCommand(DeflectorSubsystem.DeflectorHeight.HIGH.height));
+		goToDeflectorButton.whenPressed(new GoToDeflectorCommand(DeflectorSubsystem.DeflectorAngle.LOW.angle));
 		//goToTurretPosition.whenPressed(new TurnTurretCommand(10, false));
 		
 	}
@@ -89,6 +91,12 @@ public class OI {
 	public static double getDriverRightYValue(){
 		return driverJoystick.getRawAxis(5);
 	}
+	
+	public static boolean getDriverReverseButton(){
+		return reverseDriveTrainBttn.get();
+	}
+
+	
 	
 	public static double getDriverRightXValue(){
 		return driverJoystick.getRawAxis(4);

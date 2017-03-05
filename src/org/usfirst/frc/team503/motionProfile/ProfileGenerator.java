@@ -37,7 +37,6 @@ public class ProfileGenerator {
 		        char[] chars = new char[(int) file.length()];
 		        reader.read(chars);
 		        content = new String(chars);
-		        reader.close();
 		    } catch (IOException e) {
 		        e.printStackTrace();
 		    } finally {

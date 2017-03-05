@@ -94,9 +94,6 @@ public class Robot extends IterativeRobot {
 	//	autonCommand = new CenterPegCenterStart();
 		autonCommand = new RightPegRightStart();
 
-
-//	    autonCommand = new AutonDriveCommand();
-	    //autonCommand = new GyroTurnCommand(90);
 		autonCommand.start();
 	}
 
@@ -110,7 +107,7 @@ public class Robot extends IterativeRobot {
 		
 		if (!Robot.bot.getName().equals("ProgrammingBot")){
 			SmartDashboard.putNumber("Shooter Motor Speed", ShooterSubsystem.getInstance().getSpeed());
-			//GyroSubsystem.getInstance().sendDashboardData();
+			GyroSubsystem.getInstance().sendDashboardData();
 			UltrasonicSubsystem.getInstance().sendDashboardData();
 			DeflectorSubsystem.getInstance().sendDashboardData();
 			TurretSubsystem.getInstance().sendDashboardData();
@@ -136,7 +133,7 @@ public class Robot extends IterativeRobot {
 	    //start commands that use joysticks and dpads manually from Robot.java
     	(new ArcadeDriveCommand()).start();
     	if (!Robot.bot.getName().equals("ProgrammingBot")){
-    	   // TurretSubsystem.getInstance().getThread().startTurret();
+    		TurretSubsystem.getInstance().getThread().startTurret();
     		//(new TeleopTurretCommand()).start();
         	(new TeleopDeflectorCommand()).start();
     	}
@@ -150,14 +147,13 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		//DrivetrainSubsystem.getInstance().populateLog(startTime);
 		if (!Robot.bot.getName().equals("ProgrammingBot")){
-			SmartDashboard.putNumber("Shooter Motor Speed", ShooterSubsystem.getInstance().getSpeed());
+			SmartDashboard.putNumber("Shooter RPM Speed", ShooterSubsystem.getInstance().getSpeed());
 			SmartDashboard.putNumber("Shooter position", ShooterSubsystem.getInstance().getPosition());
-			SmartDashboard.putNumber("Shooter Enc Speed", ShooterSubsystem.getInstance().getEncSpeed());
 			SmartDashboard.putNumber("Peg Angle", table.getNumber("Degrees", 0.0));
 			DeflectorSubsystem.getInstance().sendDashboardData();
 			TurretSubsystem.getInstance().sendDashboardData();
 			UltrasonicSubsystem.getInstance().sendDashboardData();
-			// GyroSubsystem.getInstance().sendDashboardData();
+			GyroSubsystem.getInstance().sendDashboardData();
 			DrivetrainSubsystem.getInstance().sendDashboardData();
 		}
 	}

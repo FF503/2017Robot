@@ -24,13 +24,15 @@ public class DeflectorSubsystem extends Subsystem {
 	public DeflectorSubsystem(){                               
 		deflectorMotor = new CANTalon(Robot.bot.deflectorID);                    
 		deflectorMotor.enableBrakeMode(true);
-		deflectorMotor.enableLimitSwitch(false, true);
-		deflectorMotor.ConfigRevLimitSwitchNormallyOpen(true);
+		deflectorMotor.enableLimitSwitch(true, false);
+		deflectorMotor.ConfigFwdLimitSwitchNormallyOpen(true);
 		deflectorMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		deflectorMotor.setProfile(0);
 		deflectorMotor.setPID(Robot.bot.DEFLECTOR_P, Robot.bot.DEFLECTOR_I, Robot.bot.DEFLECTOR_D);  
 		deflectorMotor.reverseSensor(Robot.bot.DEFLECTOR_REVERSE_SENSOR);
 		deflectorMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
+		deflectorMotor.setReverseSoftLimit(-(Robot.bot.DEFLECTOR_MAX_COUNTS-.25));
+		deflectorMotor.enableReverseSoftLimit(true);
 		//deflectorMotor.setAllowableClosedLoopErr((int)(kTurretOnTargetTolerance /kTurretDegreesPerTick));
 	}                 
 	
@@ -42,28 +44,28 @@ public class DeflectorSubsystem extends Subsystem {
 	}
 
 	public synchronized void setSetpoint(double target) {
-		SmartDashboard.putNumber("deflector target", target);
+		SmartDashboard.putNumber("deflector target angle", target);
 		
-		if(target>Robot.bot.DEFLECTOR_MAX) {
+		if(target>Robot.bot.DEFLECTOR_MAX_ANGLE) {
 			System.out.println("BAD DEFLECTOR SETPOINT");
 			SmartDashboard.putString("BAD DEFLECTOR SETPOINT","CANNOT ATTAIN");
 		}								
 		else{
 		    deflectorMotor.changeControlMode(CANTalon.TalonControlMode.Position);
-			deflectorMotor.setSetpoint(target);
+			deflectorMotor.setSetpoint((target-Robot.bot.DEFLECTOR_MIN_ANGLE) * Robot.bot.DEFLECTOR_COUNTS_PER_DEGREE * -1.0);
 		}
 	}					
 	
-	public enum DeflectorHeight{
-		LOW(0.0), MEDIUM(3.0), HIGH(6.0);
-		public double height;
-		private DeflectorHeight(double height){
-			this.height = height;
+	public enum DeflectorAngle{
+		BOTTOM(15.0), LOW(30.0), MEDIUM(40.0), HIGH(50.0);
+		public double angle;
+		private DeflectorAngle(double angle){
+			this.angle = angle;
 		}
 	}
 	
 	public synchronized double getSetpoint() {
-	    return deflectorMotor.getSetpoint();
+	    return -deflectorMotor.getSetpoint();
 	}
 	
 	public synchronized double getError() {    
@@ -71,14 +73,14 @@ public class DeflectorSubsystem extends Subsystem {
 	}
 	
 	public synchronized boolean isOnTarget() {
-	    return (deflectorMotor.getControlMode() == CANTalon.TalonControlMode.Position && Math.abs(getError()) < Robot.bot.DEFLECTOR_TOLERANCE);
+	    return (deflectorMotor.getControlMode() == CANTalon.TalonControlMode.Position && Math.abs(getError()) < (Robot.bot.DEFLECTOR_TOLERANCE * Robot.bot.DEFLECTOR_COUNTS_PER_DEGREE));
 	}
 										
 	public synchronized void setMotorPower(double deflectorPower){
 		deflectorMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		SmartDashboard.putNumber("deflectorPower", deflectorPower);
 		 if(getLimitSwitch() && deflectorPower > 0){
-				deflectorMotor.set(0);	
+	//			deflectorMotor.set(0);	
 				resetEncoder();
 		 }
 		 else{
@@ -87,11 +89,15 @@ public class DeflectorSubsystem extends Subsystem {
 	}
 	
 	public boolean getLimitSwitch(){                 
-		return !deflectorMotor.isRevLimitSwitchClosed();
+		return deflectorMotor.isFwdLimitSwitchClosed();
 	}
 	
 	public double getPosition(){
 		return -deflectorMotor.getPosition();
+	}
+	
+	public double getAngle(){
+		return (getPosition() / Robot.bot.DEFLECTOR_COUNTS_PER_DEGREE) + Robot.bot.DEFLECTOR_MIN_ANGLE;
 	}
 	                               
 	public void resetEncoder(){												
@@ -105,6 +111,8 @@ public class DeflectorSubsystem extends Subsystem {
 		SmartDashboard.putNumber("Deflector encoder", DeflectorSubsystem.getInstance().getPosition());
 		SmartDashboard.putNumber("Deflector error", DeflectorSubsystem.getInstance().getError());
 		SmartDashboard.putNumber("Deflector setpoint", DeflectorSubsystem.getInstance().getSetpoint());
+		SmartDashboard.putNumber("Deflector angle", getAngle());
+		SmartDashboard.putBoolean("Deflector OnTarget", deflectorMotor.getControlMode() == CANTalon.TalonControlMode.Position && Math.abs(getError()) < Robot.bot.DEFLECTOR_TOLERANCE);
 	}
 
     public void initDefaultCommand() {

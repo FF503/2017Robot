@@ -57,7 +57,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  	//Automatic tracking with discarding images
 	private synchronized void turretControl(){
 		//checks to see if rasberry pi is still alive by checking heart beat
-		piIsAlive = isPiAlive();
+		//piIsAlive = isPiAlive();
 		//Tells pi if it wants angle values or not
 		table.putBoolean("Discard", discardImage);
 		//gets camera angle from pi
@@ -168,7 +168,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 			heartbeatUpdateStartTime = Timer.getFPGATimestamp();
 		}
 		heartbeatUpdateTime = Timer.getFPGATimestamp() - heartbeatUpdateStartTime;
-		
+		SmartDashboard.putNumber("heartbeat update time", heartbeatUpdateTime);
 		if (heartbeatUpdateTime >= 2.0){
 			table.putNumber("Degrees", 503);
 			RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);

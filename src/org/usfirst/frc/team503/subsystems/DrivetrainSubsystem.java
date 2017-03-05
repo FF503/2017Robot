@@ -106,7 +106,6 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 	
 	public void stopTrapezoidControl() {
-		
 		trapThread.resetTrapezoid();
 	}
 	

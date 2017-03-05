@@ -15,6 +15,7 @@ public class TeleopDeflectorCommand extends Command {
     public TeleopDeflectorCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(DeflectorSubsystem.getInstance());
     }
 
     // Called just before this Command runs the first time
@@ -32,7 +33,7 @@ public class TeleopDeflectorCommand extends Command {
     	else{
     		DeflectorSubsystem.getInstance().setMotorPower(0);                 
 		}  */
-    	DeflectorSubsystem.getInstance().setMotorPower(OI.getOperatorLeftYValue());
+    	DeflectorSubsystem.getInstance().setMotorPower(OI.getOperatorLeftYValue()/5.0);
     	DeflectorSubsystem.getInstance().resetEncoder();
     }
 

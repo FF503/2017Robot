@@ -9,45 +9,43 @@ import org.usfirst.frc.team503.utils.Constants;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class ToggleShootRPMCommand extends Command {
-
-    public ToggleShootRPMCommand() {
+public class ShootSequenceCommand extends Command {
+	double startTime, currTime;
+    public ShootSequenceCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(ShooterSubsystem.getInstance());
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(OI.getShootRPMButton()){
-    		if(RobotState.getInstance().getShooterStatus()){
-    			ShooterSubsystem.getInstance().setMotorPower(0);
-        		RobotState.getInstance().setShooterStatus(false);
-        	}
-        	else{
-        		ShooterSubsystem.getInstance().setSetpoint(Constants.SHOOTER_SPEED);
-            	RobotState.getInstance().setShooterStatus(true);
-        	}
-    	}
+    	ShooterSubsystem.getInstance().setSetpoint(Constants.SHOOTER_SPEED);
+    	RobotState.getInstance().setShooterStatus(true);
+    	startTime = Timer.getFPGATimestamp();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(ShooterSubsystem.getInstance().isOnTarget()){
+    		IndexerSubsystem.getInstance().setMotorPower(0.6 * Robot.bot.REVERSE_INDEXER);
+			RobotState.getInstance().setIndexerStatus(true);
+    	}
+    	currTime = Timer.getFPGATimestamp();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return OI.getIndexer();
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	ShooterSubsystem.getInstance().setMotorPower(0);
+    	IndexerSubsystem.getInstance().setMotorPower(0);
+    	RobotState.getInstance().setShooterStatus(true);
     }
 
     // Called when another command which requires one or more of the same
@@ -55,4 +53,5 @@ public class ToggleShootRPMCommand extends Command {
     protected void interrupted() {
     	end();
     }
+
 }
