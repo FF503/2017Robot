@@ -1,14 +1,15 @@
-package org.usfirst.frc.team503.auton;
+package org.usfirst.frc.team503.auton.autonHelpers;
 
 import org.usfirst.frc.team503.commands.GyroTurnCommand;
 import org.usfirst.frc.team503.motionProfile.RunMotionProfileCommand;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
+import org.usfirst.frc.team503.subsystems.GyroSubsystem;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class LeftPegLeftStart extends CommandGroup {
+public class BackUpFromLeftPinAndDumpRed extends CommandGroup {
 
-    public LeftPegLeftStart() {
+    public BackUpFromLeftPinAndDumpRed() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -25,25 +26,20 @@ public class LeftPegLeftStart extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	double[][] leftPinLeftStart = {
+    	double[][] dumpbinForward = {
 				{0, 22.5},
-				{-5.9, 22.5}
+				{3.5, 22.5}
 		};
     	
-    	double[][] backUpFromPin = {
+    	double[][] hitBin ={
     			{0,0},
-    			{5.5,0}
+    			{4.5,0}
     	};
-    	
   
-		addSequential(new RunMotionProfileCommand(leftPinLeftStart, 2, 1, true));
+		addSequential(new RunMotionProfileCommand(dumpbinForward, 2, 1, false));
 	
-		addSequential(new GyroTurnCommand(60));
+		addSequential(new GyroTurnCommand(30, true));
 		
-		addSequential(new AutonDriveCommand());
-		
-		addSequential(new BackUpFromLeftPinAndDump());
-		
-		
+		addSequential(new RunMotionProfileCommand(hitBin, 2, 1, false));
     }
 }

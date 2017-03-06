@@ -1,4 +1,4 @@
-package org.usfirst.frc.team503.auton;
+package org.usfirst.frc.team503.auton.autonHelpers;
 
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.tables.ITable;

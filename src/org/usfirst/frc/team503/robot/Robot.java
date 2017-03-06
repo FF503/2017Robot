@@ -1,11 +1,11 @@
 
 package org.usfirst.frc.team503.robot;
 
-import org.usfirst.frc.team503.auton.LeftPegLeftStart;
-import org.usfirst.frc.team503.auton.RightPegRightStart;
-import org.usfirst.frc.team503.auton.BackUpFromLeftPinAndDump;
+import org.usfirst.frc.team503.auton.LeftPegLeftStartBlue;
+import org.usfirst.frc.team503.auton.RightPegRightStartBlue;
+import org.usfirst.frc.team503.auton.BackUpFromLeftPinAndDumpBlue;
 import org.usfirst.frc.team503.auton.CenterPegCenterStart;
-import org.usfirst.frc.team503.auton.DumpBinLeftStart;
+import org.usfirst.frc.team503.auton.DumpBinAndShootBlue;
 import org.usfirst.frc.team503.commands.ArcadeDriveCommand;
 import org.usfirst.frc.team503.commands.TeleopDeflectorCommand;
 import org.usfirst.frc.team503.commands.TeleopTurretCommand;
@@ -92,7 +92,7 @@ public class Robot extends IterativeRobot {
 		RobotState.getInstance().setState(RobotState.State.AUTON);
 
 	//	autonCommand = new CenterPegCenterStart();
-		autonCommand = new RightPegRightStart();
+		autonCommand = new RightPegRightStartBlue();
 
 		autonCommand.start();
 	}
