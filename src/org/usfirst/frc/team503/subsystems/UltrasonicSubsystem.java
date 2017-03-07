@@ -17,8 +17,6 @@ public class UltrasonicSubsystem extends Subsystem {
 	private UltrasonicSensor rightUltrasonic;
 	private double[] values;
 	
-//	public final double diff = leftUltrasonic.getDistance() - rightUltrasonic.getDistance();
-
 	public UltrasonicSubsystem(){
 			leftUltrasonic = new UltrasonicSensor(Robot.bot.leftUltrasonicPort);
 			rightUltrasonic = new UltrasonicSensor(Robot.bot.rightUltrasonicPort);

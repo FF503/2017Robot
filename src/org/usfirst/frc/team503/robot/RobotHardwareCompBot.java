@@ -8,23 +8,26 @@ public class RobotHardwareCompBot extends RobotHardware {
 	public final int shooterID = 5;
 	public final int turretID = 6;
 	public final int deflectorID = 7;
-	public final int lowerIntakeID = 1;   //was 4 
+	public final int lowerIntakeID = 1; 
 	public final int upperIntakeID = 0;
-	public final int indexerID = 4; //was 3 
+	public final int indexerID = 4; 
 	public final int driveSolenoidID1 = 0;
 	public final int driveSolenoidID2 = 1;
 	public final int outerGearSolenoidID1 = 2;
 	public final int outerGearSolenoidID2 = 3;
 	public final int innerGearSolenoidID1 = 4;
 	public final int innerGearSolenoidID2 = 5;
-	public final int climberSpark1Port = 2;     // was 1 
-	public final int climberSpark2Port = 3;     // was 2 
-	
+	public final int climberSpark1Port = 2;      
+	public final int climberSpark2Port = 3;     
+	public final int rightUltrasonicPort = 1;
+	public final int leftUltrasonicPort = 0;
+		
+	public final double REVERSE_UPPER_INTAKE = -1.0;
+
 	public final double WHEEL_DIAMETER = 4.0;
 	public final double WHEEL_BASE = 32.5;
 	public final double CYCLE_TIME = 0.05;	
-	public final int DRIVE_COUNTS_PER_REV = 512;
-	
+	public final int DRIVE_COUNTS_PER_REV = 512;	
 	public final double DRIVE_P = 0;
 	public final double DRIVE_I = 0;
 	public final double DRIVE_D = 0;
@@ -36,21 +39,38 @@ public class RobotHardwareCompBot extends RobotHardware {
 	public final boolean REVERSE_LEFT_OUTPUT = false;
 	public final boolean REVERSE_RIGHT_OUTPUT = true;
 	
-	public final double SHOOT_P = 0;
-	public final double SHOOT_I = 0;
-	public final double SHOOT_D = 0;
-	public final double SHOOT_F = 0;
-	public final double SHOOT_TOLERANCE = 50;
+	public final double REVERSE_INDEXER = 1.0;
 	
-	public final double TURRET_CYCLE_TIME = .01; //seconds
+	public final double SHOOT_P = 0.7; //0.1
+	public final double SHOOT_I = 0.0; //0.0
+	public final double SHOOT_D = 100.0; //0.005
+	public final double SHOOT_F = 0.0188;
+	public final double SHOOT_TOLERANCE = 50.0;
 	
-	public final double DEFLECTOR_P = .5;
+	public final double TURRET_CYCLE_TIME = .005; //seconds
+	
+	public double GYRO_P = 0.035;     //was 0.0125
+	public double GYRO_I = 0.0;		//was 0.0
+	public double GYRO_D = 0.0600;		//was 0.0
+	public double GYRO_TOLERANCE = 1.0;
+		
+	public final double DEFLECTOR_P = .0175;
 	public final double DEFLECTOR_I = 0;
 	public final double DEFLECTOR_D = 0;
-	public final double DEFLECTOR_MAX = 12.0;
-	public final double DEFLECTOR_TOLERANCE = 6.6;
+	public final double DEFLECTOR_MAX_COUNTS = 12.0;
+	public final double DEFLECTOR_MIN_ANGLE = 15.0;
+	public final double DEFLECTOR_MAX_ANGLE = 51.0;
+	public final double DEFLECTOR_COUNTS_PER_DEGREE = DEFLECTOR_MAX_COUNTS/(DEFLECTOR_MAX_ANGLE - DEFLECTOR_MIN_ANGLE);
+	public final double DEFLECTOR_TOLERANCE = 1.0;
 	public final boolean DEFLECTOR_REVERSE_SENSOR = true;
-
+	
+	public final double DISTANCE_BETWEEN_ULTRASONICS = 13.7;
+	public final double LEFT_ULTRASONIC_VOLTS_PER_INCH = 0.01064453016;
+	public final double RIGHT_ULTRASONIC_VOLTS_PER_INCH = 0.01035156144;
+	
+	public double TURRET_P = 0.0;
+	public double TURRET_I = 0.0;
+	public double TURRET_D = 0.0;	
 	
 	@Override
 	public void initialize(){

@@ -34,10 +34,10 @@ public class IntakeSubsystem extends Subsystem {
 		return instance;
 	}
 	
-	public void setMotorPower(double x){
-		upperIntakeMotor.set(x);
+	public void setMotorPower(double upper, double lower){
+		upperIntakeMotor.set(upper*Robot.bot.REVERSE_UPPER_INTAKE);
 		if(!Robot.bot.getName().equals("ProgrammingBot")){
-			lowerIntakeMotor.set(x);
+			lowerIntakeMotor.set(lower);
 		}
 	}
 

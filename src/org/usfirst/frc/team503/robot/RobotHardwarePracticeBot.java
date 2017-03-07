@@ -33,6 +33,8 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final int leftUltrasonicPort = 0;
 	public final int rightUltrasonicPort = 1;
 	
+	public final double REVERSE_UPPER_INTAKE = 1.0;
+	
 	public final double WHEEL_DIAMETER = 4.0;
 	public final double WHEEL_BASE = 32.5;
 	public final double CYCLE_TIME = 0.01;	 //was .05
@@ -53,6 +55,7 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final double SHOOT_D = 100.0; //0.005
 	public final double SHOOT_F = 0.0188;
 	public final double SHOOT_TOLERANCE = 50.0;
+	
 	public final double TURRET_CYCLE_TIME = .005; //seconds
 	
 	public final double DEFLECTOR_P = .0175;

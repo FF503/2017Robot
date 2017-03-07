@@ -28,10 +28,10 @@ public class ToggleIntakeCommand extends Command {
     protected void execute() {
     	if (OI.getIntake()) {
 			if (RobotState.getInstance().getIntakeStatus()){
-				IntakeSubsystem.getInstance().setMotorPower(0.0);
+				IntakeSubsystem.getInstance().setMotorPower(0.0, 0.0);
 				RobotState.getInstance().setIntakeStatus(false);
 			} else {
-				IntakeSubsystem.getInstance().setMotorPower(-1.0);
+				IntakeSubsystem.getInstance().setMotorPower(-.75, -1.0);
 				RobotState.getInstance().setIntakeStatus(true);
 			}
     	} 
@@ -39,10 +39,10 @@ public class ToggleIntakeCommand extends Command {
     	if (OI.getIntakeReverse()) {
     		if (RobotState.getInstance().getIntakeStatus()){
     			//intake is running - turn it off 
-    			IntakeSubsystem.getInstance().setMotorPower(0.0);
+    			IntakeSubsystem.getInstance().setMotorPower(0.0, 0.0);
     			RobotState.getInstance().setIntakeStatus(false);
     		} else {
-    			IntakeSubsystem.getInstance().setMotorPower(1.0);
+    			IntakeSubsystem.getInstance().setMotorPower(.75, 1.0);
     			RobotState.getInstance().setIntakeStatus(true);
     		}
     	}
