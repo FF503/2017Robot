@@ -1,4 +1,4 @@
-package org.usfirst.frc.team503.auton.autonHelpers;
+package org.usfirst.frc.team503.auton;
 
 import org.usfirst.frc.team503.robot.Robot;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;

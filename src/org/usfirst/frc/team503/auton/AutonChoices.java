@@ -1,4 +1,4 @@
-package org.usfirst.frc.team503.auton.autonHelpers;
+package org.usfirst.frc.team503.auton;
 
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.tables.ITable;
@@ -58,7 +58,7 @@ public class AutonChoices{
 	}
 	
 	public enum BinPosition implements Sendable {
-		CLOSE_LEFT_BIN, CLOSE_RIGHT_BIN, FAR_LEFT_BIN, FAR_RIGHT_BIN, NONE;
+		LEFT_BIN, RIGHT_BIN, NO_BIN;
 
 		@Override
 		public void initTable(ITable subtable) { }

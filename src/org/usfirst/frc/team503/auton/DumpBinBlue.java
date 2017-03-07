@@ -1,15 +1,14 @@
-package org.usfirst.frc.team503.auton.autonHelpers;
+package org.usfirst.frc.team503.auton;
 
 import org.usfirst.frc.team503.commands.GyroTurnCommand;
+import org.usfirst.frc.team503.commands.ShootSequenceCommand;
 import org.usfirst.frc.team503.motionProfile.RunMotionProfileCommand;
-import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
-import org.usfirst.frc.team503.subsystems.GyroSubsystem;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class BackUpFromLeftPinAndDumpBlue extends CommandGroup {
+public class DumpBinBlue extends CommandGroup {
 
-    public BackUpFromLeftPinAndDumpBlue() {
+    public DumpBinBlue(boolean shoot) {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -28,18 +27,19 @@ public class BackUpFromLeftPinAndDumpBlue extends CommandGroup {
         // arm.
     	double[][] dumpbinForward = {
 				{0, 22.5},
-				{3.5, 22.5}
+				{-6.6, 22.5}
 		};
     	
     	double[][] hitBin ={
     			{0,0},
-    			{4.5,0}
+    			{3.3,0}
     	};
   
-		addSequential(new RunMotionProfileCommand(dumpbinForward, 2, 1, false));
-	
-		addSequential(new GyroTurnCommand(30, true));
-		
+		addSequential(new RunMotionProfileCommand(dumpbinForward, 2, 1, true));
+		addSequential(new GyroTurnCommand(90));
 		addSequential(new RunMotionProfileCommand(hitBin, 2, 1, false));
+		if(shoot){
+			addSequential(new ShootSequenceCommand());
+		}
     }
 }

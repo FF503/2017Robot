@@ -16,11 +16,11 @@ public class GyroTurnCommand extends Command {
         // eg. requires(chassis);   	
     	this.angle = angle;
     }
-    public GyroTurnCommand(double angle, boolean inRelToCam){
+    public GyroTurnCommand(double angle, boolean relativeToCamera){
     	table = NetworkTable.getTable("LG_Camera");
     	double camOffset = table.getNumber("Degrees",0.0);
     	
-    	if (inRelToCam){
+    	if (relativeToCamera){
     		if (angle != 0.0){
     			this.angle = angle - camOffset;
     		}

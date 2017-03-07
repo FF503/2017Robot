@@ -21,8 +21,7 @@ public class ReverseDriveTrainCommand extends Command {
 	@Override
 	protected void initialize() {
 		if (OI.getDriverReverseButton()){
-			RobotState.getInstance().setDriveTrainReversed(!RobotState.getInstance().getDriveTrainReversed());
-			
+			RobotState.getInstance().setDriveTrainReversed(!RobotState.getInstance().getDriveTrainReversed());	
 		}
 	}
 

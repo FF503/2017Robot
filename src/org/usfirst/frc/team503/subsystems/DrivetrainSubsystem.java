@@ -154,19 +154,14 @@ public class DrivetrainSubsystem extends Subsystem {
 	
 	public void shiftGears(boolean high){
 		//true is high, false is low  
-		boolean currGear = RobotState.getInstance().getCurrentGear(); 
-		if(currGear) {
-			if(!high){ 
-				driveSolenoid.set(Value.kReverse);
-				RobotState.getInstance().setcurrentGear(false);
-			}
-			
-		} 
-		else {
-			if(high) {
-				//Want high - Shift to high 
+		if(RobotState.getInstance().getCurrentGear() != high){
+			if(high){
 				driveSolenoid.set(Value.kForward);
 				RobotState.getInstance().setcurrentGear(true); 
+			}
+			else{
+				driveSolenoid.set(Value.kReverse);
+				RobotState.getInstance().setcurrentGear(false);
 			}
 		}
 	}

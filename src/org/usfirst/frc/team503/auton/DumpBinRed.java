@@ -1,14 +1,14 @@
 package org.usfirst.frc.team503.auton;
 
 import org.usfirst.frc.team503.commands.GyroTurnCommand;
+import org.usfirst.frc.team503.commands.ShootSequenceCommand;
 import org.usfirst.frc.team503.motionProfile.RunMotionProfileCommand;
-import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class DumpBinAndShootBlue extends CommandGroup {
+public class DumpBinRed extends CommandGroup {
 
-    public DumpBinAndShootBlue() {
+    public DumpBinRed(boolean shoot) {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -36,9 +36,11 @@ public class DumpBinAndShootBlue extends CommandGroup {
     	};
   
 		addSequential(new RunMotionProfileCommand(dumpbinForward, 2, 1, true));
-	
-		addSequential(new GyroTurnCommand(90));
-		
+		addSequential(new GyroTurnCommand(-90));
 		addSequential(new RunMotionProfileCommand(hitBin, 2, 1, false));
+		
+		if(shoot){
+			addSequential(new ShootSequenceCommand());
+		}
     }
 }

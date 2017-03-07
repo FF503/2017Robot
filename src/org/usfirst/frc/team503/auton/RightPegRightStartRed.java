@@ -1,16 +1,14 @@
 package org.usfirst.frc.team503.auton;
 
-import org.usfirst.frc.team503.auton.autonHelpers.AutonDriveCommand;
-import org.usfirst.frc.team503.auton.autonHelpers.BackUpFromRightPinAndDumpRed;
 import org.usfirst.frc.team503.commands.GyroTurnCommand;
+import org.usfirst.frc.team503.commands.ShootSequenceCommand;
 import org.usfirst.frc.team503.motionProfile.RunMotionProfileCommand;
-import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class RightPegRightStartRed extends CommandGroup {
 
-    public RightPegRightStartRed(boolean dump) {
+    public RightPegRightStartRed(boolean dump, boolean shoot) {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -37,18 +35,27 @@ public class RightPegRightStartRed extends CommandGroup {
     			{5.5,0}
     	};
     	
+    	double[][] dumpBinForward = {
+				{0, 22.5},
+				{3.5, 22.5}
+		};
+    	
+    	double[][] hitBin ={
+    			{0,0},
+    			{4.5,0}
+    	};    	
   
 		addSequential(new RunMotionProfileCommand(RightPinRightStart, 2, 1, true));
-	
 		addSequential(new GyroTurnCommand(60));
-		
 		addSequential(new AutonDriveCommand());
-		
-		if (dump){
-			addSequential(new BackUpFromRightPinAndDumpRed());
-			
+		if (dump){	  
+			addSequential(new RunMotionProfileCommand(dumpBinForward, 2, 1, false));
+			addSequential(new GyroTurnCommand(30, true));
+			addSequential(new RunMotionProfileCommand(hitBin, 2, 1, false));
 		}
-		
+		if(shoot){
+			addSequential(new ShootSequenceCommand());
+		}
 		
     }
 }
