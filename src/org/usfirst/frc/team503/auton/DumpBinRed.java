@@ -1,6 +1,7 @@
 package org.usfirst.frc.team503.auton;
 
 import org.usfirst.frc.team503.commands.GyroTurnCommand;
+import org.usfirst.frc.team503.commands.ResetTurretCommand;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
 import org.usfirst.frc.team503.motionProfile.RunMotionProfileCommand;
 
@@ -34,7 +35,8 @@ public class DumpBinRed extends CommandGroup {
     			{0,0},
     			{3.3,0}
     	};
-  
+    	
+    	addParallel(new ResetTurretCommand());
 		addSequential(new RunMotionProfileCommand(dumpbinForward, 2, 1, true));
 		addSequential(new GyroTurnCommand(-90));
 		addSequential(new RunMotionProfileCommand(hitBin, 2, 1, false));

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team503.auton;
 
+import org.usfirst.frc.team503.commands.ResetTurretCommand;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
 import org.usfirst.frc.team503.motionProfile.RunMotionProfileCommand;
 
@@ -28,7 +29,8 @@ public class CenterPegCenterStart extends CommandGroup {
 				{0, 13.5},
 				{-4.5, 13.5}
 		};
-  
+    	
+    	addParallel(new ResetTurretCommand());
 		addSequential(new RunMotionProfileCommand(centerPinCenterStart, 2, 1, true));
 		addSequential(new AutonDriveCommand());
 		if(shoot){
