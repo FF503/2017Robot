@@ -20,9 +20,11 @@ public class RobotState extends Subsystem {
 	private boolean climberIsAccelerated;
 	private boolean turretIsRunning;
 	private boolean driveTrainIsReversed;
-	private boolean gearPlacer;
+	private boolean gearPlacerBack;
+	private boolean gearPlacerFront;
 	private State robotState;
 	private TurretState turretState;
+	private ShootingPresets shootingPreset;
     	
 	public RobotState() {
 		shooterIsRunning = false; 
@@ -33,7 +35,8 @@ public class RobotState extends Subsystem {
 		climberIsAccelerated = false;
 		turretIsRunning = false;
 		driveTrainIsReversed = false;
-		gearPlacer = false; //closed
+		gearPlacerBack = false; //closed
+		gearPlacerFront = false; //closed
 		robotState = State.DISABLED;
 		turretState = TurretState.DISABLED;
 	}
@@ -52,13 +55,40 @@ public class RobotState extends Subsystem {
 		DISABLED, SEEKING_TARGET, TARGET_FOUND, RUNNING_PID, ON_TARGET;
 	}
 	
-	public boolean getGearPlacer(){
-		return gearPlacer;
+	public enum ShootingPresets{
+		Batter(0,3900), Hopper(6.45,4500), PegNearHopper(8.8,5050);
+		public double distance;
+		public int rpm;
+		private ShootingPresets(double distance, int rpm){
+			this.distance = distance;
+			this.rpm = rpm;
+		}
 	}
 	
-	public void setGearPlacer(boolean gearPlacer){
-		this.gearPlacer = gearPlacer;
+	public ShootingPresets getShooterPreset(){
+		return shootingPreset;
 	}
+	
+	public void setShootingPreset(ShootingPresets preset){
+		shootingPreset = preset;
+	}
+	
+	public boolean getGearPlacerBack(){
+		return gearPlacerBack;
+	}
+	
+	public void setGearPlacerBack(boolean gearPlacer){
+		this.gearPlacerBack = gearPlacer;
+	}
+	
+	public boolean getGearPlacerFront(){
+		return gearPlacerFront;
+	}
+	
+	public void setGearPlacerFront(boolean gearPlacer){
+		this.gearPlacerFront = gearPlacer;
+	}
+	
 	
 	public TurretState getTurretState(){
 		return turretState;

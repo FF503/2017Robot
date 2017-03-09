@@ -1,37 +1,46 @@
 package org.usfirst.frc.team503.commands;
 
-import org.usfirst.frc.team503.subsystems.TurretSubsystem;
+import org.usfirst.frc.team503.robot.OI;
+import org.usfirst.frc.team503.robot.RobotState;
+import org.usfirst.frc.team503.subsystems.GearPlacerSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ResetTurret extends Command {
+public class OpenGearPlacerCommand extends Command {
 
-    public ResetTurret() {
+    public OpenGearPlacerCommand() {
+    	requires(GearPlacerSubsystem.getInstance());
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	if(OI.getOpenGearMech()){
+       		GearPlacerSubsystem.getInstance().moveGearClampFrontOpen();
+       		GearPlacerSubsystem.getInstance().moveGearClampBackOpen();
+       		RobotState.getInstance().setGearPlacerBack(true);
+       		RobotState.getInstance().setGearPlacerFront(true);
+    	}
     }
+    
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	TurretSubsystem.getInstance().setMotorPower(-.4);
-    	
+    protected void execute() {	
     }
+    
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return TurretSubsystem.getInstance().getRevLimitSwitch();
+        return true;
+
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	TurretSubsystem.getInstance().resetEncoder();
     }
 
     // Called when another command which requires one or more of the same

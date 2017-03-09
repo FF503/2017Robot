@@ -77,7 +77,7 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final double LEFT_ULTRASONIC_VOLTS_PER_INCH = 0.01064453016;
 	public final double RIGHT_ULTRASONIC_VOLTS_PER_INCH = 0.01035156144;
 	
-	public final double REVERSE_INDEXER = -1;
+	public final double REVERSE_INDEXER = -1.0  ;
 	
 	public double TURRET_P = 0.0;
 	public double TURRET_I = 0.0;
@@ -98,6 +98,10 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	
 	public boolean hasIndexer(){
 		return true;
+	}
+	
+	public boolean hasDriveCamera(){
+		return false;
 	}
 	
 	@Override 

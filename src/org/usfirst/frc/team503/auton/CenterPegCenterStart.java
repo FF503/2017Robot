@@ -1,9 +1,13 @@
 package org.usfirst.frc.team503.auton;
 
+import org.usfirst.frc.team503.commands.CloseGearPlacerCommand;
+import org.usfirst.frc.team503.commands.OpenGearPlacerCommand;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
 import org.usfirst.frc.team503.motionProfile.RunMotionProfileCommand;
+import org.usfirst.frc.team503.robot.RobotState;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class CenterPegCenterStart extends CommandGroup {
 
@@ -26,12 +30,16 @@ public class CenterPegCenterStart extends CommandGroup {
         // arm.
     	double[][] centerPinCenterStart = {
 				{0, 13.5},
-				{-4.5, 13.5}
+				{-4, 13.5}
 		};
   
 		addSequential(new RunMotionProfileCommand(centerPinCenterStart, 2, 1, true));
-		addSequential(new AutonDriveCommand());
+		addSequential(new AutonDriveCommand(false));
+		addParallel(new CloseGearPlacerCommand());
+		addSequential(new WaitCommand(2));
+		addSequential(new OpenGearPlacerCommand());
 		if(shoot){
+			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.PegNearHopper);
 			addSequential(new ShootSequenceCommand());
 		}
     }

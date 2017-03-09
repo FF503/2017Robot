@@ -28,13 +28,14 @@ public class TurnTurretCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	currAngle = TurretSubsystem.getInstance().getAngle();
+    	
 		SmartDashboard.putBoolean("Turret onTarget", TurretSubsystem.getInstance().isOnTarget());
 
     	if(goTo){
         	TurretSubsystem.getInstance().setSetpoint(angle);
     	}
     	else{
+    		currAngle = TurretSubsystem.getInstance().getAngle();
     		TurretSubsystem.getInstance().setSetpoint(angle+currAngle);
     	}
     }

@@ -25,7 +25,7 @@ public class ShootSequenceCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	ShooterSubsystem.getInstance().setSetpoint(Constants.SHOOTER_SPEED);
+    	ShooterSubsystem.getInstance().setSetpoint(RobotState.getInstance().getShooterPreset().rpm);
     	RobotState.getInstance().setShooterStatus(true);
     	startTime = Timer.getFPGATimestamp();
     }
@@ -42,7 +42,7 @@ public class ShootSequenceCommand extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	if(RobotState.getInstance().getState()==RobotState.State.TELEOP){
-            return OI.getIndexer();
+            return OI.getEndShoot();
     	}
     	else{
     		return (currTime-startTime)>Constants.SHOOT_TIME_FOR_10_BALLS;

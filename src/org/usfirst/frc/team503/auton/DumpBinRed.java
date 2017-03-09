@@ -1,10 +1,13 @@
 package org.usfirst.frc.team503.auton;
 
+import org.usfirst.frc.team503.commands.CloseGearPlacerCommand;
 import org.usfirst.frc.team503.commands.GyroTurnCommand;
+import org.usfirst.frc.team503.commands.OpenGearPlacerCommand;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
 import org.usfirst.frc.team503.motionProfile.RunMotionProfileCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class DumpBinRed extends CommandGroup {
 
@@ -38,7 +41,9 @@ public class DumpBinRed extends CommandGroup {
 		addSequential(new RunMotionProfileCommand(dumpbinForward, 2, 1, true));
 		addSequential(new GyroTurnCommand(-90));
 		addSequential(new RunMotionProfileCommand(hitBin, 2, 1, false));
-		
+		addParallel(new OpenGearPlacerCommand());
+		addSequential(new WaitCommand(2));
+		addSequential(new CloseGearPlacerCommand());
 		if(shoot){
 			addSequential(new ShootSequenceCommand());
 		}

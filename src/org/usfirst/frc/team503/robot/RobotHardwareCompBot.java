@@ -21,6 +21,7 @@ public class RobotHardwareCompBot extends RobotHardware {
 	public final int climberSpark2Port = 3;     
 	public final int rightUltrasonicPort = 1;
 	public final int leftUltrasonicPort = 0;
+	public final int lowGoalLightPort = 6;
 		
 	public final double REVERSE_UPPER_INTAKE = -1.0;
 
@@ -28,11 +29,11 @@ public class RobotHardwareCompBot extends RobotHardware {
 	public final double WHEEL_BASE = 32.5;
 	public final double CYCLE_TIME = 0.05;	
 	public final int DRIVE_COUNTS_PER_REV = 512;	
-	public final double DRIVE_P = 0;
-	public final double DRIVE_I = 0;
-	public final double DRIVE_D = 0;
-	public final double LEFT_DRIVE_F  = 0.2291;
-	public final double RIGHT_DRIVE_F = 0.2205;
+	public final double DRIVE_P = 0.00013;//0.00015;
+	public final double DRIVE_I = 0.0000000; //0.0
+	public final double DRIVE_D = 0.5;//6.5; //1.6
+	public final double LEFT_DRIVE_F  = 0.1208; 
+	public final double RIGHT_DRIVE_F = 0.1229;
 	
 	public final boolean REVERSE_LEFT_SENSOR = true;
 	public final boolean REVERSE_RIGHT_SENSOR = false;
@@ -65,10 +66,10 @@ public class RobotHardwareCompBot extends RobotHardware {
 	public final boolean DEFLECTOR_REVERSE_SENSOR = true;
 	
 	public final double DISTANCE_BETWEEN_ULTRASONICS = 13.7;
-	public final double LEFT_ULTRASONIC_VOLTS_PER_INCH = 0.01064453016;
-	public final double RIGHT_ULTRASONIC_VOLTS_PER_INCH = 0.01035156144;
+	public final double LEFT_ULTRASONIC_VOLTS_PER_INCH = 0.008392333125;
+	public final double RIGHT_ULTRASONIC_VOLTS_PER_INCH = 0.01041412246875;
 	
-	public double TURRET_P = 0.0;
+	public double TURRET_P = 0.1;
 	public double TURRET_I = 0.0;
 	public double TURRET_D = 0.0;	
 	
@@ -86,6 +87,10 @@ public class RobotHardwareCompBot extends RobotHardware {
 	
 	public boolean hasIndexer(){
 		return true;
+	}
+	
+	public boolean hasDriveCamera(){
+		return false;
 	}
 	
 	@Override 

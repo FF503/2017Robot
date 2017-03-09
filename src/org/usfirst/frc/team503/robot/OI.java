@@ -2,13 +2,16 @@ package org.usfirst.frc.team503.robot;
 
 import org.usfirst.frc.team503.commands.ClimbCommand;
 import org.usfirst.frc.team503.commands.ClimbFasterCommand;
-import org.usfirst.frc.team503.commands.GoToDeflectorCommand;
+import org.usfirst.frc.team503.commands.CloseGearPlacerCommand;
+import org.usfirst.frc.team503.commands.OpenGearPlacerCommand;
+import org.usfirst.frc.team503.commands.ReverseDriveTrainCommand;
 import org.usfirst.frc.team503.commands.ShiftToHighGear;
 import org.usfirst.frc.team503.commands.ShiftToLowGear;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
-import org.usfirst.frc.team503.commands.ToggleGearPlacerCommand;
+import org.usfirst.frc.team503.commands.ToggleGearPlacerBack;
+import org.usfirst.frc.team503.commands.ToggleGearPlacerFront;
 import org.usfirst.frc.team503.commands.ToggleIntakeCommand;
-import org.usfirst.frc.team503.subsystems.DeflectorSubsystem;
+import org.usfirst.frc.team503.commands.TurnTurretCommand;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -49,37 +52,53 @@ public class OI {
 	private static Joystick operatorJoystick = new Joystick(1);
 //	private static XboxController  xBox = new XboxController(1);	
 	
-	private static JoystickButton intakeButton = new JoystickButton(driverJoystick, 1);
-	private static JoystickButton intakeReverse = new JoystickButton(driverJoystick, 2);
-	private static JoystickButton gearButton = new JoystickButton(driverJoystick, 3);
+	private static JoystickButton openGearMechButton = new JoystickButton(driverJoystick, 1);
+	private static JoystickButton closeGearMechButton = new JoystickButton(driverJoystick, 2);
+	private static JoystickButton intakeButton = new JoystickButton(driverJoystick, 3);
+	private static JoystickButton intakeReverse = new JoystickButton(driverJoystick, 4);
 	private static JoystickButton shiftToLowGearButton = new JoystickButton(driverJoystick,5);
 	private static JoystickButton shiftToHighGearButton = new JoystickButton(driverJoystick,6);
-	private static JoystickButton reverseDriveTrainBttn = new JoystickButton(driverJoystick, 8);
+	private static JoystickButton reverseDriveTrainButton = new JoystickButton(driverJoystick, 8);
 
 	private static JoystickButton climbButton = new JoystickButton(operatorJoystick, 1);
 	private static JoystickButton climbFasterButton = new JoystickButton(operatorJoystick, 2);
-	private static JoystickButton shootRPMButton = new JoystickButton(operatorJoystick, 3);
-	private static JoystickButton indexerButton = new JoystickButton(operatorJoystick, 4);
+	private static JoystickButton backGearButton = new JoystickButton(operatorJoystick, 3);
+	private static JoystickButton frontGearButton = new JoystickButton(operatorJoystick, 4);
+	private static JoystickButton endShoot = new JoystickButton(operatorJoystick, 5);
+	private static JoystickButton shootRPMButton = new JoystickButton(operatorJoystick, 6);
+	//private static JoystickButton incrementDeflector = new JoystickButton(operatorJoystick, 7);
+	//private static JoystickButton decrementDeflector = new JoystickButton(operatorJoystick, 8);
 	
-	private static JoystickButton goToDeflectorButton = new JoystickButton(operatorJoystick, 5);
-	//private static JoystickButton goToTurretPosition = new JoystickButton(operatorJoystick, 7);
+	//private static JoystickButton goToDeflectorButton = new JoystickButton(operatorJoystick, 5);
+	private static JoystickButton goToTurretPosition = new JoystickButton(operatorJoystick, 7);
 	
 	public static void initialize(){
-	//	shootRPMButton.whenPressed(new ToggleShootRPMCommand());
+		//	shootRPMButton.whenPressed(new ToggleShootRPMCommand());
 		shootRPMButton.whenPressed(new ShootSequenceCommand());
 		intakeButton.whenPressed(new ToggleIntakeCommand());
 		intakeReverse.whenPressed(new ToggleIntakeCommand());
 		shiftToLowGearButton.whenPressed(new ShiftToLowGear());
 		shiftToHighGearButton.whenPressed(new ShiftToHighGear());
 		//indexerButton.whenPressed(new ToggleIndexerCommand());
-		gearButton.whenPressed(new ToggleGearPlacerCommand());
+		backGearButton.whenPressed(new ToggleGearPlacerBack());
+		frontGearButton.whenPressed(new ToggleGearPlacerFront());
+		openGearMechButton.whenPressed(new OpenGearPlacerCommand());
+		closeGearMechButton.whenPressed(new CloseGearPlacerCommand());
+		//incrementPreset.whenPressed(new GoToDeflectorCommand());
+		//decrementPreset.whenPressed(new GoToDeflectorCommand());
 		climbButton.whenPressed(new ClimbCommand());
+		reverseDriveTrainButton.whenPressed(new ReverseDriveTrainCommand());
 		climbFasterButton.whenPressed(new ClimbFasterCommand());
-		goToDeflectorButton.whenPressed(new GoToDeflectorCommand(DeflectorSubsystem.DeflectorAngle.LOW.angle));
+		//goToDeflectorButton.whenPressed(new GoToDeflectorCommand(DeflectorSubsystem.DeflectorAngle.LOW.angle));
 		//goToTurretPosition.whenPressed(new TurnTurretCommand(10, false));
 		
 	}
-	
+	/*public static boolean getIncrementDeflector(){
+		return incrementPreset.get();
+	}
+	public static boolean getDecrementDeflector(){
+		return decrementPreset.get();
+	}*/
 	public static double getDriverLeftYValue(){
 		return driverJoystick.getRawAxis(1);
 	}
@@ -93,7 +112,7 @@ public class OI {
 	}
 	
 	public static boolean getDriverReverseButton(){
-		return reverseDriveTrainBttn.get();
+		return reverseDriveTrainButton.get();
 	}
 
 	
@@ -145,10 +164,6 @@ public class OI {
 	public static boolean getIntake(){
 		return intakeButton.get();
 	}
-
-	public static boolean getIndexer(){
-		return indexerButton.get();
-	}
 	
 	public static boolean getShootRPMButton(){
 		return shootRPMButton.get();
@@ -158,16 +173,31 @@ public class OI {
 		return intakeReverse.get();
 	}
 	
-	public static boolean getGearButton(){
-		return gearButton.get();
+	public static boolean getGearButtonBack(){
+		return backGearButton.get();
+	}
+	
+	public static boolean getGearButtonFront(){
+		return frontGearButton.get();
 	}
 	
 	public static boolean getClimbButton(){
 		return climbButton.get();
 	}
 	
+	public static boolean getEndShoot(){
+		return endShoot.get();
+	}
+	
 	public static boolean getClimbFastButton(){
 		return climbFasterButton.get();
 	}
+	
+	public static boolean getOpenGearMech(){
+		return openGearMechButton.get();
+	}
+	
+	public static boolean getCloseGearMech(){
+		return closeGearMechButton.get();
+	}
 }
-

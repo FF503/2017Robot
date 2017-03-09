@@ -28,7 +28,7 @@ public class ArcadeDriveCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if (RobotState.getInstance().getDriveTrainReversed()){
-          	DrivetrainSubsystem.getInstance().arcadeDrive(OI.getDriverLeftYValue(), OI.getDriverLeftXValue(), true);
+          	DrivetrainSubsystem.getInstance().arcadeDrive(OI.getDriverLeftYValue(), -OI.getDriverLeftXValue(), true);
     	}
     	else{
     		DrivetrainSubsystem.getInstance().arcadeDrive(OI.getDriverLeftYValue(), OI.getDriverLeftXValue(),false);

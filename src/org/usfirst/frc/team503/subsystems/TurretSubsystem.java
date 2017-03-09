@@ -40,7 +40,7 @@ public class TurretSubsystem extends Subsystem {
 //		turretMotor.setAllowableClosedLoopErr((int)(kTurretOnTargetTolerance /kTurretDegreesPerRotation));
 //		turretMotor.setForwardSoftLimit(kRotationsInRange);
 //		turretMotor.setReverseSoftLimit(0.0);
-		turretMotor.setVoltageRampRate(6);
+		turretMotor.setVoltageRampRate(9);
 	    turretMotor.enableForwardSoftLimit(false);
 	    turretMotor.enableReverseSoftLimit(false);
 		turretThread = new TurretThread();

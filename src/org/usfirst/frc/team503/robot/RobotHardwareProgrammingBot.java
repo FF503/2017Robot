@@ -80,6 +80,10 @@ public class RobotHardwareProgrammingBot extends RobotHardware {
 		return false;
 	}
 	
+	public boolean hasDriveCamera(){
+		return false;
+	}
+	
 	@Override
 	public String getName(){
 		return "ProgrammingBot";

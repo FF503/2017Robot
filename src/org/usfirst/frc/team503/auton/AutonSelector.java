@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * This class creates the choosers for the auton mode, test mode, and possible teleop selectors.
  * @author Rodrigo Cardenas
  */
-public class SteamworksAutonSelector {
+public class AutonSelector {
 
 	private SendableChooser<AutonChoices.Alliances> allianceChooser;
 	private SendableChooser<AutonChoices.GearPosition> gearPosChooser;
@@ -19,7 +19,7 @@ public class SteamworksAutonSelector {
 	/**
 	 * Constructor for the SteamworksAutonSelectors
 	 */
-	public SteamworksAutonSelector(){
+	public AutonSelector(){
 		//All of the Auton Choosers
 		allianceChooser = new SendableChooser<>();
 		gearPosChooser = new SendableChooser<>();
@@ -28,9 +28,9 @@ public class SteamworksAutonSelector {
 		
 	}
 	
-	private static SteamworksAutonSelector instance = new SteamworksAutonSelector();
+	private static AutonSelector instance = new AutonSelector();
 	
-	public static SteamworksAutonSelector getInstance() {
+	public static AutonSelector getInstance() {
 		return instance;
 	}
 	
@@ -79,7 +79,7 @@ public class SteamworksAutonSelector {
 		 * This is where the commands are determined 
 		 * 
 		 */
-		
+		SmartDashboard.putString("Auton choice", allianceChoice.toString() + " " + gearPositionChoice.toString() + " " + shootChoice.toString() + " " + binChoice.toString());
 		switch(allianceChoice){
 		case RED: 
 			switch(gearPositionChoice){
@@ -96,6 +96,8 @@ public class SteamworksAutonSelector {
 						(new LeftPegLeftStartRed(true, true)).start();
 						break;
 					}
+					break;
+					
 				case NO_BIN: 
 					switch(shootChoice) {
 					case SHOOT:
@@ -107,7 +109,9 @@ public class SteamworksAutonSelector {
 						(new LeftPegLeftStartRed(false,false)).start();
 						break;
 					}
+					break;
 				}
+				break;
 			case CENTER:
 				switch(binChoice){
 				case NO_BIN: 
@@ -121,7 +125,9 @@ public class SteamworksAutonSelector {
 						(new CenterPegCenterStart(false)).start();
 						break;
 					}
+					break;
 				}
+				break;
 			case RIGHT:
 				switch(binChoice){
 				case RIGHT_BIN:
@@ -135,6 +141,7 @@ public class SteamworksAutonSelector {
 						(new RightPegRightStartRed(true, false)).start();
 						break;
 					}
+					break;
 				case NO_BIN: 
 					switch(shootChoice) {
 					case SHOOT:
@@ -146,11 +153,14 @@ public class SteamworksAutonSelector {
 						(new RightPegRightStartRed(false, false)).start();
 						break;
 					}
+					break;
 				}
+				break;
 			case DO_NOTHING:
 				//Red Alliance, Do Nothing
 				break;
 			}
+			break;
 		case BLUE:
 			switch(gearPositionChoice){
 			case LEFT:
@@ -166,6 +176,7 @@ public class SteamworksAutonSelector {
 						(new LeftPegLeftStartBlue(true, false)).start();
 						break;
 					}
+					break;
 				case NO_BIN: 
 					switch(shootChoice) {
 					case SHOOT:
@@ -177,7 +188,9 @@ public class SteamworksAutonSelector {
 						(new LeftPegLeftStartBlue(false, false)).start();
 						break;
 					}
+					break;
 				}
+				break;
 			case CENTER:
 				switch(binChoice){
 				case NO_BIN: 
@@ -189,9 +202,12 @@ public class SteamworksAutonSelector {
 					case DONT_SHOOT:
 						//Blue Alliance, Center Gear, Don't Dump Any Bin, Don't Shoot
 						(new CenterPegCenterStart(false)).start();
+						SmartDashboard.putString("starting auton","reached it");
 						break;
 					}
+					break;
 				}
+				break;
 			case RIGHT:
 				switch(binChoice){
 				case RIGHT_BIN:
@@ -205,6 +221,7 @@ public class SteamworksAutonSelector {
 						(new RightPegRightStartBlue(true, false)).start();
 						break;
 					}
+					break;
 				case NO_BIN: 
 					switch(shootChoice) {
 					case SHOOT:
@@ -216,11 +233,14 @@ public class SteamworksAutonSelector {
 						(new RightPegRightStartBlue(false, false)).start();
 						break;
 					}
+					break;
 				}
+				break;
 			case DO_NOTHING:
 				//Blue Alliance, Do Nothing
 				break;
 			}
+			break;
 		}
 	}
 	

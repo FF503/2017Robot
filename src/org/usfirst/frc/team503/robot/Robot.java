@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team503.robot;
 
+import org.usfirst.frc.team503.auton.AutonSelector;
 import org.usfirst.frc.team503.commands.ArcadeDriveCommand;
 import org.usfirst.frc.team503.commands.TeleopDeflectorCommand;
 import org.usfirst.frc.team503.subsystems.DeflectorSubsystem;
@@ -13,7 +14,9 @@ import org.usfirst.frc.team503.subsystems.TurretSubsystem;
 import org.usfirst.frc.team503.subsystems.UltrasonicSubsystem;
 import org.usfirst.frc.team503.utils.Logger;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -32,6 +35,7 @@ public class Robot extends IterativeRobot {
 	private static double startTime;
 	private Command autonCommand = null; 
 	private NetworkTable table;
+	private Solenoid lightSolenoid; 
 	/**
 	 * RobotInit - Fires when robot is powered-up 
 	 */
@@ -39,14 +43,16 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
         NetworkTable.globalDeleteAll(); //Removes unused garbage from SmartDashboard
         NetworkTable.initialize();      //Initialize Network Tables
-		
         bot = new RobotHardwareCompBot();
 		bot.initialize();
 		bot.logSmartDashboard();         /*put name of selected bot on smartdashboard */
 		OI.initialize();
 		table = NetworkTable.getTable("LG_Camera");
-		//SteamworksChooser.getInstance().autonInitChooser();
+		AutonSelector.getInstance().putAutonChoosers();
 		RobotState.getInstance().setState(RobotState.State.DISABLED);
+		if(Robot.bot.hasDriveCamera()){
+			CameraServer.getInstance().startAutomaticCapture();
+		}
 	}
  
 	/**
@@ -80,16 +86,11 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		
-		//SteamworksChooser.getInstance().executeAuton();
+		lightSolenoid = new Solenoid(Robot.bot.lowGoalLightPort);
+    	lightSolenoid.set(true);
+		AutonSelector.getInstance().startAuton();
 		startTime = Timer.getFPGATimestamp();
 		RobotState.getInstance().setState(RobotState.State.AUTON);
-
-	//	autonCommand = new CenterPegCenterStart();
-
-		if(autonCommand!=null){
-			autonCommand.start();
-		}
 	}
 
 	/**

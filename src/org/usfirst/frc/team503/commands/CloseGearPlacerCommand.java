@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ToggleGearPlacerCommand extends Command {
+public class CloseGearPlacerCommand extends Command {
 
-    public ToggleGearPlacerCommand() {
+    public CloseGearPlacerCommand() {
     	requires(GearPlacerSubsystem.getInstance());
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -19,19 +19,14 @@ public class ToggleGearPlacerCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(OI.getGearButton()){
-    		if(RobotState.getInstance().getGearPlacer()==false){
-    			GearPlacerSubsystem.getInstance().moveGearClampOuterBackward();
-        		GearPlacerSubsystem.getInstance().moveGearClampInnerBackward();
-        		RobotState.getInstance().setGearPlacer(true);
-    		}
-    		else{
-    			GearPlacerSubsystem.getInstance().moveGearClampOuterForward();
-        		GearPlacerSubsystem.getInstance().moveGearClampInnerForward();
-        		RobotState.getInstance().setGearPlacer(false);
-    		}
+    	if(OI.getCloseGearMech()){
+        		GearPlacerSubsystem.getInstance().moveGearClampFrontClose();
+        		GearPlacerSubsystem.getInstance().moveGearClampBackClose();
+        		RobotState.getInstance().setGearPlacerBack(false);
+        		RobotState.getInstance().setGearPlacerFront(false);
     	}
     }
+    
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {	
