@@ -34,7 +34,7 @@ public class CenterPegCenterStart extends CommandGroup {
 		};
   
 		addSequential(new RunMotionProfileCommand(centerPinCenterStart, 2, 1, true));
-		addSequential(new AutonDriveCommand(false));
+		addSequential(new AutonDriveCommand());
 		addParallel(new CloseGearPlacerCommand());
 		addSequential(new WaitCommand(2));
 		addSequential(new OpenGearPlacerCommand());

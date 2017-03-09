@@ -17,6 +17,7 @@ public class AutonDriveCommand extends Command {
 	double angle, difference;
 	NetworkTable table;
 	double count;
+	double startTime, currTime;
 	
     public AutonDriveCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -31,13 +32,14 @@ public class AutonDriveCommand extends Command {
     	SmartDashboard.putBoolean("Auton drive isFinished", false);
     	GyroSubsystem.getInstance().gyro.reset();
     	DrivetrainSubsystem.getInstance().percentVoltageMode();
+    	startTime = Timer.getFPGATimestamp();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	count++;
+    	currTime = Timer.getFPGATimestamp();
 		SmartDashboard.putNumber("auton drive count", count);
-    	angle = -table.getNumber("Degrees", 0.0);
     	SmartDashboard.putNumber("Peg Angle", angle);
     	if(UltrasonicSubsystem.getInstance().getUltrasonicDistance() > 24.0 && angle != 0.0){   //was 36 
     		DrivetrainSubsystem.getInstance().arcadeDrive(.2, angle*.05, false); //0.2 and 0.05
@@ -61,8 +63,8 @@ public class AutonDriveCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	SmartDashboard.putBoolean("Auton drive isFinished",(UltrasonicSubsystem.getInstance().getUltrasonicDistance() < 12));
-    	return (UltrasonicSubsystem.getInstance().getUltrasonicDistance() < 12.0);
+    	SmartDashboard.putBoolean("Auton drive isFinished",(UltrasonicSubsystem.getInstance().getUltrasonicDistance() < 12.0));
+    	return (UltrasonicSubsystem.getInstance().getUltrasonicDistance() < 12.0) || (currTime - startTime)>3.0;
     }	
 
     protected void end(){
