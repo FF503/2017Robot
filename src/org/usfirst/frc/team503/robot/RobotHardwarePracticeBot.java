@@ -81,7 +81,8 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	
 	public double TURRET_P = 0.0;
 	public double TURRET_I = 0.0;
-	public double TURRET_D = 0.0;	
+	public double TURRET_D = 0.0;
+	public int lowGoalLightPort;	
 	
 	@Override
 	public void initialize(){

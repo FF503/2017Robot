@@ -25,6 +25,8 @@ public abstract class RobotHardware {
 	private AnalogAccelerometer dummyAccel;
 	private Solenoid dummySolenoid;
 	
+	public boolean hasLowGoalLight = false;
+	
 
 	public void logSmartDashboard()
 	{

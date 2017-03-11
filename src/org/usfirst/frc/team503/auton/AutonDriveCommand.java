@@ -63,8 +63,8 @@ public class AutonDriveCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	SmartDashboard.putBoolean("Auton drive isFinished",(UltrasonicSubsystem.getInstance().getUltrasonicDistance() < 12.0));
-    	return (UltrasonicSubsystem.getInstance().getUltrasonicDistance() < 12.0) || (currTime - startTime)>3.0;
+    	SmartDashboard.putBoolean("Auton drive isFinished",(UltrasonicSubsystem.getInstance().getUltrasonicDistance() < 15.0));
+    	return (UltrasonicSubsystem.getInstance().getUltrasonicDistance() < 15.0);
     }	
 
     protected void end(){

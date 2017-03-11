@@ -86,8 +86,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		lightSolenoid = new Solenoid(Robot.bot.lowGoalLightPort);
-    	lightSolenoid.set(true);
+		if (Robot.bot.hasLowGoalLight){
+			lightSolenoid = new Solenoid(Robot.bot.lowGoalLightPort);
+	    	lightSolenoid.set(true);
+		}
 		AutonSelector.getInstance().startAuton();
 		startTime = Timer.getFPGATimestamp();
 		RobotState.getInstance().setState(RobotState.State.AUTON);
@@ -103,6 +105,7 @@ public class Robot extends IterativeRobot {
 		
 		if (!Robot.bot.getName().equals("ProgrammingBot")){
 			SmartDashboard.putNumber("Shooter Motor Speed", ShooterSubsystem.getInstance().getSpeed());
+			SmartDashboard.putNumber("Peg Angle", table.getNumber("Degrees", 0.0));
 			GyroSubsystem.getInstance().sendDashboardData();
 			UltrasonicSubsystem.getInstance().sendDashboardData();
 			DeflectorSubsystem.getInstance().sendDashboardData();

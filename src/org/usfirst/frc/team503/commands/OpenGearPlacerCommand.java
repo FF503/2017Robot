@@ -19,12 +19,22 @@ public class OpenGearPlacerCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(OI.getOpenGearMech()){
-       		GearPlacerSubsystem.getInstance().moveGearClampFrontOpen();
-       		GearPlacerSubsystem.getInstance().moveGearClampBackOpen();
-       		RobotState.getInstance().setGearPlacerBack(true);
-       		RobotState.getInstance().setGearPlacerFront(true);
+    	
+    	if (RobotState.getInstance().getState() == RobotState.State.TELEOP){
+	    	if(OI.getOpenGearMech()){
+	       		GearPlacerSubsystem.getInstance().moveGearClampFrontClose();
+	       		GearPlacerSubsystem.getInstance().moveGearClampBackClose();
+	       		RobotState.getInstance().setGearPlacerBack(true);
+	       		RobotState.getInstance().setGearPlacerFront(true);
+	    	}
     	}
+    	else{
+    		GearPlacerSubsystem.getInstance().moveGearClampFrontClose();
+       		GearPlacerSubsystem.getInstance().moveGearClampBackClose();
+       		RobotState.getInstance().setGearPlacerBack(true);
+       		RobotState.getInstance().setGearPlacerFront(true);	
+    	}
+    	
     }
     
 

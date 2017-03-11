@@ -73,6 +73,9 @@ public class RobotHardwareCompBot extends RobotHardware {
 	public double TURRET_I = 0.0;
 	public double TURRET_D = 0.0;	
 	
+	
+	public boolean hasTurretLight = true;
+	
 	@Override
 	public void initialize(){
 	}
@@ -90,7 +93,7 @@ public class RobotHardwareCompBot extends RobotHardware {
 	}
 	
 	public boolean hasDriveCamera(){
-		return false;
+		return true;
 	}
 	
 	@Override 

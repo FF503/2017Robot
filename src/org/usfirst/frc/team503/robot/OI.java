@@ -52,8 +52,8 @@ public class OI {
 	private static Joystick operatorJoystick = new Joystick(1);
 //	private static XboxController  xBox = new XboxController(1);	
 	
-	private static JoystickButton openGearMechButton = new JoystickButton(driverJoystick, 1);
-	private static JoystickButton closeGearMechButton = new JoystickButton(driverJoystick, 2);
+	private static JoystickButton openGearMechButton = new JoystickButton(driverJoystick, 2);
+	private static JoystickButton closeGearMechButton = new JoystickButton(driverJoystick, 1);
 	private static JoystickButton intakeButton = new JoystickButton(driverJoystick, 3);
 	private static JoystickButton intakeReverse = new JoystickButton(driverJoystick, 4);
 	private static JoystickButton shiftToLowGearButton = new JoystickButton(driverJoystick,5);
