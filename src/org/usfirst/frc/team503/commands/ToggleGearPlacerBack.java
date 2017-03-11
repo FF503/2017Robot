@@ -10,8 +10,9 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ToggleGearPlacerBack extends Command {
-
-    public ToggleGearPlacerBack() {
+	private static boolean justOpen;
+    public ToggleGearPlacerBack(boolean justOpen) {
+    	this.justOpen = justOpen;
     	requires(GearPlacerSubsystem.getInstance());
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -20,7 +21,8 @@ public class ToggleGearPlacerBack extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	if(OI.getGearButtonBack()){
-    		if(RobotState.getInstance().getGearPlacerBack()==false){
+    		
+    		if((justOpen)||(RobotState.getInstance().getGearPlacerBack()==false)){
         		GearPlacerSubsystem.getInstance().moveGearClampFrontOpen();
         		RobotState.getInstance().setGearPlacerBack(true);
     		}

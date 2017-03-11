@@ -58,8 +58,10 @@ public class OI {
 	private static JoystickButton intakeReverse = new JoystickButton(driverJoystick, 4);
 	private static JoystickButton shiftToLowGearButton = new JoystickButton(driverJoystick,5);
 	private static JoystickButton shiftToHighGearButton = new JoystickButton(driverJoystick,6);
-	private static JoystickButton reverseDriveTrainButton = new JoystickButton(driverJoystick, 8);
-
+	private static JoystickButton reverseDriveTrainButton = new JoystickButton(driverJoystick, 7);
+	private static JoystickButton placeGearButton = new JoystickButton(driverJoystick, 8);
+	
+	
 	private static JoystickButton climbButton = new JoystickButton(operatorJoystick, 1);
 	private static JoystickButton climbFasterButton = new JoystickButton(operatorJoystick, 2);
 	private static JoystickButton backGearButton = new JoystickButton(operatorJoystick, 3);
@@ -80,8 +82,9 @@ public class OI {
 		shiftToLowGearButton.whenPressed(new ShiftToLowGear());
 		shiftToHighGearButton.whenPressed(new ShiftToHighGear());
 		//indexerButton.whenPressed(new ToggleIndexerCommand());
-		backGearButton.whenPressed(new ToggleGearPlacerBack());
-		frontGearButton.whenPressed(new ToggleGearPlacerFront());
+		backGearButton.whenPressed(new ToggleGearPlacerBack(false));
+		frontGearButton.whenPressed(new ToggleGearPlacerFront(false));
+		placeGearButton.whenPressed(new ToggleGearPlacerFront(true));
 		openGearMechButton.whenPressed(new OpenGearPlacerCommand());
 		closeGearMechButton.whenPressed(new CloseGearPlacerCommand());
 		//incrementPreset.whenPressed(new GoToDeflectorCommand());
@@ -199,5 +202,9 @@ public class OI {
 	
 	public static boolean getCloseGearMech(){
 		return closeGearMechButton.get();
+	}
+	
+	public static boolean getPlaceGear(){
+		return placeGearButton.get();
 	}
 }
