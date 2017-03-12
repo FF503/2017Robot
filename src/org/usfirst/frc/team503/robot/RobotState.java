@@ -22,12 +22,14 @@ public class RobotState extends Subsystem {
 	private boolean driveTrainIsReversed;
 	private boolean gearPlacerBack;
 	private boolean gearPlacerFront;
+	private boolean climberIsRunningSlow;
 	private State robotState;
 	private TurretState turretState;
 	private ShootingPresets shootingPreset;
     	
 	public RobotState() {
 		shooterIsRunning = false; 
+		climberIsRunningSlow = false; 
 		intakeIsRunning = false;
 		currentDriveGear = false;    //low gear
 		indexerIsRunning = false;
@@ -83,6 +85,14 @@ public class RobotState extends Subsystem {
 	
 	public boolean getGearPlacerFront(){
 		return gearPlacerFront;
+	}
+	
+	public boolean getClimberRunningSlow(){
+		return climberIsRunningSlow;
+	}
+	
+	public void setClimberRunningSlow(boolean climber){
+		climberIsRunningSlow = climber;
 	}
 	
 	public void setGearPlacerFront(boolean gearPlacer){
@@ -143,7 +153,7 @@ public class RobotState extends Subsystem {
 	}
 	
 	public boolean getClimberCanAccelerate(){
-		return (climberIsRunning && (!climberIsAccelerated));
+		return (!climberIsAccelerated);
 	}
 	
 	public void setcurrentGear(boolean status) {

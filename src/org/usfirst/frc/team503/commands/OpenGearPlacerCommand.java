@@ -29,9 +29,9 @@ public class OpenGearPlacerCommand extends Command {
 	    	}
     	}
     	else{
-    		GearPlacerSubsystem.getInstance().moveGearClampFrontClose();
+    		//GearPlacerSubsystem.getInstance().moveGearClampFrontClose();
        		GearPlacerSubsystem.getInstance().moveGearClampBackClose();
-       		RobotState.getInstance().setGearPlacerBack(true);
+       		//RobotState.getInstance().setGearPlacerBack(true);
        		RobotState.getInstance().setGearPlacerFront(true);	
     	}
     	

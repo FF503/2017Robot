@@ -87,6 +87,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		if (Robot.bot.hasLowGoalLight){
+			
 			lightSolenoid = new Solenoid(Robot.bot.lowGoalLightPort);
 	    	lightSolenoid.set(true);
 		}
@@ -106,6 +107,9 @@ public class Robot extends IterativeRobot {
 		if (!Robot.bot.getName().equals("ProgrammingBot")){
 			SmartDashboard.putNumber("Shooter Motor Speed", ShooterSubsystem.getInstance().getSpeed());
 			SmartDashboard.putNumber("Peg Angle", table.getNumber("Degrees", 0.0));
+			
+			SmartDashboard.putBoolean("Front Gear Placer", RobotState.getInstance().getGearPlacerFront());
+			SmartDashboard.putBoolean("Back Gear Placer", RobotState.getInstance().getGearPlacerBack());
 			GyroSubsystem.getInstance().sendDashboardData();
 			UltrasonicSubsystem.getInstance().sendDashboardData();
 			DeflectorSubsystem.getInstance().sendDashboardData();
@@ -149,6 +153,8 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putNumber("Shooter RPM Speed", ShooterSubsystem.getInstance().getSpeed());
 			SmartDashboard.putNumber("Shooter position", ShooterSubsystem.getInstance().getPosition());
 			SmartDashboard.putNumber("Peg Angle", table.getNumber("Degrees", 0.0));
+			SmartDashboard.putBoolean("Front Gear Placer", RobotState.getInstance().getGearPlacerFront());
+			SmartDashboard.putBoolean("Back Gear Placer", RobotState.getInstance().getGearPlacerBack());
 			DeflectorSubsystem.getInstance().sendDashboardData();
 			TurretSubsystem.getInstance().sendDashboardData();
 			UltrasonicSubsystem.getInstance().sendDashboardData();
@@ -162,6 +168,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testInit(){
+		lightSolenoid = new Solenoid(Robot.bot.lowGoalLightPort);
+    	lightSolenoid.set(true);
 		Logger.froglog("In Roborio Test Mode...initiating Power On Self Test (POST) Diagnostics ...");
 		RobotState.getInstance().setState(RobotState.State.TEST);
 	}

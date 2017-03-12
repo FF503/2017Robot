@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class ClimberSubsystem extends Subsystem {
     // Put methods for controlling this subsystem
-    private Spark spark1;
-    private Spark spark2; 
+    public Spark spark1;
+    public Spark spark2; 
     
 	public ClimberSubsystem(){
 		spark1 = new Spark(Robot.bot.climberSpark1Port);

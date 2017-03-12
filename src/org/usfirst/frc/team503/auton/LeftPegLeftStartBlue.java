@@ -30,7 +30,7 @@ public class LeftPegLeftStartBlue extends CommandGroup {
         // arm.
     	double[][] leftPinLeftStart = {
 				{0, 22.5},
-				{-5.9, 22.5}
+				{-5.4, 22.5} //5.9
 		};
     	
     	double[][] backUpFromPin = {

@@ -66,8 +66,8 @@ public class RobotHardwareCompBot extends RobotHardware {
 	public final boolean DEFLECTOR_REVERSE_SENSOR = true;
 	
 	public final double DISTANCE_BETWEEN_ULTRASONICS = 13.7;
-	public final double LEFT_ULTRASONIC_VOLTS_PER_INCH = 0.008392333125;
-	public final double RIGHT_ULTRASONIC_VOLTS_PER_INCH = 0.01041412246875;
+	public final double LEFT_ULTRASONIC_VOLTS_PER_INCH = 0.228271461 / 24;
+	public final double RIGHT_ULTRASONIC_VOLTS_PER_INCH = 0.22705075800000002 / 24;
 	
 	public double TURRET_P = 0.1;
 	public double TURRET_I = 0.0;
@@ -75,6 +75,7 @@ public class RobotHardwareCompBot extends RobotHardware {
 	
 	
 	public boolean hasTurretLight = true;
+	public boolean hasLowGoalLight = true;
 	
 	@Override
 	public void initialize(){

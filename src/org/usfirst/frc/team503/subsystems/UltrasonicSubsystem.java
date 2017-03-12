@@ -20,7 +20,7 @@ public class UltrasonicSubsystem extends Subsystem {
 	public UltrasonicSubsystem(){
 			leftUltrasonic = new UltrasonicSensor(Robot.bot.leftUltrasonicPort);
 			rightUltrasonic = new UltrasonicSensor(Robot.bot.rightUltrasonicPort);
-			values = new double[15];
+			values = new double[9];
 	}
 	private static UltrasonicSubsystem instance = new UltrasonicSubsystem();                                        
     

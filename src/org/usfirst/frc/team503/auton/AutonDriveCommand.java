@@ -29,6 +29,7 @@ public class AutonDriveCommand extends Command {
     protected void initialize() {
     	System.out.println("in auton command");
     	table = NetworkTable.getTable("LG_Camera");
+    	
     	SmartDashboard.putBoolean("Auton drive isFinished", false);
     	GyroSubsystem.getInstance().gyro.reset();
     	DrivetrainSubsystem.getInstance().percentVoltageMode();
@@ -39,9 +40,10 @@ public class AutonDriveCommand extends Command {
     protected void execute() {
     	count++;
     	currTime = Timer.getFPGATimestamp();
+    	angle = -table.getNumber("Degrees",0.0);
 		SmartDashboard.putNumber("auton drive count", count);
     	SmartDashboard.putNumber("Peg Angle", angle);
-    	if(UltrasonicSubsystem.getInstance().getUltrasonicDistance() > 24.0 && angle != 0.0){   //was 36 
+    	if(/*UltrasonicSubsystem.getInstance().getUltrasonicDistance() > 24.0 && */angle != 0.0){   //was 36 
     		DrivetrainSubsystem.getInstance().arcadeDrive(.2, angle*.05, false); //0.2 and 0.05
     	} 
     	
@@ -63,8 +65,8 @@ public class AutonDriveCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	SmartDashboard.putBoolean("Auton drive isFinished",(UltrasonicSubsystem.getInstance().getUltrasonicDistance() < 15.0));
-    	return (UltrasonicSubsystem.getInstance().getUltrasonicDistance() < 15.0);
+    	SmartDashboard.putBoolean("Auton drive isFinished",(UltrasonicSubsystem.getInstance().getUltrasonicDistance() < 12.0));
+    	return (UltrasonicSubsystem.getInstance().getUltrasonicDistance()< 13.0);
     }	
 
     protected void end(){

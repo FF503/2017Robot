@@ -30,7 +30,7 @@ public class RightPegRightStartBlue extends CommandGroup {
         // arm.
     	double[][] RightPinRightStart = {
 				{0, 22.5},
-				{-5.90, 22.5}   //was -6.2, 22.5 
+				{-5.45, 22.5}   //was -6.2, 22.5 
 		};
     	
     	double[][] backUpFromPin = {

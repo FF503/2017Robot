@@ -2,6 +2,7 @@ package org.usfirst.frc.team503.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+import org.usfirst.frc.team503.robot.OI;
 import org.usfirst.frc.team503.robot.Robot;
 import org.usfirst.frc.team503.robot.RobotState;
 import org.usfirst.frc.team503.subsystems.ClimberSubsystem;
@@ -24,12 +25,17 @@ public class ClimbCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		if (OI.getClimbButton()){
 		if (!RobotState.getInstance().getClimberStatus()){
 			ClimberSubsystem.getInstance().setPower(-0.4);
 			RobotState.getInstance().setClimberStatus(true);
+			RobotState.getInstance().setClimberRunningSlow(true);
 		} else {
+			
 			ClimberSubsystem.getInstance().setPower(0.0);
 			RobotState.getInstance().setClimberStatus(false);
+			RobotState.getInstance().setClimberRunningSlow(false);
+		}
 		}
 	}
 

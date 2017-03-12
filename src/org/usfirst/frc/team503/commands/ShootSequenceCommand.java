@@ -25,7 +25,7 @@ public class ShootSequenceCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	ShooterSubsystem.getInstance().setSetpoint(RobotState.getInstance().getShooterPreset().rpm);
+    	ShooterSubsystem.getInstance().setSetpoint(RobotState.ShootingPresets.Batter.rpm);
     	RobotState.getInstance().setShooterStatus(true);
     	startTime = Timer.getFPGATimestamp();
     }

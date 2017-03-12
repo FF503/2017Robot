@@ -30,7 +30,7 @@ public class RightPegRightStartRed extends CommandGroup {
         // arm.
     	double[][] RightPinRightStart = {
 				{0, 22.5},
-				{-5.9, 22.5}
+				{-5.45, 22.5}
 		};
     	
     	double[][] backUpFromPin = {
@@ -49,7 +49,7 @@ public class RightPegRightStartRed extends CommandGroup {
     	};    	
   
 		addSequential(new RunMotionProfileCommand(RightPinRightStart, 2, 1, true));
-		addSequential(new GyroTurnCommand(60));
+		addSequential(new GyroTurnCommand(-60));
 		addSequential(new AutonDriveCommand());
 		addParallel(new OpenGearPlacerCommand());
 		addSequential(new WaitCommand(2));

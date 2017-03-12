@@ -80,6 +80,7 @@ public class OI {
 		intakeButton.whenPressed(new ToggleIntakeCommand());
 		intakeReverse.whenPressed(new ToggleIntakeCommand());
 		shiftToLowGearButton.whenPressed(new ShiftToLowGear());
+		
 		shiftToHighGearButton.whenPressed(new ShiftToHighGear());
 		//indexerButton.whenPressed(new ToggleIndexerCommand());
 		backGearButton.whenPressed(new ToggleGearPlacerBack(false));
