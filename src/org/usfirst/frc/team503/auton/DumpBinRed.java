@@ -4,6 +4,7 @@ import org.usfirst.frc.team503.commands.CloseGearPlacerCommand;
 import org.usfirst.frc.team503.commands.GyroTurnCommand;
 import org.usfirst.frc.team503.commands.OpenGearPlacerCommand;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
+import org.usfirst.frc.team503.commands.ToggleIntakeCommand;
 import org.usfirst.frc.team503.motionProfile.RunMotionProfileCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -30,21 +31,19 @@ public class DumpBinRed extends CommandGroup {
         // arm.
     	double[][] dumpbinForward = {
 				{0, 22.5},
-				{-6.6, 22.5}
+				{-4.3, 22.5} //6.6
 		};
     	
     	double[][] hitBin ={
     			{0,0},
-    			{3.3,0}
+    			{3.9,0}
     	};
   
 		addSequential(new RunMotionProfileCommand(dumpbinForward, 2, 1, true));
 		addSequential(new GyroTurnCommand(-90));
 		addSequential(new RunMotionProfileCommand(hitBin, 2, 1, false));
-		addParallel(new OpenGearPlacerCommand());
-		addSequential(new WaitCommand(2));
-		addSequential(new CloseGearPlacerCommand());
 		if(shoot){
+			addParallel(new ToggleIntakeCommand());
 			addSequential(new ShootSequenceCommand());
 		}
     }

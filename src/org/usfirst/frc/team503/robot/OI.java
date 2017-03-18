@@ -3,6 +3,7 @@ package org.usfirst.frc.team503.robot;
 import org.usfirst.frc.team503.commands.ClimbCommand;
 import org.usfirst.frc.team503.commands.ClimbFasterCommand;
 import org.usfirst.frc.team503.commands.CloseGearPlacerCommand;
+import org.usfirst.frc.team503.commands.GoToDeflectorCommand;
 import org.usfirst.frc.team503.commands.OpenGearPlacerCommand;
 import org.usfirst.frc.team503.commands.ReverseDriveTrainCommand;
 import org.usfirst.frc.team503.commands.ShiftToHighGear;
@@ -12,6 +13,7 @@ import org.usfirst.frc.team503.commands.ToggleGearPlacerBack;
 import org.usfirst.frc.team503.commands.ToggleGearPlacerFront;
 import org.usfirst.frc.team503.commands.ToggleIntakeCommand;
 import org.usfirst.frc.team503.commands.TurnTurretCommand;
+import org.usfirst.frc.team503.subsystems.DeflectorSubsystem;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -52,8 +54,8 @@ public class OI {
 	private static Joystick operatorJoystick = new Joystick(1);
 //	private static XboxController  xBox = new XboxController(1);	
 	
-	private static JoystickButton openGearMechButton = new JoystickButton(driverJoystick, 2);
-	private static JoystickButton closeGearMechButton = new JoystickButton(driverJoystick, 1);
+	private static JoystickButton openGearMechButton = new JoystickButton(driverJoystick, 1);
+	private static JoystickButton closeGearMechButton = new JoystickButton(driverJoystick, 2);
 	private static JoystickButton intakeButton = new JoystickButton(driverJoystick, 3);
 	private static JoystickButton intakeReverse = new JoystickButton(driverJoystick, 4);
 	private static JoystickButton shiftToLowGearButton = new JoystickButton(driverJoystick,5);
@@ -71,9 +73,9 @@ public class OI {
 	//private static JoystickButton incrementDeflector = new JoystickButton(operatorJoystick, 7);
 	//private static JoystickButton decrementDeflector = new JoystickButton(operatorJoystick, 8);
 	
-	//private static JoystickButton goToDeflectorButton = new JoystickButton(operatorJoystick, 5);
 	private static JoystickButton goToTurretPosition = new JoystickButton(operatorJoystick, 7);
-	
+	private static JoystickButton goToDeflectorButton = new JoystickButton(operatorJoystick, 8);
+
 	public static void initialize(){
 		//	shootRPMButton.whenPressed(new ToggleShootRPMCommand());
 		shootRPMButton.whenPressed(new ShootSequenceCommand());
@@ -93,8 +95,8 @@ public class OI {
 		climbButton.whenPressed(new ClimbCommand());
 		reverseDriveTrainButton.whenPressed(new ReverseDriveTrainCommand());
 		climbFasterButton.whenPressed(new ClimbFasterCommand());
-		//goToDeflectorButton.whenPressed(new GoToDeflectorCommand(DeflectorSubsystem.DeflectorAngle.LOW.angle));
-		//goToTurretPosition.whenPressed(new TurnTurretCommand(10, false));
+		goToDeflectorButton.whenPressed(new GoToDeflectorCommand(20.0));
+		goToTurretPosition.whenPressed(new TurnTurretCommand(10.0, false));
 		
 	}
 	/*public static boolean getIncrementDeflector(){

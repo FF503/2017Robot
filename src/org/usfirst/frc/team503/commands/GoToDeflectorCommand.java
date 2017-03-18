@@ -12,11 +12,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class GoToDeflectorCommand extends Command {
-	double height;
-    public GoToDeflectorCommand() {
+	double angle;
+    public GoToDeflectorCommand(double angle) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	
+    	this.angle = angle;
     	requires(DeflectorSubsystem.getInstance());
     }
 
@@ -41,13 +41,14 @@ public class GoToDeflectorCommand extends Command {
     		RobotState.getInstance().setPreset(ShootingPresets.values()[RobotState.getInstance().getPreset().ordinal() - 1]);
     		}
     		height = RobotState.getInstance().getPreset().position;
-    	}
-    	DeflectorSubsystem.getInstance().setSetpoint(height);
-    	SmartDashboard.putBoolean("Deflector on target", false);*/
+    	}*/
+    	DeflectorSubsystem.getInstance().setSetpoint(angle);
+    	SmartDashboard.putBoolean("Deflector on target", false);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	DeflectorSubsystem.getInstance().resetEncoder();
     }
 
     // Make this return true when this Command no longer needs to run execute()

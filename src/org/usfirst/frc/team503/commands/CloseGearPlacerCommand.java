@@ -21,15 +21,15 @@ public class CloseGearPlacerCommand extends Command {
     protected void initialize() {
     	if(RobotState.getInstance().getState() == RobotState.State.TELEOP){
 	    	if(OI.getCloseGearMech()){
-	        		GearPlacerSubsystem.getInstance().moveGearClampFrontOpen();
-	        		GearPlacerSubsystem.getInstance().moveGearClampBackOpen();
+	        		GearPlacerSubsystem.getInstance().moveGearClampFrontClose();
+	        		GearPlacerSubsystem.getInstance().moveGearClampBackClose();
 	        		RobotState.getInstance().setGearPlacerBack(false);
 	        		RobotState.getInstance().setGearPlacerFront(false);
 	    	}
     	}
     	else{
-    		GearPlacerSubsystem.getInstance().moveGearClampFrontOpen();
-    		GearPlacerSubsystem.getInstance().moveGearClampBackOpen();
+    		GearPlacerSubsystem.getInstance().moveGearClampFrontClose();
+    		GearPlacerSubsystem.getInstance().moveGearClampBackClose();
     		RobotState.getInstance().setGearPlacerBack(false);
     		RobotState.getInstance().setGearPlacerFront(false);
     	}

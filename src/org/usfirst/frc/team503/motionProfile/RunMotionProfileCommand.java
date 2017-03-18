@@ -10,8 +10,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RunMotionProfileCommand extends Command {
 	private PathPlanner planner;
-	private double[][] rightProfile;
-	private double[][] leftProfile;
 	private double time, curveExaggeration;
 	boolean reverse;
 	boolean calculatingInHouse;
@@ -44,8 +42,6 @@ public class RunMotionProfileCommand extends Command {
     	else{
     		DrivetrainSubsystem.getInstance().runProfileLeftRight(pathPuller.getLeftProfile(), pathPuller.getRightProfile());
     	}
-    	
-    	//DrivetrainSubsystem.getInstance().runProfileLeftRight(pathPuller.getLeftProfile(), pathPuller.getRightProfile());
     }
 
     // Called repeatedly when this Command is scheduled to run

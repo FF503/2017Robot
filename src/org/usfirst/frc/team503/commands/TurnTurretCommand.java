@@ -28,9 +28,7 @@ public class TurnTurretCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
 		SmartDashboard.putBoolean("Turret onTarget", TurretSubsystem.getInstance().isOnTarget());
-
     	if(goTo){
         	TurretSubsystem.getInstance().setSetpoint(angle);
     	}
@@ -42,18 +40,17 @@ public class TurnTurretCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	TurretSubsystem.getInstance().resetEncoder();
+    	TurretSubsystem.getInstance().resetEncoderAtLimitSwitch();
     }
 
 	// Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	System.out.println("turn turret finished. is on target");
         return TurretSubsystem.getInstance().isOnTarget();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-		SmartDashboard.putBoolean("Turret onTarget", TurretSubsystem.getInstance().isOnTarget());
+		SmartDashboard.putBoolean("Turret onTarget", true);
     	TurretSubsystem.getInstance().setMotorPower(0);
     }
 

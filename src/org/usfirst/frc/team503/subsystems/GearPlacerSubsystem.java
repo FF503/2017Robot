@@ -36,16 +36,16 @@ public class GearPlacerSubsystem extends Subsystem {
 		return instance;
 	}
 	
-	public void moveGearClampBackClose(){
+	public void moveGearClampBackOpen(){
 		outerGearSolenoid.set(DoubleSolenoid.Value.kForward);
 	}
-	public void moveGearClampBackOpen(){
+	public void moveGearClampBackClose(){
 		outerGearSolenoid.set(DoubleSolenoid.Value.kReverse);
 	}
-	public void moveGearClampFrontClose(){
+	public void moveGearClampFrontOpen(){
 		innerGearSolenoid.set(DoubleSolenoid.Value.kForward);
 	}
-	public void moveGearClampFrontOpen(){
+	public void moveGearClampFrontClose(){
 		innerGearSolenoid.set(DoubleSolenoid.Value.kReverse);
 	}
     public void initDefaultCommand() {

@@ -31,8 +31,10 @@ public class DeflectorSubsystem extends Subsystem {
 		deflectorMotor.setPID(Robot.bot.DEFLECTOR_P, Robot.bot.DEFLECTOR_I, Robot.bot.DEFLECTOR_D);  
 		deflectorMotor.reverseSensor(Robot.bot.DEFLECTOR_REVERSE_SENSOR);
 		deflectorMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
+		//deflectorMotor.setForwardSoftLimit(0.0);
 		deflectorMotor.setReverseSoftLimit(-Robot.bot.DEFLECTOR_MAX_COUNTS);
 		deflectorMotor.enableReverseSoftLimit(true);
+		deflectorMotor.enableForwardSoftLimit(false);
 		//deflectorMotor.setAllowableClosedLoopErr((int)(kTurretOnTargetTolerance /kTurretDegreesPerTick));
 	}                 
 	
@@ -45,13 +47,13 @@ public class DeflectorSubsystem extends Subsystem {
 
 	public synchronized void setSetpoint(double target) {
 		SmartDashboard.putNumber("deflector target angle", target);
-		
 		if(target>Robot.bot.DEFLECTOR_MAX_ANGLE) {
 			System.out.println("BAD DEFLECTOR SETPOINT");
 			SmartDashboard.putString("BAD DEFLECTOR SETPOINT","CANNOT ATTAIN");
 		}								
 		else{
 		    deflectorMotor.changeControlMode(CANTalon.TalonControlMode.Position);
+		    deflectorMotor.clearIAccum();
 			deflectorMotor.setSetpoint((target-Robot.bot.DEFLECTOR_MIN_ANGLE) * Robot.bot.DEFLECTOR_COUNTS_PER_DEGREE * -1.0);
 		}
 	}					

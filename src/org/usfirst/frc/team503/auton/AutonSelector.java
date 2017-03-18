@@ -25,7 +25,6 @@ public class AutonSelector {
 		gearPosChooser = new SendableChooser<>();
 		shootChooser = new SendableChooser<>();
 		binChooser = new SendableChooser<>();
-		
 	}
 	
 	private static AutonSelector instance = new AutonSelector();
@@ -112,6 +111,7 @@ public class AutonSelector {
 					break;
 				}
 				break;
+				
 			case CENTER:
 				switch(binChoice){
 				case NO_BIN: 
@@ -158,6 +158,20 @@ public class AutonSelector {
 				break;
 			case DO_NOTHING:
 				//Red Alliance, Do Nothing
+				switch(binChoice){
+				case RIGHT_BIN:
+					switch(shootChoice){
+					case SHOOT:
+						(new DumpBinRed(true)).start();
+						break;
+					case DONT_SHOOT:
+						(new DumpBinRed(false)).start();
+						break;
+					}
+					break;
+				case LEFT_BIN:
+					break;
+				}
 				break;
 			}
 			break;
@@ -238,6 +252,22 @@ public class AutonSelector {
 				break;
 			case DO_NOTHING:
 				//Blue Alliance, Do Nothing
+				switch(binChoice){
+				case LEFT_BIN:
+					switch(shootChoice){
+					case SHOOT:
+						//Blue Alliance, No Gear, Dump Left Bin, Shoot
+						(new DumpBinBlue(true)).start();
+						break;
+					case DONT_SHOOT:
+						//Blue Alliance, No Gear, Dump Left Bin, Don't Shoot
+						(new DumpBinBlue(false)).start();
+						break;
+					}
+					break;
+				case RIGHT_BIN:
+					break;
+				}
 				break;
 			}
 			break;

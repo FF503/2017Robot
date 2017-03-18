@@ -58,6 +58,10 @@ public class ShooterSubsystem extends Subsystem {
 		return shooterMotor.getSpeed();
 	}
 	
+	public double getCurrent(){
+		return shooterMotor.getOutputCurrent();
+	}
+	
 	public double getError(){
 		return getSetpoint() - getSpeed();
 	}

@@ -26,25 +26,31 @@ public class ToggleIntakeCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (OI.getIntake()) {
-			if (RobotState.getInstance().getIntakeStatus()){
-				IntakeSubsystem.getInstance().setMotorPower(0.0, 0.0);
-				RobotState.getInstance().setIntakeStatus(false);
-			} else {
-				IntakeSubsystem.getInstance().setMotorPower(-.75, -1.0);
-				RobotState.getInstance().setIntakeStatus(true);
-			}
-    	} 
-    	
-    	if (OI.getIntakeReverse()) {
-    		if (RobotState.getInstance().getIntakeStatus()){
-    			//intake is running - turn it off 
-    			IntakeSubsystem.getInstance().setMotorPower(0.0, 0.0);
-    			RobotState.getInstance().setIntakeStatus(false);
-    		} else {
-    			IntakeSubsystem.getInstance().setMotorPower(.75, 1.0);
-    			RobotState.getInstance().setIntakeStatus(true);
-    		}
+    	if (RobotState.getInstance().getState() == RobotState.State.TELEOP){
+	    	if (OI.getIntake()) {
+				if (RobotState.getInstance().getIntakeStatus()){
+					IntakeSubsystem.getInstance().setMotorPower(0.0, 0.0);
+					RobotState.getInstance().setIntakeStatus(false);
+				} else {
+					IntakeSubsystem.getInstance().setMotorPower(-.75, -1.0);
+					RobotState.getInstance().setIntakeStatus(true);
+				}
+	    	} 
+	    	
+	    	if (OI.getIntakeReverse()) {
+	    		if (RobotState.getInstance().getIntakeStatus()){
+	    			//intake is running - turn it off 
+	    			IntakeSubsystem.getInstance().setMotorPower(0.0, 0.0);
+	    			RobotState.getInstance().setIntakeStatus(false);
+	    		} else {
+	    			IntakeSubsystem.getInstance().setMotorPower(.75, 1.0);
+	    			RobotState.getInstance().setIntakeStatus(true);
+	    		}
+	    	}
+    	}
+    	else{
+    		IntakeSubsystem.getInstance().setMotorPower(-.75, -1.0);
+    		RobotState.getInstance().setIntakeStatus(true);
     	}
 	}
      

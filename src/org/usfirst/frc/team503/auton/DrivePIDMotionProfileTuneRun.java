@@ -33,7 +33,7 @@ public class DrivePIDMotionProfileTuneRun extends CommandGroup {
 				{-4, 13.5}
 		};
   
-		addSequential(new RunMotionProfileCommand(centerPinCenterStart, 2, 1, true));
+		addSequential(new RunMotionProfileCommand("leftPinLeftStartPracticeBot", false));
 	
     }
 }

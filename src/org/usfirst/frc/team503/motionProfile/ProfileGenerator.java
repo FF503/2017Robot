@@ -11,6 +11,8 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import org.usfirst.frc.team503.robot.Robot;
+
 public class ProfileGenerator {
 	
 	private static String FILE_PATH = "/home/lvuser/motionProfiles/";
@@ -47,7 +49,7 @@ public class ProfileGenerator {
 		    return content;
 
 	}
-	
+	 
 	private String[] splitSides(String split) {
 		return split.split("-");
 	}
@@ -67,14 +69,14 @@ public class ProfileGenerator {
 		for (int i = 0; i < profile.length; i++){
 			if (reverse){
 				if (i != profile.length - 1){
-					profile[i][2] = profile[i+1][2] - profile[i][2];
+					profile[i][2] = (profile[i+1][2] - profile[i][2]) * 1000; // future time - curtime then seconds to milliseconds
 				}
 				profile[i][0] = -toEncoderPos(profile[i][0]);
 				profile[i][1] = -profile[i][1];
 			}
 			else{
 				if (i != profile.length - 1){
-					profile[i][2] = profile[i+1][2] - profile[i][2];
+					profile[i][2] = (profile[i+1][2] - profile[i][2]) * 1000; // future time - curTime then seconds to milliseconds
 				}
 				profile[i][0] = toEncoderPos(profile[i][0]);
 			}
@@ -85,7 +87,7 @@ public class ProfileGenerator {
 	}
 	
 	private double toEncoderPos(double feet){
-		return 512 * ( feet/(Math.PI * 0.25));
+		return Robot.bot.DRIVE_COUNTS_PER_REV * ( feet/(Math.PI * Robot.bot.WHEEL_DIAMETER / 12));
 	}
 	
 	public double[][] getLeftProfile(){

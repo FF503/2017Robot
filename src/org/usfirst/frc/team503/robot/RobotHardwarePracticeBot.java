@@ -30,8 +30,8 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final int innerGearSolenoidID2 = 5;
 	public final int climberSpark1Port = 1;
 	public final int climberSpark2Port = 2;
-	public final int leftUltrasonicPort = 0;
-	public final int rightUltrasonicPort = 1;
+	public final int leftUltrasonicPort = 1;     //was 0
+	public final int rightUltrasonicPort = 2;    // was 1 
 	
 	public final double REVERSE_UPPER_INTAKE = 1.0;
 	
@@ -58,12 +58,12 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	
 	public final double TURRET_CYCLE_TIME = .005; //seconds
 	
-	public final double DEFLECTOR_P = .0175;
-	public final double DEFLECTOR_I = 0;
-	public final double DEFLECTOR_D = 0;
-	public final double DEFLECTOR_MAX_COUNTS = 12.0;
-	public final double DEFLECTOR_MIN_ANGLE = 15.0;
-	public final double DEFLECTOR_MAX_ANGLE = 51.0;
+	public final double DEFLECTOR_P = .035;
+	public final double DEFLECTOR_I = 0.00004;
+	public final double DEFLECTOR_D = 0.5;
+	public final double DEFLECTOR_MAX_COUNTS = 8.71630859375;
+	public final double DEFLECTOR_MIN_ANGLE = 17.0; 
+	public final double DEFLECTOR_MAX_ANGLE = 41.0;
 	public final double DEFLECTOR_COUNTS_PER_DEGREE = DEFLECTOR_MAX_COUNTS/(DEFLECTOR_MAX_ANGLE - DEFLECTOR_MIN_ANGLE);
 	public final double DEFLECTOR_TOLERANCE = 1.0;
 	public final boolean DEFLECTOR_REVERSE_SENSOR = true;
@@ -74,14 +74,14 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public double GYRO_TOLERANCE = 1.0;
 	
 	public final double DISTANCE_BETWEEN_ULTRASONICS = 13.7;
-	public final double LEFT_ULTRASONIC_VOLTS_PER_INCH = 0.01064453016;
+	public final double LEFT_ULTRASONIC_VOLTS_PER_INCH = 0.00950404;   //was .01064453016
 	public final double RIGHT_ULTRASONIC_VOLTS_PER_INCH = 0.01035156144;
 	
-	public final double REVERSE_INDEXER = -1.0  ;
+	public final double REVERSE_INDEXER = -1.0;
 	
-	public double TURRET_P = 0.0;
+	public double TURRET_P = 0.38;
 	public double TURRET_I = 0.0;
-	public double TURRET_D = 0.0;
+	public double TURRET_D = 5.0;
 	public int lowGoalLightPort;	
 	
 	@Override

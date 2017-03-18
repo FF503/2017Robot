@@ -5,6 +5,7 @@ import org.usfirst.frc.team503.commands.GyroTurnCommand;
 import org.usfirst.frc.team503.commands.OpenGearPlacerCommand;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
 import org.usfirst.frc.team503.motionProfile.RunMotionProfileCommand;
+import org.usfirst.frc.team503.robot.RobotState;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
@@ -60,6 +61,12 @@ public class RightPegRightStartBlue extends CommandGroup {
 			addSequential(new RunMotionProfileCommand(hitBin, 2, 1, false));			
 		}
 		if(shoot){
+			if (dump){
+				RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperBlue);
+			}
+			else{
+				RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.PegNearHopper);
+			}
 			addSequential(new ShootSequenceCommand());
 		}
     }

@@ -26,8 +26,8 @@ public class ClimbCommand extends Command {
 	@Override
 	protected void execute() {
 		if (OI.getClimbButton()){
-		if (!RobotState.getInstance().getClimberStatus()){
-			ClimberSubsystem.getInstance().setPower(-0.4);
+		if (!RobotState.getInstance().getClimberStatus( )){
+			ClimberSubsystem.getInstance().setPower(-0.25);
 			RobotState.getInstance().setClimberStatus(true);
 			RobotState.getInstance().setClimberRunningSlow(true);
 		} else {
@@ -38,6 +38,7 @@ public class ClimbCommand extends Command {
 		}
 		}
 	}
+	
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override

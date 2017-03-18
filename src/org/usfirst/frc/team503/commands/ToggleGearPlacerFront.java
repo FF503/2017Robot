@@ -23,16 +23,16 @@ public class ToggleGearPlacerFront extends Command {
     	
     	if(OI.getPlaceGear()){
     		
-        		GearPlacerSubsystem.getInstance().moveGearClampBackClose();
+        		GearPlacerSubsystem.getInstance().moveGearClampBackOpen();
         		RobotState.getInstance().setGearPlacerFront(true);
     	}
     	else if (OI.getGearButtonFront()){
 	    		if((RobotState.getInstance().getGearPlacerFront()==false)){
-	        		GearPlacerSubsystem.getInstance().moveGearClampBackClose();
+	        		GearPlacerSubsystem.getInstance().moveGearClampBackOpen();
 	        		RobotState.getInstance().setGearPlacerFront(true);
 	    		}
 	    		else{
-	        		GearPlacerSubsystem.getInstance().moveGearClampBackOpen();
+	        		GearPlacerSubsystem.getInstance().moveGearClampBackClose();
 	        		RobotState.getInstance().setGearPlacerFront(false);
 	    		}
     	}

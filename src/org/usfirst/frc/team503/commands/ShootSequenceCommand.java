@@ -25,7 +25,7 @@ public class ShootSequenceCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	ShooterSubsystem.getInstance().setSetpoint(RobotState.ShootingPresets.Batter.rpm);
+    	ShooterSubsystem.getInstance().setSetpoint(RobotState.getInstance().getShooterPreset().rpm);
     	RobotState.getInstance().setShooterStatus(true);
     	startTime = Timer.getFPGATimestamp();
     }
@@ -45,7 +45,7 @@ public class ShootSequenceCommand extends Command {
             return OI.getEndShoot();
     	}
     	else{
-    		return (currTime-startTime)>Constants.SHOOT_TIME_FOR_10_BALLS;
+    		return false;
     	}
     }
 

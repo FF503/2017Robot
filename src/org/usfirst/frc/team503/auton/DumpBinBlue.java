@@ -30,20 +30,18 @@ public class DumpBinBlue extends CommandGroup {
         // arm.
     	double[][] dumpbinForward = {
 				{0, 22.5},
-				{-6.6, 22.5}
+				{-6.3, 22.5} //6.6
 		};
     	
     	double[][] hitBin ={
     			{0,0},
-    			{3.3,0}
+    			{3.9,0}
     	};
+  
   
 		addSequential(new RunMotionProfileCommand(dumpbinForward, 2, 1, true));
 		addSequential(new GyroTurnCommand(90));
 		addSequential(new RunMotionProfileCommand(hitBin, 2, 1, false));
-		addParallel(new OpenGearPlacerCommand());
-		addSequential(new WaitCommand(2));
-		addSequential(new CloseGearPlacerCommand());
 		if(shoot){
 			addSequential(new ShootSequenceCommand());
 		}

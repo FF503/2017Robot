@@ -58,11 +58,11 @@ public class RobotState extends Subsystem {
 	}
 	
 	public enum ShootingPresets{
-		Batter(0,3900), Hopper(6.45,4500), PegNearHopper(8.8,5050);
-		public double distance;
+		Batter(0,3900), HopperRed(6.45,4300), PegNearHopper(8.8,5050), HopperBlue(6.45,4500);
+		public double deflectorCounts;
 		public int rpm;
-		private ShootingPresets(double distance, int rpm){
-			this.distance = distance;
+		private ShootingPresets(double deflectorCounts, int rpm){
+			this.deflectorCounts = deflectorCounts;
 			this.rpm = rpm;
 		}
 	}

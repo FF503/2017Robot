@@ -38,11 +38,11 @@ public class TurretSubsystem extends Subsystem {
 		turretMotor.reverseSensor(true);
 		turretMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 //		turretMotor.setAllowableClosedLoopErr((int)(kTurretOnTargetTolerance /kTurretDegreesPerRotation));
-//		turretMotor.setForwardSoftLimit(kRotationsInRange);
-//		turretMotor.setReverseSoftLimit(0.0);
-		turretMotor.setVoltageRampRate(9);
-	    turretMotor.enableForwardSoftLimit(false);
-	    turretMotor.enableReverseSoftLimit(false);
+		turretMotor.setForwardSoftLimit(Constants.TURRET_ROTATIONS_IN_RANGE);
+		turretMotor.setReverseSoftLimit(0.0);
+		turretMotor.setVoltageRampRate(10);    
+	    turretMotor.enableForwardSoftLimit(true);
+	    turretMotor.enableReverseSoftLimit(true);
 		turretThread = new TurretThread();
 	}                 
 	
@@ -81,7 +81,7 @@ public class TurretSubsystem extends Subsystem {
 	}
 	
 	public synchronized double getSetpoint() {
-	    return setpoint;
+	    return turretMotor.getSetpoint() * Constants.TURRET_DEGREES_PER_ROTATION;
 	}
 	
 	public synchronized double getError() {    
@@ -94,10 +94,17 @@ public class TurretSubsystem extends Subsystem {
 	
 
 	public synchronized void setMotorPower(double turretPower){
-		SmartDashboard.putNumber("turretPower", turretPower);
+		//stop the turret from moving from a very bad joystick 
 		turretMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-		resetEncoder();
-		turretMotor.set(turretPower);    
+		resetEncoderAtLimitSwitch();
+		if (Math.abs(turretPower) > .10) {
+			SmartDashboard.putNumber("turretPower", turretPower);
+			turretMotor.set(turretPower); 	
+		} else {
+			SmartDashboard.putNumber("turretPower", 0);
+			turretMotor.set(0.0); 
+
+		}
 	}
 	
 	public boolean getFwdLimitSwitch(){   
@@ -111,7 +118,7 @@ public class TurretSubsystem extends Subsystem {
 		return turretMotor.getPosition();
 	}		
 	
-	public void resetEncoder(){												
+	public void resetEncoderAtLimitSwitch(){												
 		if(TurretSubsystem.getInstance().getRevLimitSwitch()){
 			turretMotor.setPosition(0); 
     	}
