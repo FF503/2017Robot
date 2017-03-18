@@ -35,9 +35,8 @@ public class CenterPegCenterStart extends CommandGroup {
   
 		addSequential(new RunMotionProfileCommand(centerPinCenterStart, 2, 1, true));
 		addSequential(new AutonDriveCommand());
-		addParallel(new CloseGearPlacerCommand());
-		addSequential(new WaitCommand(2));
 		addSequential(new OpenGearPlacerCommand());
+		addSequential(new CloseGearPlacerCommand());
 		if(shoot){
 			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.PegNearHopper);
 			addSequential(new ShootSequenceCommand());

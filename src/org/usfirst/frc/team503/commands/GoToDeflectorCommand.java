@@ -23,25 +23,6 @@ public class GoToDeflectorCommand extends Command {
  
 	// Called just before this Command runs the first time
     protected void initialize() {
-    	/*if (OI.getIncrementDeflector()){
-    		if (RobotState.getInstance().getPreset() == RobotState.ShootingPresets.NearPeg){
-    			RobotState.getInstance().setPreset(RobotState.ShootingPresets.Batter);
-    		}
-    		else{
-    			RobotState.getInstance().setPreset(ShootingPresets.values()[RobotState.getInstance().getPreset().ordinal() + 1]);
-    		}
-			
-    		height = RobotState.getInstance().getPreset().position;
-    	}
-    	else if (OI.getDecrementDeflector()){
-    		if (RobotState.getInstance().getPreset() == RobotState.ShootingPresets.Batter){
-    			RobotState.getInstance().setPreset(RobotState.ShootingPresets.NearPeg);
-    		}
-    		else{
-    		RobotState.getInstance().setPreset(ShootingPresets.values()[RobotState.getInstance().getPreset().ordinal() - 1]);
-    		}
-    		height = RobotState.getInstance().getPreset().position;
-    	}*/
     	DeflectorSubsystem.getInstance().setSetpoint(angle);
     	SmartDashboard.putBoolean("Deflector on target", false);
     }

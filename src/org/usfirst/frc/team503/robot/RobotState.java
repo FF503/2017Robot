@@ -41,6 +41,7 @@ public class RobotState extends Subsystem {
 		gearPlacerFront = false; //closed
 		robotState = State.DISABLED;
 		turretState = TurretState.DISABLED;
+		shootingPreset = ShootingPresets.HopperRed;
 	}
 	
 	private static RobotState instance = new RobotState();
@@ -58,11 +59,11 @@ public class RobotState extends Subsystem {
 	}
 	
 	public enum ShootingPresets{
-		Batter(0,3900), HopperRed(6.45,4300), PegNearHopper(8.8,5050), HopperBlue(6.45,4500);
-		public double deflectorCounts;
+		Batter(17.0,3900), HopperRed(29.9,4300), HopperBlue(29.9,4500), PegNearHopper(34.6,5050);
+		public double angle;
 		public int rpm;
-		private ShootingPresets(double deflectorCounts, int rpm){
-			this.deflectorCounts = deflectorCounts;
+		private ShootingPresets(double angle, int rpm){
+			this.angle = angle;
 			this.rpm = rpm;
 		}
 	}

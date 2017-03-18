@@ -52,8 +52,7 @@ public class RightPegRightStartBlue extends CommandGroup {
 		addSequential(new RunMotionProfileCommand(RightPinRightStart, 2, 1, true));
 		addSequential(new GyroTurnCommand(-60));
 		addSequential(new AutonDriveCommand());
-		addParallel(new OpenGearPlacerCommand());
-		addSequential(new WaitCommand(2));
+		addSequential(new OpenGearPlacerCommand());
 		addSequential(new CloseGearPlacerCommand());
 		if (dump){
 			addSequential(new RunMotionProfileCommand(dumpbinForward, 2, 1, false));

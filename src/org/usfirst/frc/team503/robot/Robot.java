@@ -111,7 +111,7 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putNumber("Peg Angle", table.getNumber("Degrees", 0.0));
 			SmartDashboard.putBoolean("Front Gear Placer", RobotState.getInstance().getGearPlacerFront());
 			SmartDashboard.putBoolean("Back Gear Placer", RobotState.getInstance().getGearPlacerBack());
-			GyroSubsystem.getInstance().sendDashboardData();
+			SmartDashboard.putString("Shooting preset", RobotState.getInstance().getShooterPreset().toString());
 			UltrasonicSubsystem.getInstance().sendDashboardData();
 			DeflectorSubsystem.getInstance().sendDashboardData();
 			TurretSubsystem.getInstance().sendDashboardData();
@@ -151,12 +151,13 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		//DrivetrainSubsystem.getInstance().populateLog(startTime);
 		if (!Robot.bot.getName().equals("ProgrammingBot")){
-			SmartDashboard.putNumber("Shooter RPM Speed", ShooterSubsystem.getInstance().getSpeed());
+			SmartDashboard.putNumber("Shooter RPM", ShooterSubsystem.getInstance().getSpeed());
 			SmartDashboard.putNumber("Shooter position", ShooterSubsystem.getInstance().getPosition());
 			SmartDashboard.putNumber("Peg Angle", table.getNumber("Degrees", 0.0));
 			SmartDashboard.putBoolean("Front Gear Placer", RobotState.getInstance().getGearPlacerFront());
 			SmartDashboard.putBoolean("Back Gear Placer", RobotState.getInstance().getGearPlacerBack());
 			SmartDashboard.putNumber("Shooter Current", ShooterSubsystem.getInstance().getCurrent());
+			SmartDashboard.putString("Shooting preset", RobotState.getInstance().getShooterPreset().toString());
 			DeflectorSubsystem.getInstance().sendDashboardData();
 			TurretSubsystem.getInstance().sendDashboardData();
 			UltrasonicSubsystem.getInstance().sendDashboardData();

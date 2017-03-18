@@ -3,12 +3,14 @@ package org.usfirst.frc.team503.commands;
 import org.usfirst.frc.team503.robot.OI;
 import org.usfirst.frc.team503.robot.Robot;
 import org.usfirst.frc.team503.robot.RobotState;
+import org.usfirst.frc.team503.subsystems.DeflectorSubsystem;
 import org.usfirst.frc.team503.subsystems.IndexerSubsystem;
 import org.usfirst.frc.team503.subsystems.ShooterSubsystem;
 import org.usfirst.frc.team503.utils.Constants;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -21,18 +23,24 @@ public class ShootSequenceCommand extends Command {
         // eg. requires(chassis);
     	requires(ShooterSubsystem.getInstance());
     	requires(IndexerSubsystem.getInstance());
+    	requires(DeflectorSubsystem.getInstance());
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	ShooterSubsystem.getInstance().setSetpoint(RobotState.getInstance().getShooterPreset().rpm);
-    	RobotState.getInstance().setShooterStatus(true);
+    	DeflectorSubsystem.getInstance().setSetpoint(RobotState.getInstance().getShooterPreset().angle);
+    	SmartDashboard.putBoolean("Deflector on target", false);
     	startTime = Timer.getFPGATimestamp();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(ShooterSubsystem.getInstance().isOnTarget()){
+    	DeflectorSubsystem.getInstance().resetEncoder();
+    	if(DeflectorSubsystem.getInstance().isOnTarget()){
+        	ShooterSubsystem.getInstance().setSetpoint(RobotState.getInstance().getShooterPreset().rpm);
+        	RobotState.getInstance().setShooterStatus(true);
+    	}
+		if(ShooterSubsystem.getInstance().isOnTarget()){
     		IndexerSubsystem.getInstance().setMotorPower(0.6 * Robot.bot.REVERSE_INDEXER);//was 0.9 for far shots, 0.6 for boiler shot
 			RobotState.getInstance().setIndexerStatus(true);
     	}
@@ -55,6 +63,7 @@ public class ShootSequenceCommand extends Command {
     	IndexerSubsystem.getInstance().setMotorPower(0);
     	RobotState.getInstance().setShooterStatus(false);
     	RobotState.getInstance().setIndexerStatus(false);
+    	SmartDashboard.putBoolean("Deflector on target", true);
     }
 
     // Called when another command which requires one or more of the same
