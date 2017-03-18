@@ -5,7 +5,9 @@ import org.usfirst.frc.team503.robot.Robot;
 import org.usfirst.frc.team503.robot.RobotState;
 import org.usfirst.frc.team503.subsystems.DeflectorSubsystem;
 import org.usfirst.frc.team503.subsystems.IndexerSubsystem;
+import org.usfirst.frc.team503.subsystems.IntakeSubsystem;
 import org.usfirst.frc.team503.subsystems.ShooterSubsystem;
+import org.usfirst.frc.team503.subsystems.TurretSubsystem;
 import org.usfirst.frc.team503.utils.Constants;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -29,6 +31,10 @@ public class ShootSequenceCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	DeflectorSubsystem.getInstance().setSetpoint(RobotState.getInstance().getShooterPreset().angle);
+    	RobotState.getInstance().setTurretAngle(RobotState.getInstance().getShooterPreset().turretAngle);
+    	RobotState.getInstance().setTurretState(RobotState.TurretState.TAKING_HINT);
+    	ShooterSubsystem.getInstance().setSetpoint(RobotState.getInstance().getShooterPreset().rpm);
+    	RobotState.getInstance().setShooterStatus(true);
     	SmartDashboard.putBoolean("Deflector on target", false);
     	startTime = Timer.getFPGATimestamp();
     }
@@ -36,15 +42,18 @@ public class ShootSequenceCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	DeflectorSubsystem.getInstance().resetEncoder();
-    	if(DeflectorSubsystem.getInstance().isOnTarget()){
-        	ShooterSubsystem.getInstance().setSetpoint(RobotState.getInstance().getShooterPreset().rpm);
-        	RobotState.getInstance().setShooterStatus(true);
+    	SmartDashboard.putBoolean("Deflector on target", DeflectorSubsystem.getInstance().isOnTarget());
+    	if(RobotState.getInstance().getTurretIsLocked()){
+        	RobotState.getInstance().setTurretHint(false);
     	}
-		if(ShooterSubsystem.getInstance().isOnTarget()){
+		if(ShooterSubsystem.getInstance().isOnTarget() && DeflectorSubsystem.getInstance().isOnTarget() && RobotState.getInstance().getTurretIsLocked()){
     		IndexerSubsystem.getInstance().setMotorPower(0.6 * Robot.bot.REVERSE_INDEXER);//was 0.9 for far shots, 0.6 for boiler shot
-			RobotState.getInstance().setIndexerStatus(true);
+			IntakeSubsystem.getInstance().setMotorPower(-.75, -1.0);
+    		RobotState.getInstance().setIndexerStatus(true);
+    		RobotState.getInstance().setIntakeStatus(true);
     	}
     	currTime = Timer.getFPGATimestamp();
+    	SmartDashboard.putNumber("Shoot count", currTime);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -61,9 +70,11 @@ public class ShootSequenceCommand extends Command {
     protected void end() {
     	ShooterSubsystem.getInstance().setMotorPower(0);
     	IndexerSubsystem.getInstance().setMotorPower(0);
+    	IntakeSubsystem.getInstance().setMotorPower(0, 0);
+    	RobotState.getInstance().setTurretHint(false);
     	RobotState.getInstance().setShooterStatus(false);
+    	RobotState.getInstance().setIntakeStatus(false);
     	RobotState.getInstance().setIndexerStatus(false);
-    	SmartDashboard.putBoolean("Deflector on target", true);
     }
 
     // Called when another command which requires one or more of the same

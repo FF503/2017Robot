@@ -48,10 +48,6 @@ public class ToggleIntakeCommand extends Command {
 	    		}
 	    	}
     	}
-    	else{
-    		IntakeSubsystem.getInstance().setMotorPower(-.75, -1.0);
-    		RobotState.getInstance().setIntakeStatus(true);
-    	}
 	}
      
     // Make this return true when this Command no longer needs to run execute()

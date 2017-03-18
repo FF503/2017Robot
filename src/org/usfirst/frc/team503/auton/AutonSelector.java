@@ -38,6 +38,7 @@ public class AutonSelector {
 	 */
 	public void putAutonChoosers() {
 		//The Alliance choices
+	
 		allianceChooser.addDefault("[R] Red", AutonChoices.Alliances.RED);
 		allianceChooser.addObject("[B] Blue", AutonChoices.Alliances.BLUE);
 		
@@ -62,6 +63,7 @@ public class AutonSelector {
 		SmartDashboard.putData("Choose Gear Position", gearPosChooser);
 		SmartDashboard.putData("Shoot This auton?", shootChooser);
 		SmartDashboard.putData("Choose Bin to Dump", binChooser);
+		System.out.println("im in here");
 	}
 	
 	/**

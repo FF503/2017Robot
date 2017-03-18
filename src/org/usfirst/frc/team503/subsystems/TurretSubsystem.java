@@ -38,11 +38,12 @@ public class TurretSubsystem extends Subsystem {
 		turretMotor.reverseSensor(true);
 		turretMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 //		turretMotor.setAllowableClosedLoopErr((int)(kTurretOnTargetTolerance /kTurretDegreesPerRotation));
-		turretMotor.setForwardSoftLimit(Constants.TURRET_ROTATIONS_IN_RANGE);
+		turretMotor.setForwardSoftLimit(Robot.bot.TURRET_ROTATIONS_IN_RANGE);
 		turretMotor.setReverseSoftLimit(0.0);
 		turretMotor.setVoltageRampRate(10);    
-	    turretMotor.enableForwardSoftLimit(true);
-	    turretMotor.enableReverseSoftLimit(true);
+		turretMotor.configMaxOutputVoltage(5);
+	    turretMotor.enableForwardSoftLimit(false);
+	    turretMotor.enableReverseSoftLimit(false);
 		turretThread = new TurretThread();
 	}                 
 	
@@ -64,24 +65,24 @@ public class TurretSubsystem extends Subsystem {
 	public synchronized void setSetpoint(double targetAngle) {
 		SmartDashboard.putNumber("turret target angle", targetAngle);
 		setpoint = targetAngle;
-		if(Math.abs(targetAngle)>Constants.TURRET_DEGREES_IN_RANGE) {
+		if(Math.abs(targetAngle)>Robot.bot.TURRET_DEGREES_IN_RANGE) {
 			System.out.println("BAD TURRET SETPOINT");
 			SmartDashboard.putString("BAD TURRET SETPOINT","CANNOT ATTAIN");
 		}								
 		else{
-			SmartDashboard.putNumber("Turret setpoint", targetAngle / Constants.TURRET_DEGREES_PER_ROTATION);
+			SmartDashboard.putNumber("Turret setpoint", targetAngle / Robot.bot.TURRET_DEGREES_PER_ROTATION);
 		    turretMotor.changeControlMode(CANTalon.TalonControlMode.Position);
-			turretMotor.setSetpoint(targetAngle / Constants.TURRET_DEGREES_PER_ROTATION);
+			turretMotor.setSetpoint(targetAngle / Robot.bot.TURRET_DEGREES_PER_ROTATION);
 			RobotState.getInstance().setTurretStatus(true);
 		}
 	}																										
 	
 	public synchronized double getAngle() {
-		return turretMotor.getPosition() * Constants.TURRET_DEGREES_PER_ROTATION;
+		return turretMotor.getPosition() * Robot.bot.TURRET_DEGREES_PER_ROTATION;
 	}
 	
 	public synchronized double getSetpoint() {
-	    return turretMotor.getSetpoint() * Constants.TURRET_DEGREES_PER_ROTATION;
+	    return turretMotor.getSetpoint() * Robot.bot.TURRET_DEGREES_PER_ROTATION;
 	}
 	
 	public synchronized double getError() {    
@@ -89,7 +90,7 @@ public class TurretSubsystem extends Subsystem {
 	}
 	
 	public synchronized boolean isOnTarget() {
-	    return (turretMotor.getControlMode() == CANTalon.TalonControlMode.Position && Math.abs(getError()) < Constants.TURRET_TOLERANCE);
+	    return (turretMotor.getControlMode() == CANTalon.TalonControlMode.Position && Math.abs(getError()) < Robot.bot.TURRET_TOLERANCE);
 	}								
 	
 
@@ -123,7 +124,17 @@ public class TurretSubsystem extends Subsystem {
 			turretMotor.setPosition(0); 
     	}
     	else if(TurretSubsystem.getInstance().getFwdLimitSwitch()){
-    		turretMotor.setPosition(Constants.TURRET_ROTATIONS_IN_RANGE);   
+    		turretMotor.setPosition(Robot.bot.TURRET_ROTATIONS_IN_RANGE);   
+    		
+    	}
+	}
+	
+	public void resetTurret(boolean zero){
+		if(zero){
+        	setMotorPower(-.2);
+    	}
+    	else{
+    		setMotorPower(0.2);
     	}
 	}
 	

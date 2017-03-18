@@ -35,7 +35,17 @@ public class RobotHardwareCompBot extends RobotHardware {
 	public final double LEFT_DRIVE_F  = 0.1208; 
 	public final double RIGHT_DRIVE_F = 0.1229;
 	
+	private static final double TURRET_DIAMETER = 13.0;
+	public static final double TURRET_ROTATIONS_IN_RANGE = 12.3466796875;
+	public static final double TURRET_TOLERANCE = 1.0;
+	public static final double TURRET_TEETH_BETWEEN_LIMIT_SWITCHES = 8.5;
+	public static final double TURRET_TOTAL_TEETH = 156.0;
+	public static final double TURRET_DEGREES_BETWEEN_LIMIT_SWITCHES = TURRET_TEETH_BETWEEN_LIMIT_SWITCHES/TURRET_TOTAL_TEETH * 360;
+	public static final double TURRET_DEGREES_IN_RANGE = 360 - TURRET_DEGREES_BETWEEN_LIMIT_SWITCHES;
+	public static final double TURRET_DEGREES_PER_ROTATION = TURRET_DEGREES_IN_RANGE/TURRET_ROTATIONS_IN_RANGE;
+	
 	public final boolean REVERSE_LEFT_SENSOR = true;
+
 	public final boolean REVERSE_RIGHT_SENSOR = false;
 	public final boolean REVERSE_LEFT_OUTPUT = false;
 	public final boolean REVERSE_RIGHT_OUTPUT = true;

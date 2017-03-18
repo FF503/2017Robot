@@ -4,6 +4,7 @@ import org.usfirst.frc.team503.robot.Robot;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 import org.usfirst.frc.team503.subsystems.GyroSubsystem;
 import org.usfirst.frc.team503.subsystems.UltrasonicSubsystem;
+import org.usfirst.frc.team503.utils.Constants;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -18,6 +19,7 @@ public class AutonDriveCommand extends Command {
 	NetworkTable table;
 	double count;
 	double startTime, currTime;
+	double turnMultiplier;
 	
     public AutonDriveCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -27,9 +29,7 @@ public class AutonDriveCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	System.out.println("in auton command");
-    	table = NetworkTable.getTable("LG_Camera");
-    	
+    	table = NetworkTable.getTable("LG_Camera");    	
     	SmartDashboard.putBoolean("Auton drive isFinished", false);
     	GyroSubsystem.getInstance().gyro.reset();
     	DrivetrainSubsystem.getInstance().percentVoltageMode();
@@ -38,13 +38,20 @@ public class AutonDriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	count++;
     	currTime = Timer.getFPGATimestamp();
     	angle = -table.getNumber("Degrees",0.0);
-		SmartDashboard.putNumber("auton drive count", count);
     	SmartDashboard.putNumber("Peg Angle", angle);
-    	if(/*UltrasonicSubsystem.getInstance().getUltrasonicDistance() > 24.0 && */angle != 0.0){   //was 36 
-    		DrivetrainSubsystem.getInstance().arcadeDrive(.2, angle*.05, false); //0.2 and 0.05
+    	if(/*UltrasonicSubsystem.getInstance().getUltrasonicDistance() > 2 4.0 && */angle != 0.0){   //was 36 
+    		//DrivetrainSubsystem.getInstance().arcadeDrive(.2, angle*.05, false);
+    		turnMultiplier = 1-((UltrasonicSubsystem.getInstance().getLeftUltrasonicDistance() - Constants.DISTANCE_TO_PEG)/(Robot.bot.AUTON_DRIVE_P-Constants.DISTANCE_TO_PEG));
+    		if (turnMultiplier < Robot.bot.minAutonDriveTurnPower){
+    			turnMultiplier = Robot.bot.minAutonDriveTurnPower;
+    		}
+    		else if (turnMultiplier > Robot.bot.maxAutonDriveTurnPower){
+    			turnMultiplier = Robot.bot.maxAutonDriveTurnPower;
+    		}
+    		SmartDashboard.putNumber("mult", turnMultiplier);
+    		DrivetrainSubsystem.getInstance().arcadeDrive(0.35, turnMultiplier * angle , false);
     	} 
     	
     	else {
@@ -65,8 +72,8 @@ public class AutonDriveCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	SmartDashboard.putBoolean("Auton drive isFinished",(UltrasonicSubsystem.getInstance().getLeftUltrasonicDistance() < 12.0));
-    	return (UltrasonicSubsystem.getInstance().getLeftUltrasonicDistance()< 13.0);
+    	SmartDashboard.putBoolean("Auton drive isFinished",(UltrasonicSubsystem.getInstance().getLeftUltrasonicDistance() < Constants.DISTANCE_TO_PEG));
+    	return (UltrasonicSubsystem.getInstance().getLeftUltrasonicDistance()< Constants.DISTANCE_TO_PEG);
     }	
 
     protected void end(){

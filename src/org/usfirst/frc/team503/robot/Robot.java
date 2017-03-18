@@ -2,10 +2,8 @@
 package org.usfirst.frc.team503.robot;
 
 import org.usfirst.frc.team503.auton.AutonSelector;
-import org.usfirst.frc.team503.auton.DrivePIDMotionProfileTuneRun;
 import org.usfirst.frc.team503.commands.ArcadeDriveCommand;
 import org.usfirst.frc.team503.commands.TeleopDeflectorCommand;
-import org.usfirst.frc.team503.commands.TeleopTurretCommand;
 import org.usfirst.frc.team503.subsystems.DeflectorSubsystem;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 import org.usfirst.frc.team503.subsystems.GyroSubsystem;
@@ -92,10 +90,11 @@ public class Robot extends IterativeRobot {
 			lightSolenoid = new Solenoid(Robot.bot.lowGoalLightPort);
 	    	lightSolenoid.set(true);
 		}
-		AutonSelector.getInstance().startAuton();
 		//(new DrivePIDMotionProfileTuneRun()).start();
 		startTime = Timer.getFPGATimestamp();
 		RobotState.getInstance().setState(RobotState.State.AUTON);
+		AutonSelector.getInstance().startAuton();
+		TurretSubsystem.getInstance().getThread().startTurret();
 	}
 
 	/**

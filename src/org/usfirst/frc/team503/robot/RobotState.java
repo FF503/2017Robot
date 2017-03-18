@@ -23,12 +23,16 @@ public class RobotState extends Subsystem {
 	private boolean gearPlacerBack;
 	private boolean gearPlacerFront;
 	private boolean climberIsRunningSlow;
+	private boolean turretIsLocked;
 	private State robotState;
 	private TurretState turretState;
 	private ShootingPresets shootingPreset;
+	private double turretAngle;
+	private boolean hint;
     	
 	public RobotState() {
 		shooterIsRunning = false; 
+		turretIsLocked = false;
 		climberIsRunningSlow = false; 
 		intakeIsRunning = false;
 		currentDriveGear = false;    //low gear
@@ -39,10 +43,11 @@ public class RobotState extends Subsystem {
 		driveTrainIsReversed = false;
 		gearPlacerBack = false; //closed
 		gearPlacerFront = false; //closed
+		hint = false;
 		robotState = State.DISABLED;
 		turretState = TurretState.DISABLED;
 		shootingPreset = ShootingPresets.HopperRed;
-	}
+	}	
 	
 	private static RobotState instance = new RobotState();
 	
@@ -55,17 +60,43 @@ public class RobotState extends Subsystem {
 	}
 	
 	public enum TurretState{
-		DISABLED, SEEKING_TARGET, TARGET_FOUND, RUNNING_PID, ON_TARGET;
+		DISABLED, RESET_TURRET, SEEKING_TARGET, TARGET_FOUND, RUNNING_PID, ON_TARGET, TAKING_HINT;
 	}
 	
 	public enum ShootingPresets{
-		Batter(17.0,3900), HopperRed(29.9,4300), HopperBlue(29.9,4500), PegNearHopper(34.6,5050);
+		Batter(17.0,3900,0), HopperRed(29.9,4300,0), PegNearHopper(39.0, 4900, 266.66537145811753), HopperBlue(28.0,4600,204.0);
 		public double angle;
 		public int rpm;
-		private ShootingPresets(double angle, int rpm){
+		public double turretAngle; 
+		private ShootingPresets(double angle, int rpm, double turretAngle){
 			this.angle = angle;
 			this.rpm = rpm;
+			this.turretAngle = turretAngle;
 		}
+	}
+	
+	public boolean getTurretIsLocked(){
+		return turretIsLocked;
+	}
+	
+	public void setTurretIsLocked(boolean lock){
+		turretIsLocked = lock;
+	}
+	
+	public double getTurretAngle(){
+		return turretAngle;
+	}
+	
+	public void setTurretAngle(double angle){
+		turretAngle = angle;
+	}
+	
+	public boolean getTurretHint(){
+		return hint;
+	}
+	
+	public void setTurretHint(boolean hint){
+		this.hint = hint;
 	}
 	
 	public ShootingPresets getShooterPreset(){

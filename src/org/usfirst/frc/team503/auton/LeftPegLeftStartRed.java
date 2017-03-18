@@ -53,7 +53,6 @@ public class LeftPegLeftStartRed extends CommandGroup {
 		addSequential(new GyroTurnCommand(60));
 		addSequential(new AutonDriveCommand());
 		addSequential(new OpenGearPlacerCommand());
-		addSequential(new CloseGearPlacerCommand());
 		if (dump){	  
 			addSequential(new RunMotionProfileCommand(dumpbinForward, 2, 1, false));
 			addSequential(new GyroTurnCommand(30, true));

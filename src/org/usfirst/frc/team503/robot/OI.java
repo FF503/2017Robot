@@ -4,6 +4,7 @@ import org.usfirst.frc.team503.commands.ChangeShooterPresetCommand;
 import org.usfirst.frc.team503.commands.ClimbCommand;
 import org.usfirst.frc.team503.commands.ClimbFasterCommand;
 import org.usfirst.frc.team503.commands.CloseGearPlacerCommand;
+import org.usfirst.frc.team503.commands.GyroTurnCommand;
 import org.usfirst.frc.team503.commands.OpenGearPlacerCommand;
 import org.usfirst.frc.team503.commands.ReverseDriveTrainCommand;
 import org.usfirst.frc.team503.commands.ShiftToHighGear;
@@ -52,15 +53,15 @@ public class OI {
 	private static Joystick operatorJoystick = new Joystick(1);
 //	private static XboxController  xBox = new XboxController(1);	
 	
-	private static JoystickButton openGearMechButton = new JoystickButton(driverJoystick, 1);
-	private static JoystickButton closeGearMechButton = new JoystickButton(driverJoystick, 2);
+	private static JoystickButton openGearMechButton = new JoystickButton(driverJoystick, 2);
+	private static JoystickButton closeGearMechButton = new JoystickButton(driverJoystick, 1);
 	private static JoystickButton intakeButton = new JoystickButton(driverJoystick, 3);
 	private static JoystickButton intakeReverse = new JoystickButton(driverJoystick, 4);
 	private static JoystickButton shiftToLowGearButton = new JoystickButton(driverJoystick,5);
 	private static JoystickButton shiftToHighGearButton = new JoystickButton(driverJoystick,6);
 	private static JoystickButton reverseDriveTrainButton = new JoystickButton(driverJoystick, 7);
 	private static JoystickButton placeGearButton = new JoystickButton(driverJoystick, 8);
-	
+	private static JoystickButton turnPIDButton = new JoystickButton(driverJoystick, 8);
 	
 	private static JoystickButton climbButton = new JoystickButton(operatorJoystick, 1);
 	private static JoystickButton climbFasterButton = new JoystickButton(operatorJoystick, 2);
@@ -91,6 +92,7 @@ public class OI {
 		climbButton.whenPressed(new ClimbCommand());
 		reverseDriveTrainButton.whenPressed(new ReverseDriveTrainCommand());
 		climbFasterButton.whenPressed(new ClimbFasterCommand());
+		turnPIDButton.whenPressed(new GyroTurnCommand(60));
 	//	goToDeflectorButton.whenPressed(new GoToDeflectorCommand(20.0));
 		//goToTurretPosition.whenPressed(new TurnTurretCommand(10.0, false));	
 	}
