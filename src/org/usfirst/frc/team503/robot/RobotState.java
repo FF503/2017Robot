@@ -64,12 +64,12 @@ public class RobotState extends Subsystem {
 	}
 	
 	public enum ShootingPresets{
-		Batter(17.0,3900,0), HopperRed(29.9,4300,0), PegNearHopper(39.0, 4900, 266.66537145811753), HopperBlue(28.0,4600,204.0);
-		public double angle;
+		Batter(17.0,3900,0), HopperRed(29.9,4300,0), PegNearHopper(36.0, 5050, 266.66537145811753), HopperBlue(32.0,4350,204.0);
+		public double deflectorAngle;
 		public int rpm;
 		public double turretAngle; 
-		private ShootingPresets(double angle, int rpm, double turretAngle){
-			this.angle = angle;
+		private ShootingPresets(double deflectorAngle, int rpm, double turretAngle){
+			this.deflectorAngle = deflectorAngle;
 			this.rpm = rpm;
 			this.turretAngle = turretAngle;
 		}

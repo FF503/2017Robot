@@ -30,9 +30,11 @@ public class ShootSequenceCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	DeflectorSubsystem.getInstance().setSetpoint(RobotState.getInstance().getShooterPreset().angle);
-    	RobotState.getInstance().setTurretAngle(RobotState.getInstance().getShooterPreset().turretAngle);
-    	RobotState.getInstance().setTurretState(RobotState.TurretState.TAKING_HINT);
+    	DeflectorSubsystem.getInstance().setSetpoint(RobotState.getInstance().getShooterPreset().deflectorAngle);
+    	if(RobotState.getInstance().getTurretState()!=RobotState.TurretState.ON_TARGET){
+    		RobotState.getInstance().setTurretAngle(RobotState.getInstance().getShooterPreset().turretAngle);
+        	RobotState.getInstance().setTurretState(RobotState.TurretState.TAKING_HINT);
+    	}
     	ShooterSubsystem.getInstance().setSetpoint(RobotState.getInstance().getShooterPreset().rpm);
     	RobotState.getInstance().setShooterStatus(true);
     	SmartDashboard.putBoolean("Deflector on target", false);
@@ -53,7 +55,6 @@ public class ShootSequenceCommand extends Command {
     		RobotState.getInstance().setIntakeStatus(true);
     	}
     	currTime = Timer.getFPGATimestamp();
-    	SmartDashboard.putNumber("Shoot count", currTime);
     }
 
     // Make this return true when this Command no longer needs to run execute()

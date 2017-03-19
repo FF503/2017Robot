@@ -112,7 +112,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 			//Turret finds target and finds a new more accurate angle
 			case TARGET_FOUND:
 				//delay to account for pi lag
-				Timer.delay(.5);
+				Timer.delay(.4);
 				cameraOffset = getCameraAngle();
 				if(!piIsAlive){
 					RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
@@ -131,6 +131,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 			case RUNNING_PID:
 		 		TurretSubsystem.getInstance().resetEncoderAtLimitSwitch();
 		 		PIDCurrTime = Timer.getFPGATimestamp();
+		 		RobotState.getInstance().setTurretIsLocked(false);
 		 		if(!piIsAlive){
 					RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
 				}

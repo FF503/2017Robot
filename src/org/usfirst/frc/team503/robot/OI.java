@@ -92,7 +92,7 @@ public class OI {
 		climbButton.whenPressed(new ClimbCommand());
 		reverseDriveTrainButton.whenPressed(new ReverseDriveTrainCommand());
 		climbFasterButton.whenPressed(new ClimbFasterCommand());
-		turnPIDButton.whenPressed(new GyroTurnCommand(60));
+		//turnPIDButton.whenPressed(new GyroTurnCommand(60));
 	//	goToDeflectorButton.whenPressed(new GoToDeflectorCommand(20.0));
 		//goToTurretPosition.whenPressed(new TurnTurretCommand(10.0, false));	
 	}
