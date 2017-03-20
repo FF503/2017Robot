@@ -59,7 +59,7 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final boolean REVERSE_LEFT_OUTPUT = false;
 	public final boolean REVERSE_RIGHT_OUTPUT = true;
 	
-	public final double SHOOT_P = 0.7; //0.1
+	public final double SHOOT_P = 0.7; //0.1 //0.7
 	public final double SHOOT_I = 0.0; //0.0
 	public final double SHOOT_D = 100.0; //0.005
 	public final double SHOOT_F = 0.0188;
@@ -67,8 +67,8 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	
 	public final double TURRET_CYCLE_TIME = .005; //seconds
 	
-	public final double minAutonDriveTurnPower = 0.05;
-	public final double maxAutonDriveTurnPower = 0.1;
+	public final double minAutonDriveTurnPower = 0.03; //0.05
+	public final double maxAutonDriveTurnPower = 0.07; //0.1
 	public final double AUTON_DRIVE_P = 50;
 	
 	public final double DEFLECTOR_P = .035;

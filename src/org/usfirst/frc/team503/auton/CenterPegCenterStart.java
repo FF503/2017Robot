@@ -32,13 +32,19 @@ public class CenterPegCenterStart extends CommandGroup {
 				{0, 13.5},
 				{-4, 13.5}
 		};
+    	
+    	double[][] backUpFromCenterPin = {
+    			{0,13.5},
+    			{5,13.5}
+    	};
   
 		addSequential(new RunMotionProfileCommand(centerPinCenterStart, 2, 1, true));
 		addSequential(new AutonDriveCommand());
 		addSequential(new OpenGearPlacerCommand());
 		//addSequential(new CloseGearPlacerCommand());
 		if(shoot){
-			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.PegNearHopper);
+			addSequential(new RunMotionProfileCommand(backUpFromCenterPin, 2, 1, false));
+			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.CenterPeg); 
 			addSequential(new ShootSequenceCommand());
 		}
     }

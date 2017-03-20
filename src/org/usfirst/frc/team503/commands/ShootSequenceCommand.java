@@ -31,10 +31,8 @@ public class ShootSequenceCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	DeflectorSubsystem.getInstance().setSetpoint(RobotState.getInstance().getShooterPreset().deflectorAngle);
-    	if(RobotState.getInstance().getTurretState()!=RobotState.TurretState.ON_TARGET){
-    		RobotState.getInstance().setTurretAngle(RobotState.getInstance().getShooterPreset().turretAngle);
-        	RobotState.getInstance().setTurretState(RobotState.TurretState.TAKING_HINT);
-    	}
+    	RobotState.getInstance().setTurretAngle(RobotState.getInstance().getShooterPreset().turretAngle);
+        RobotState.getInstance().setTurretState(RobotState.TurretState.TAKING_HINT);
     	ShooterSubsystem.getInstance().setSetpoint(RobotState.getInstance().getShooterPreset().rpm);
     	RobotState.getInstance().setShooterStatus(true);
     	SmartDashboard.putBoolean("Deflector on target", false);

@@ -66,8 +66,9 @@ public class TurretSubsystem extends Subsystem {
 		SmartDashboard.putNumber("turret target angle", targetAngle);
 		setpoint = targetAngle;
 		if(Math.abs(targetAngle)>Robot.bot.TURRET_DEGREES_IN_RANGE) {
-			System.out.println("BAD TURRET SETPOINT");
+			System.out.println("BAD TURRET SETPOINT: " + targetAngle);
 			SmartDashboard.putString("BAD TURRET SETPOINT","CANNOT ATTAIN");
+			//turretMotor.setSetpoint(turretMotor.getPosition());  //tricks controller into thinking its on target so that bad setpoints dont break the system
 		}								
 		else{
 			SmartDashboard.putNumber("Turret setpoint", targetAngle / Robot.bot.TURRET_DEGREES_PER_ROTATION);

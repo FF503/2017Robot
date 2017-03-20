@@ -64,7 +64,7 @@ public class RobotState extends Subsystem {
 	}
 	
 	public enum ShootingPresets{
-		Batter(17.0,3900,0), HopperRed(29.9,4300,0), PegNearHopper(36.0, 5050, 266.66537145811753), HopperBlue(32.0,4350,204.0);
+		Batter(25.0,4000,283.5324107344833), HopperRed(29.9,4300,0), CenterPeg(29.9,4500,503), PegNearHopper(36.0, 5050, 266.66537145811753), HopperBlue(32.0,4350,204.0);
 		public double deflectorAngle;
 		public int rpm;
 		public double turretAngle; 
@@ -74,6 +74,7 @@ public class RobotState extends Subsystem {
 			this.turretAngle = turretAngle;
 		}
 	}
+	
 	
 	public boolean getTurretIsLocked(){
 		return turretIsLocked;
@@ -98,6 +99,7 @@ public class RobotState extends Subsystem {
 	public void setTurretHint(boolean hint){
 		this.hint = hint;
 	}
+	
 	
 	public ShootingPresets getShooterPreset(){
 		return shootingPreset;
@@ -132,11 +134,11 @@ public class RobotState extends Subsystem {
 	}
 	
 	
-	public TurretState getTurretState(){
+	public synchronized TurretState getTurretState(){
 		return turretState;
 	}
 	
-	public void setTurretState(TurretState state){
+	public synchronized void setTurretState(TurretState state){
 		turretState = state;
 	}
 	

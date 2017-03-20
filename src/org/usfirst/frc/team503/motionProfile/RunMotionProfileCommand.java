@@ -5,6 +5,7 @@ import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 
 import com.ctre.CANTalon.TalonControlMode;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -35,7 +36,9 @@ public class RunMotionProfileCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	if (calculatingInHouse){
+    		 double calcStartTime = Timer.getFPGATimestamp();
     		planner.calculate(time, Robot.bot.CYCLE_TIME, Robot.bot.WHEEL_BASE, curveExaggeration, reverse);
+    		System.out.println("calc total time:" + (Timer.getFPGATimestamp() -calcStartTime));
     		SmartDashboard.putNumber("left target", planner.getLeftProfile()[planner.getLeftProfile().length-1][0]);
     		DrivetrainSubsystem.getInstance().runProfileLeftRight(planner.getLeftProfile(), planner.getRightProfile());
     	}
