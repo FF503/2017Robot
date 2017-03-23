@@ -30,8 +30,8 @@ public class LeftPegLeftStartRed extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	double[][] leftPinLeftStart = {
-				{0, 22.5},
-				{-5.45, 22.5}
+    			{0, 22.5},
+				{-5.6, 22.5}
 		};
     	
     	double[][] backUpFromPin = {
@@ -48,7 +48,7 @@ public class LeftPegLeftStartRed extends CommandGroup {
     			{0,0},
     			{4.5,0}
     	};    	
-  
+    	addParallel(new CloseGearPlacerCommand());
 		addSequential(new RunMotionProfileCommand(leftPinLeftStart, 2, 1, true));
 		addSequential(new GyroTurnCommand(60));
 		addSequential(new AutonDriveCommand());
@@ -63,7 +63,7 @@ public class LeftPegLeftStartRed extends CommandGroup {
 				RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperRed);
 			}
 			else{
-				RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.PegNearHopper);
+				RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.PegNearHopperRed);
 			}
 			addSequential(new ShootSequenceCommand());
 		}

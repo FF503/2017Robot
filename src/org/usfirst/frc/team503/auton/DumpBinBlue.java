@@ -5,6 +5,7 @@ import org.usfirst.frc.team503.commands.GyroTurnCommand;
 import org.usfirst.frc.team503.commands.OpenGearPlacerCommand;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
 import org.usfirst.frc.team503.motionProfile.RunMotionProfileCommand;
+import org.usfirst.frc.team503.robot.RobotState;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
@@ -43,6 +44,7 @@ public class DumpBinBlue extends CommandGroup {
 		addSequential(new GyroTurnCommand(90));
 		addSequential(new RunMotionProfileCommand(hitBin, 2, 1, false));
 		if(shoot){
+			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperBlue);
 			addSequential(new ShootSequenceCommand());
 		}
     }

@@ -43,9 +43,6 @@ public class ShootSequenceCommand extends Command {
     protected void execute() {
     	DeflectorSubsystem.getInstance().resetEncoder();
     	SmartDashboard.putBoolean("Deflector on target", DeflectorSubsystem.getInstance().isOnTarget());
-    	if(RobotState.getInstance().getTurretIsLocked()){
-        	RobotState.getInstance().setTurretHint(false);
-    	}
 		if(ShooterSubsystem.getInstance().isOnTarget() && DeflectorSubsystem.getInstance().isOnTarget() && RobotState.getInstance().getTurretIsLocked()){
     		IndexerSubsystem.getInstance().setMotorPower(0.6 * Robot.bot.REVERSE_INDEXER);//was 0.9 for far shots, 0.6 for boiler shot
 			IntakeSubsystem.getInstance().setMotorPower(-.75, -1.0);

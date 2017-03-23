@@ -33,14 +33,14 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final int leftUltrasonicPort = 1;     //was 0
 	public final int rightUltrasonicPort = 2;    // was 1 
 	
-	private static final double TURRET_DIAMETER = 13.0;
-	public final static double TURRET_ROTATIONS_IN_RANGE = 12.203857421875;
-	public static final double TURRET_TOLERANCE = 1.0;
-	public static final double TURRET_TEETH_BETWEEN_LIMIT_SWITCHES = 8.5;
-	public static final double TURRET_TOTAL_TEETH = 156.0;
-	public static final double TURRET_DEGREES_BETWEEN_LIMIT_SWITCHES = TURRET_TEETH_BETWEEN_LIMIT_SWITCHES/TURRET_TOTAL_TEETH * 360;
-	public static final double TURRET_DEGREES_IN_RANGE = 360 - TURRET_DEGREES_BETWEEN_LIMIT_SWITCHES;
-	public static final double TURRET_DEGREES_PER_ROTATION = TURRET_DEGREES_IN_RANGE/TURRET_ROTATIONS_IN_RANGE;
+	private final double TURRET_DIAMETER = 13.0;
+	public final double TURRET_ROTATIONS_IN_RANGE = 12.203857421875;
+	public final double TURRET_TOLERANCE = 1.0;
+	public final double TURRET_TEETH_BETWEEN_LIMIT_SWITCHES = 8.5;
+	public final double TURRET_TOTAL_TEETH = 156.0;
+	public final double TURRET_DEGREES_BETWEEN_LIMIT_SWITCHES = TURRET_TEETH_BETWEEN_LIMIT_SWITCHES/TURRET_TOTAL_TEETH * 360;
+	public final double TURRET_DEGREES_IN_RANGE = 360 - TURRET_DEGREES_BETWEEN_LIMIT_SWITCHES;
+	public final double TURRET_DEGREES_PER_ROTATION = TURRET_DEGREES_IN_RANGE/TURRET_ROTATIONS_IN_RANGE;
 	
 	public final double REVERSE_UPPER_INTAKE = 1.0;
 	

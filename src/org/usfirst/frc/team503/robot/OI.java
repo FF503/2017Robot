@@ -1,10 +1,9 @@
 package org.usfirst.frc.team503.robot;
 
-import org.usfirst.frc.team503.commands.ChangeShooterPresetCommand;
 import org.usfirst.frc.team503.commands.ClimbCommand;
 import org.usfirst.frc.team503.commands.ClimbFasterCommand;
 import org.usfirst.frc.team503.commands.CloseGearPlacerCommand;
-import org.usfirst.frc.team503.commands.GyroTurnCommand;
+import org.usfirst.frc.team503.commands.GoToDeflectorCommand;
 import org.usfirst.frc.team503.commands.OpenGearPlacerCommand;
 import org.usfirst.frc.team503.commands.ReverseDriveTrainCommand;
 import org.usfirst.frc.team503.commands.ShiftToHighGear;
@@ -13,6 +12,8 @@ import org.usfirst.frc.team503.commands.ShootSequenceCommand;
 import org.usfirst.frc.team503.commands.ToggleGearPlacerBack;
 import org.usfirst.frc.team503.commands.ToggleGearPlacerFront;
 import org.usfirst.frc.team503.commands.ToggleIntakeCommand;
+import org.usfirst.frc.team503.commands.TurnTurretCommand;
+import org.usfirst.frc.team503.commands.ChangeShooterPresetCommand;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -87,14 +88,14 @@ public class OI {
 		placeGearButton.whenPressed(new ToggleGearPlacerFront(true));
 		openGearMechButton.whenPressed(new OpenGearPlacerCommand());
 		closeGearMechButton.whenPressed(new CloseGearPlacerCommand());
-		incrementPreset.whenPressed(new ChangeShooterPresetCommand());
-		decrementPreset.whenPressed(new ChangeShooterPresetCommand());
+		//incrementPreset.whenPressed(new ChangeShooterPresetCommand());
+		//decrementPreset.whenPressed(new ChangeShooterPresetCommand());
 		climbButton.whenPressed(new ClimbCommand());
 		reverseDriveTrainButton.whenPressed(new ReverseDriveTrainCommand());
 		climbFasterButton.whenPressed(new ClimbFasterCommand());
 		//turnPIDButton.whenPressed(new GyroTurnCommand(60));
-	//	goToDeflectorButton.whenPressed(new GoToDeflectorCommand(20.0));
-		//goToTurretPosition.whenPressed(new TurnTurretCommand(10.0, false));	
+		//goToDeflectorButton.whenPressed(new GoToDeflectorCommand(30.0));
+		goToTurretPosition.whenPressed(new TurnTurretCommand(10.0, false));	
 	}
 	
 	public static boolean getIncrementPreset(){

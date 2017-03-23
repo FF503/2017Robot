@@ -133,8 +133,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 		 		TurretSubsystem.getInstance().resetEncoderAtLimitSwitch();
 		 		PIDCurrTime = Timer.getFPGATimestamp();
 		 		RobotState.getInstance().setTurretIsLocked(false);
-		 	
-		 		if ((PIDCurrTime - PIDStartTime) > 2.0){
+		 		if ((PIDCurrTime - PIDStartTime) > 1.0){
 		 			RobotState.getInstance().setTurretState(RobotState.TurretState.ON_TARGET);
 		 			cameraOffset = 503;		 			
 		 			discardImage = false;
@@ -153,7 +152,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 					RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
 				}
 				else{
-					if((Math.abs(cameraOffset) >= Constants.CAMERA_TOLERANCE)){
+					if(cameraOffset!=503 && (Math.abs(cameraOffset) >= Constants.CAMERA_TOLERANCE)){
 						RobotState.getInstance().setTurretState(RobotState.TurretState.TARGET_FOUND);
 						RobotState.getInstance().setTurretIsLocked(false);
 						RobotState.getInstance().setTurretHint(false);
@@ -165,7 +164,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 				break;
 			case TAKING_HINT:
 				TurretSubsystem.getInstance().setSetpoint(RobotState.getInstance().getTurretAngle());
-				System.out.println("made it");
 				PIDStartTime = Timer.getFPGATimestamp() - 0.5;  //workaround to give us an extra 0.5 seconds to achieve target
 				RobotState.getInstance().setTurretState(RobotState.TurretState.RUNNING_PID);
 				RobotState.getInstance().setTurretHint(true);
@@ -208,7 +206,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 		heartbeatUpdateTime = Timer.getFPGATimestamp() - heartbeatUpdateStartTime;
 		SmartDashboard.putNumber("heartbeat update time", heartbeatUpdateTime);
 		if (heartbeatUpdateTime >= 2.0){
-			table.putNumber("Degrees", 503);
+			table.putNumber("Degrees", 0.0);
 			RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
 			return false;
 		}

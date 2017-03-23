@@ -19,8 +19,8 @@ public class RobotHardwareCompBot extends RobotHardware {
 	public final int innerGearSolenoidID2 = 5;
 	public final int climberSpark1Port = 2;      
 	public final int climberSpark2Port = 3;     
-	public final int rightUltrasonicPort = 1;
-	public final int leftUltrasonicPort = 0;
+	public final int rightUltrasonicPort = 1; 
+	public final int leftUltrasonicPort = 0; 
 	public final int lowGoalLightPort = 6;
 		
 	public final double REVERSE_UPPER_INTAKE = -1.0;
@@ -35,8 +35,12 @@ public class RobotHardwareCompBot extends RobotHardware {
 	public final double LEFT_DRIVE_F  = 0.1208; 
 	public final double RIGHT_DRIVE_F = 0.1229;
 	
+	public final double minAutonDriveTurnPower = 0.03; //0.05
+	public final double maxAutonDriveTurnPower = 0.07; //0.1
+	public final double AUTON_DRIVE_P = 50;
+	
 	private static final double TURRET_DIAMETER = 13.0;
-	public static final double TURRET_ROTATIONS_IN_RANGE = 12.3466796875;
+	public static final double TURRET_ROTATIONS_IN_RANGE = 257.495361328125;
 	public static final double TURRET_TOLERANCE = 1.0;
 	public static final double TURRET_TEETH_BETWEEN_LIMIT_SWITCHES = 8.5;
 	public static final double TURRET_TOTAL_TEETH = 156.0;
@@ -65,12 +69,12 @@ public class RobotHardwareCompBot extends RobotHardware {
 	public double GYRO_D = 0.0600;		//was 0.0
 	public double GYRO_TOLERANCE = 1.0;
 		
-	public final double DEFLECTOR_P = .0175;
-	public final double DEFLECTOR_I = 0;
-	public final double DEFLECTOR_D = 0;
-	public final double DEFLECTOR_MAX_COUNTS = 12.0;
-	public final double DEFLECTOR_MIN_ANGLE = 15.0;
-	public final double DEFLECTOR_MAX_ANGLE = 51.0;
+	public final double DEFLECTOR_P = .025;
+	public final double DEFLECTOR_I = 0.00002;
+	public final double DEFLECTOR_D = 0.5;
+	public final double DEFLECTOR_MAX_COUNTS = 12.252197265625;
+	public final double DEFLECTOR_MIN_ANGLE = 15.0; 
+	public final double DEFLECTOR_MAX_ANGLE = 46.0;
 	public final double DEFLECTOR_COUNTS_PER_DEGREE = DEFLECTOR_MAX_COUNTS/(DEFLECTOR_MAX_ANGLE - DEFLECTOR_MIN_ANGLE);
 	public final double DEFLECTOR_TOLERANCE = 1.0;
 	public final boolean DEFLECTOR_REVERSE_SENSOR = true;
@@ -79,9 +83,9 @@ public class RobotHardwareCompBot extends RobotHardware {
 	public final double LEFT_ULTRASONIC_VOLTS_PER_INCH = 0.228271461 / 24;
 	public final double RIGHT_ULTRASONIC_VOLTS_PER_INCH = 0.22705075800000002 / 24;
 	
-	public double TURRET_P = 0.1;
-	public double TURRET_I = 0.0;
-	public double TURRET_D = 0.0;	
+	public double TURRET_P = 0.03;
+	public double TURRET_I = 0.00001;
+	public double TURRET_D = 8.0;
 	
 	
 	public boolean hasTurretLight = true;

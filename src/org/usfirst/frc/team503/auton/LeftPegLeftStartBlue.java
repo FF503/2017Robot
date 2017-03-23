@@ -1,5 +1,6 @@
 package org.usfirst.frc.team503.auton;
 
+import org.usfirst.frc.team503.commands.CloseGearPlacerCommand;
 import org.usfirst.frc.team503.commands.GyroTurnCommand;
 import org.usfirst.frc.team503.commands.OpenGearPlacerCommand;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
@@ -29,7 +30,7 @@ public class LeftPegLeftStartBlue extends CommandGroup {
         // arm.
     	double[][] leftPinLeftStart = {
 				{0, 22.5},
-				{-5.6, 22.5}
+				{-4.95, 22.5} //
 		};
     	
     	double[][] backUpFromPin = {
@@ -46,7 +47,7 @@ public class LeftPegLeftStartBlue extends CommandGroup {
     			{0,0},
     			{3.7,0}
     	};
-    	    	
+    	addParallel(new CloseGearPlacerCommand());    	
 		addSequential(new RunMotionProfileCommand(leftPinLeftStart, 2, 1, true));
 		addSequential(new GyroTurnCommand(60));
 		addSequential(new AutonDriveCommand());
@@ -61,7 +62,7 @@ public class LeftPegLeftStartBlue extends CommandGroup {
 				RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperBlue);
 			}
 			else{
-				RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.PegNearHopper);
+				RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.PegNearHopperBlue);
 			}
 			addSequential(new ShootSequenceCommand());
 		}
