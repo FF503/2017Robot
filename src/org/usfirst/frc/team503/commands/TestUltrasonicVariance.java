@@ -57,12 +57,10 @@ public class TestUltrasonicVariance extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	 
     	return false;
     }	
 
     protected void end(){
-    	System.out.println("finished auton drive command");
     	DrivetrainSubsystem.getInstance().tankDrive(0, 0, false);
     }
     

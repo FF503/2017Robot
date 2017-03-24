@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
@@ -52,7 +53,7 @@ public class Robot extends IterativeRobot {
 		AutonSelector.getInstance().putAutonChoosers();
 		RobotState.getInstance().setState(RobotState.State.DISABLED);
 		if(Robot.bot.hasDriveCamera()){
-			CameraServer.getInstance().startAutomaticCapture();
+		//	CameraServer.getInstance().startAutomaticCapture();
 		}
 	}
  
@@ -70,7 +71,7 @@ public class Robot extends IterativeRobot {
 		IndexerSubsystem.getInstance().setMotorPower(0.0);
 		DeflectorSubsystem.getInstance().setMotorPower(0.0);
 		DrivetrainSubsystem.getInstance().tankDrive(0.0,0.0,false);
-		//TurretSubsystem.getInstance().getThread().stopTurret();
+		TurretSubsystem.getInstance().getThread().stopTurret();
 		RobotState.getInstance().setState(RobotState.State.DISABLED);
 	}
 
@@ -91,7 +92,7 @@ public class Robot extends IterativeRobot {
 			lightSolenoid = new Solenoid(Robot.bot.lowGoalLightPort);
 	    	lightSolenoid.set(true);
 		}
-		//(new DrivePIDMotionProfileTuneRun()).start();
+
 		startTime = Timer.getFPGATimestamp();
 		RobotState.getInstance().setState(RobotState.State.AUTON);
 		AutonSelector.getInstance().startAuton();
@@ -126,19 +127,19 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		// Ensure the autonomous commands are cancelled if not finished 
+		LiveWindow.setEnabled(false);
 		if (autonCommand != null){
 			autonCommand.cancel();
 		}
 		DrivetrainSubsystem.getInstance().stopTrapezoidControl();    	
     	DrivetrainSubsystem.getInstance().resetEncoders();
-
 		RobotState.getInstance().setState(RobotState.State.TELEOP);
 	    startTime = Timer.getFPGATimestamp();
 	    //start commands that use joysticks and dpads manually from Robot.java
     	(new ArcadeDriveCommand()).start();
     	if (!Robot.bot.getName().equals("ProgrammingBot")){
-    		//TurretSubsystem.getInstance().getThread().startTurret();
-    		(new TeleopTurretCommand()).start();
+    		TurretSubsystem.getInstance().getThread().startTurret();
+    		//(new TeleopTurretCommand()).start();
         	(new TeleopDeflectorCommand()).start();
     	}
 	}

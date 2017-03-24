@@ -39,7 +39,7 @@ public class DumpBinBlue extends CommandGroup {
     			{3.9,0}
     	};
   
-  
+    	addParallel(new CloseGearPlacerCommand());    	
 		addSequential(new RunMotionProfileCommand(dumpbinForward, 2, 1, true));
 		addSequential(new GyroTurnCommand(90));
 		addSequential(new RunMotionProfileCommand(hitBin, 2, 1, false));

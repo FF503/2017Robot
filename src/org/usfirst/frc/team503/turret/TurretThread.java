@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  	private double leftSpeed, rightSpeed, turretSpeed;
  	private boolean discardImage;
 	private double startTime;
+	private double onTargetStartTime, onTargetCurrTime;
  	private Notifier handler;
  	private boolean startTurret;
  	private boolean piIsAlive;
@@ -36,6 +37,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 		discardImage = false;
 		lastHeartbeat = 0.0;
 		curHeartbeat = 0.0;
+		onTargetStartTime = startTime;
  	}
  	
  	public void run(){
@@ -137,19 +139,27 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 		 			RobotState.getInstance().setTurretState(RobotState.TurretState.ON_TARGET);
 		 			cameraOffset = 503;		 			
 		 			discardImage = false;
+					onTargetStartTime = Timer.getFPGATimestamp();
 		 		}
 		 		else if(TurretSubsystem.getInstance().isOnTarget()){
 					cameraOffset = 503;
 					RobotState.getInstance().setTurretState(RobotState.TurretState.ON_TARGET);
 					discardImage = false;
+					onTargetStartTime = Timer.getFPGATimestamp();
 				}
 				else if((cameraOffset == 0.0)&&(!RobotState.getInstance().getTurretHint())){
 					RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
 				}
 				break;
 			case ON_TARGET:
-				if (cameraOffset == 0.0 && !RobotState.getInstance().getTurretHint() ) {
-					RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
+				onTargetCurrTime = Timer.getFPGATimestamp();
+				if (cameraOffset == 0.0) {
+					if (!RobotState.getInstance().getTurretHint()){
+						RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
+					}
+					else if((onTargetCurrTime - onTargetStartTime)>.2){
+						RobotState.getInstance().setTurretIsLocked(true);
+					}
 				}
 				else{
 					if(cameraOffset!=503 && (Math.abs(cameraOffset) >= Constants.CAMERA_TOLERANCE)){

@@ -88,14 +88,14 @@ public class OI {
 		placeGearButton.whenPressed(new ToggleGearPlacerFront(true));
 		openGearMechButton.whenPressed(new OpenGearPlacerCommand());
 		closeGearMechButton.whenPressed(new CloseGearPlacerCommand());
-		//incrementPreset.whenPressed(new ChangeShooterPresetCommand());
-		//decrementPreset.whenPressed(new ChangeShooterPresetCommand());
+		incrementPreset.whenPressed(new ChangeShooterPresetCommand());
+		decrementPreset.whenPressed(new ChangeShooterPresetCommand());
 		climbButton.whenPressed(new ClimbCommand());
 		reverseDriveTrainButton.whenPressed(new ReverseDriveTrainCommand());
 		climbFasterButton.whenPressed(new ClimbFasterCommand());
 		//turnPIDButton.whenPressed(new GyroTurnCommand(60));
 		//goToDeflectorButton.whenPressed(new GoToDeflectorCommand(30.0));
-		goToTurretPosition.whenPressed(new TurnTurretCommand(10.0, false));	
+		//goToTurretPosition.whenPressed(new TurnTurretCommand(15.0, false));	
 	}
 	
 	public static boolean getIncrementPreset(){

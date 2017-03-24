@@ -83,9 +83,9 @@ public class RobotHardwareCompBot extends RobotHardware {
 	public final double LEFT_ULTRASONIC_VOLTS_PER_INCH = 0.228271461 / 24;
 	public final double RIGHT_ULTRASONIC_VOLTS_PER_INCH = 0.22705075800000002 / 24;
 	
-	public double TURRET_P = 0.03;
-	public double TURRET_I = 0.00001;
-	public double TURRET_D = 8.0;
+	public double TURRET_P = 0.019;//.03
+	public double TURRET_I = 0.0000;//.00001
+	public double TURRET_D = .4;//8.0
 	
 	
 	public boolean hasTurretLight = true;
