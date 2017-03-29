@@ -5,6 +5,7 @@ import org.usfirst.frc.team503.auton.AutonSelector;
 import org.usfirst.frc.team503.commands.ArcadeDriveCommand;
 import org.usfirst.frc.team503.commands.TeleopDeflectorCommand;
 import org.usfirst.frc.team503.commands.TeleopTurretCommand;
+import org.usfirst.frc.team503.motionProfile.RunMotionProfileCommand;
 import org.usfirst.frc.team503.subsystems.DeflectorSubsystem;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 import org.usfirst.frc.team503.subsystems.GyroSubsystem;
@@ -32,7 +33,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static RobotHardwareCompBot bot = null;
+	public static RobotHardwarePracticeBot bot = null;
 	private static double startTime;
 	private Command autonCommand = null; 
 	private NetworkTable table;
@@ -44,7 +45,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
         NetworkTable.globalDeleteAll(); //Removes unused garbage from SmartDashboard
         NetworkTable.initialize();      //Initialize Network Tables
-        bot = new RobotHardwareCompBot();
+        bot = new RobotHardwarePracticeBot();
 		bot.initialize();
 		bot.logSmartDashboard();         /*put name of selected bot on smartdashboard */
 		OI.initialize();
@@ -52,7 +53,7 @@ public class Robot extends IterativeRobot {
 		AutonSelector.getInstance().putAutonChoosers();
 		RobotState.getInstance().setState(RobotState.State.DISABLED);
 		if(Robot.bot.hasDriveCamera()){
-			CameraServer.getInstance().startAutomaticCapture();
+			//CameraServer.getInstance().startAutomaticCapture();
 		}
 	}
  
@@ -70,7 +71,7 @@ public class Robot extends IterativeRobot {
 		IndexerSubsystem.getInstance().setMotorPower(0.0);
 		DeflectorSubsystem.getInstance().setMotorPower(0.0);
 		DrivetrainSubsystem.getInstance().tankDrive(0.0,0.0,false);
-		//TurretSubsystem.getInstance().getThread().stopTurret();
+		TurretSubsystem.getInstance().getThread().stopTurret();
 		RobotState.getInstance().setState(RobotState.State.DISABLED);
 	}
 
@@ -94,7 +95,13 @@ public class Robot extends IterativeRobot {
 		//(new DrivePIDMotionProfileTuneRun()).start();
 		startTime = Timer.getFPGATimestamp();
 		RobotState.getInstance().setState(RobotState.State.AUTON);
-		AutonSelector.getInstance().startAuton();
+		//AutonSelector.getInstance().startAuton();
+		double[][] dumpbinForward = {
+				{0, 22.5},
+				{4, 22.5},
+				{7,20.0}
+		};
+		(new RunMotionProfileCommand(dumpbinForward,3,1,true)).start();
 		TurretSubsystem.getInstance().getThread().startTurret();
 	}
 

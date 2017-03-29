@@ -33,6 +33,7 @@ public class AutonDriveCommand extends Command {
     	SmartDashboard.putBoolean("Auton drive isFinished", false);
     	GyroSubsystem.getInstance().gyro.reset();
     	DrivetrainSubsystem.getInstance().percentVoltageMode();
+    	DrivetrainSubsystem.getInstance().setBrakeMode(true);
     	startTime = Timer.getFPGATimestamp();
     }
 
