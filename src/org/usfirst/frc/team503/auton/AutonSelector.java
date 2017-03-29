@@ -171,8 +171,6 @@ public class AutonSelector {
 						break;
 					}
 					break;
-				case LEFT_BIN:
-					break;
 				}
 				break;
 			}
@@ -267,19 +265,10 @@ public class AutonSelector {
 						break;
 					}
 					break;
-				case RIGHT_BIN:
-					break;
 				}
 				break;
 			}
 			break;
 		}
-	}
-	
-	/**
-	 * This method will put out the test Commands
-	 */
-	public void putTestCommands() {
-
 	}
 }
