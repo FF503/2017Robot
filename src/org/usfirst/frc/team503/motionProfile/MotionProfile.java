@@ -121,7 +121,7 @@ public class MotionProfile {
 			point.velocity = profilePoints[i][1];
 			point.timeDurMs = (int) profilePoints[i][2];
 			point.profileSlotSelect = 0; 
-			point.velocityOnly = false; 
+			point.velocityOnly = true; 
 										
 			/*WE DO NOT USE ZEROPOS, because we do not want to continually reset encoders*/
 			point.isLastPoint = ((i + 1) == profilePoints.length);
