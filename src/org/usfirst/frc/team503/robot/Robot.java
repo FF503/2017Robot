@@ -102,11 +102,11 @@ public class Robot extends IterativeRobot {
 				{4, 22.5},
 				{7,20.0}
 		};
-	//	(new RunMotionProfileCommand(dumpbinForward,3,1,true)).start();
-		RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.PegNearHopperBlue);
-		(new WaitCommand(2)).start();
-		(new ShootSequenceCommand()).start();
 		TurretSubsystem.getInstance().getThread().startTurret();
+		RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.PegNearHopperBlue);
+		(new WaitCommand(3)).start();
+		(new ShootSequenceCommand()).start();
+		//(new RunMotionProfileCommand(dumpbinForward,3,1,true)).start();
 	}
 
 	/**

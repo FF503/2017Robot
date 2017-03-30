@@ -1,4 +1,4 @@
-package org.usfirst.frc.team503.robot.commands;
+/*package org.usfirst.frc.team503.robot.commands;
 
 import org.usfirst.frc.team503.robot.RobotMap;
 import org.usfirst.frc.team503.robot.subsystems.NavSensorSubsystem;
@@ -39,10 +39,10 @@ public class DriveStraightDistanceCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	/*SmartDashboard.putNumber("pidOutput=", RobotMap.drivePIDOutput);
+    	SmartDashboard.putNumber("pidOutput=", RobotMap.drivePIDOutput);
     	SmartDashboard.putNumber("encoder kounts", NewDrivetrainSubsystem.instance.getEncoderCount());
     	SmartDashboard.putNumber("HOW FAR DID IT GO??????", NewDrivetrainSubsystem.instance.getEncoderDistance());
-    	SmartDashboard.putNumber("GETYAW HAHAHAHA",NavSensorSubsystem.ahrs.getYaw() );*/
+    	SmartDashboard.putNumber("GETYAW HAHAHAHA",NavSensorSubsystem.ahrs.getYaw() );
     	
     	if(NavSensorSubsystem.ahrs.getYaw()>(initAngle+RobotMap.COMPASS_TOLERANCE)){
     		NewDrivetrainSubsystem.instance.tankDrive((-RobotMap.drivePIDOutput*3.0/4),-RobotMap.drivePIDOutput, false);
@@ -91,3 +91,4 @@ public class DriveStraightDistanceCommand extends Command {
     	end();
     }
 }
+*/

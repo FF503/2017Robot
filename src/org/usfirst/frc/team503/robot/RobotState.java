@@ -66,7 +66,7 @@ public class RobotState extends Subsystem {
 	}
 	
 	public enum ShootingPresets{
-		Batter(18.0,4000,271.0), HopperRed(29.9,4300,0), CenterPeg(29.9,4500,503), PegNearHopperBlue(36.0, 5050, 274.0), PegNearHopperRed(32.0, 5050,301), HopperBlue(32.0,4350,204.0);
+		Batter(18.0,4000,271.0), HopperRed(29.9,4300,0), CenterPeg(29.9,4500,503), PegNearHopperBlue(36.0, 5050, 272.0), PegNearHopperRed(32.0, 5050,301), HopperBlue(32.0,4350,204.0);
 		//livonia peg near hopper 266.66537145811753
 		//livonia batter 283.5324107344833
 		public double deflectorAngle;
