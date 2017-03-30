@@ -29,6 +29,7 @@ public class RobotState extends Subsystem {
 	private ShootingPresets shootingPreset;
 	private double turretAngle;
 	private boolean hint;
+	private boolean resetAtZero;
     	
 	public RobotState() {
 		shooterIsRunning = false; 
@@ -44,6 +45,7 @@ public class RobotState extends Subsystem {
 		gearPlacerBack = false; //closed
 		gearPlacerFront = false; //closed
 		hint = false;
+		resetAtZero = false;
 		robotState = State.DISABLED;
 		turretState = TurretState.DISABLED;
 		shootingPreset = ShootingPresets.HopperRed;
@@ -64,7 +66,7 @@ public class RobotState extends Subsystem {
 	}
 	
 	public enum ShootingPresets{
-		Batter(18.0,4000,271.0), HopperRed(29.9,4300,0), CenterPeg(29.9,4500,503), PegNearHopperBlue(36.0, 5050, 271.0), PegNearHopperRed(32.0, 5050,301), HopperBlue(32.0,4350,204.0);
+		Batter(18.0,4000,271.0), HopperRed(29.9,4300,0), CenterPeg(29.9,4500,503), PegNearHopperBlue(36.0, 5050, 274.0), PegNearHopperRed(32.0, 5050,301), HopperBlue(32.0,4350,204.0);
 		//livonia peg near hopper 266.66537145811753
 		//livonia batter 283.5324107344833
 		public double deflectorAngle;
@@ -78,37 +80,51 @@ public class RobotState extends Subsystem {
 		
 	}
 	
+	public synchronized boolean getResetTurret(){
+		return resetAtZero;
+	}
 	
-	public boolean getTurretIsLocked(){
+	public synchronized void setResetTurret(boolean resetAtZero){
+		this.resetAtZero = resetAtZero;
+	}
+	
+	public synchronized boolean getTurretIsLocked(){
 		return turretIsLocked;
 	}
 	
-	public void setTurretIsLocked(boolean lock){
+	public synchronized void setTurretIsLocked(boolean lock){
 		turretIsLocked = lock;
 	}
 	
-	public double getTurretAngle(){
+	public synchronized double getTurretAngle(){
 		return turretAngle;
 	}
 	
-	public void setTurretAngle(double angle){
+	public synchronized void setTurretAngle(double angle){
 		turretAngle = angle;
 	}
 	
-	public boolean getTurretHint(){
+	public synchronized boolean getTurretHint(){
 		return hint;
 	}
 	
-	public void setTurretHint(boolean hint){
+	public synchronized void setTurretHint(boolean hint){
 		this.hint = hint;
 	}
 	
+	public synchronized TurretState getTurretState(){
+		return turretState;
+	}
 	
-	public ShootingPresets getShooterPreset(){
+	public synchronized void setTurretState(TurretState state){
+		turretState = state;
+	}
+	
+	public synchronized ShootingPresets getShooterPreset(){
 		return shootingPreset;
 	}
 	
-	public void setShootingPreset(ShootingPresets preset){
+	public synchronized void setShootingPreset(ShootingPresets preset){
 		shootingPreset = preset;
 	}
 	
@@ -136,15 +152,6 @@ public class RobotState extends Subsystem {
 		this.gearPlacerFront = gearPlacer;
 	}
 	
-	
-	public synchronized TurretState getTurretState(){
-		return turretState;
-	}
-	
-	public synchronized void setTurretState(TurretState state){
-		turretState = state;
-	}
-	
 	public State getState(){
 		return robotState;
 	}
@@ -153,11 +160,11 @@ public class RobotState extends Subsystem {
 		robotState = state;
 	}
 	
-	public void setTurretStatus(boolean status){
+	public synchronized void setTurretStatus(boolean status){
 		turretIsRunning = status;
 	}
 	
-	public boolean getTurreStatus(){
+	public synchronized boolean getTurreStatus(){
 		return turretIsRunning;
 	}
 	

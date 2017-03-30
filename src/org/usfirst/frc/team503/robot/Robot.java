@@ -3,9 +3,8 @@ package org.usfirst.frc.team503.robot;
 
 import org.usfirst.frc.team503.auton.AutonSelector;
 import org.usfirst.frc.team503.commands.ArcadeDriveCommand;
+import org.usfirst.frc.team503.commands.ShootSequenceCommand;
 import org.usfirst.frc.team503.commands.TeleopDeflectorCommand;
-import org.usfirst.frc.team503.commands.TeleopTurretCommand;
-import org.usfirst.frc.team503.motionProfile.RunMotionProfileCommand;
 import org.usfirst.frc.team503.subsystems.DeflectorSubsystem;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 import org.usfirst.frc.team503.subsystems.GyroSubsystem;
@@ -22,6 +21,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -102,7 +102,10 @@ public class Robot extends IterativeRobot {
 				{4, 22.5},
 				{7,20.0}
 		};
-		(new RunMotionProfileCommand(dumpbinForward,3,1,true)).start();
+	//	(new RunMotionProfileCommand(dumpbinForward,3,1,true)).start();
+		RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.PegNearHopperBlue);
+		(new WaitCommand(2)).start();
+		(new ShootSequenceCommand()).start();
 		TurretSubsystem.getInstance().getThread().startTurret();
 	}
 

@@ -1,6 +1,8 @@
 package org.usfirst.frc.team503.turret;
  
- import org.usfirst.frc.team503.robot.OI;
+ import org.usfirst.frc.team503.auton.AutonChoices;
+import org.usfirst.frc.team503.auton.AutonSelector;
+import org.usfirst.frc.team503.robot.OI;
 import org.usfirst.frc.team503.robot.Robot;
 import org.usfirst.frc.team503.robot.RobotState;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
@@ -25,8 +27,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  	private Notifier handler;
  	private boolean startTurret;
  	private boolean piIsAlive;
- 	
-
+ 	private boolean resetAtZero;
  	
  	public TurretThread (){
  		handler = new Notifier(this);
@@ -35,6 +36,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 		startTime = Timer.getFPGATimestamp();
 		startTurret = false;
 		discardImage = false;
+		resetAtZero = false;
 		lastHeartbeat = 0.0;
 		curHeartbeat = 0.0;
 		onTargetStartTime = startTime;
@@ -50,6 +52,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  		RobotState.getInstance().setTurretStatus(true);
  		startTurret = true;
  		if(RobotState.getInstance().getState()==RobotState.State.AUTON){
+ 			if(AutonSelector.getInstance().allianceChooser.getSelected() == AutonChoices.Alliances.RED){
+ 				RobotState.getInstance().setResetTurret(true);
+ 			}
+ 			else{
+ 				RobotState.getInstance().setResetTurret(false);
+ 			}
  			RobotState.getInstance().setTurretState(RobotState.TurretState.RESET_TURRET);
  		}
  		else{
@@ -88,10 +96,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 				break;
 			//Turret is in teleop control and is looking to find a target
 			case RESET_TURRET:
-				TurretSubsystem.getInstance().resetTurret(false);
+				TurretSubsystem.getInstance().resetTurret(RobotState.getInstance().getResetTurret());
 				if(TurretSubsystem.getInstance().getFwdLimitSwitch()||TurretSubsystem.getInstance().getRevLimitSwitch()){
 					TurretSubsystem.getInstance().getMotor().enableForwardSoftLimit(true);
 					TurretSubsystem.getInstance().getMotor().enableReverseSoftLimit(true);
+					TurretSubsystem.getInstance().setMotorPower(0);
 					RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
 				}
 				break;
@@ -117,10 +126,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 				//delay to account for pi lag
 				Timer.delay(.4);
 				cameraOffset = getCameraAngle();
-				if(!piIsAlive){
-					RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
-				}
-				else if(cameraOffset != 0.0){
+				if(cameraOffset != 0.0){
 					discardImage = true;
 					double angle = TurretSubsystem.getInstance().getAngle();
 					TurretSubsystem.getInstance().setSetpoint(angle + cameraOffset);
@@ -147,9 +153,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 					discardImage = false;
 					onTargetStartTime = Timer.getFPGATimestamp();
 				}
-				else if((cameraOffset == 0.0)&&(!RobotState.getInstance().getTurretHint())){
-					RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
-				}
 				break;
 			case ON_TARGET:
 				onTargetCurrTime = Timer.getFPGATimestamp();
@@ -157,12 +160,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 					if (!RobotState.getInstance().getTurretHint()){
 						RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
 					}
-					else if((onTargetCurrTime - onTargetStartTime)>.2){
+					else if((onTargetCurrTime - onTargetStartTime) > .3){
 						RobotState.getInstance().setTurretIsLocked(true);
 					}
 				}
 				else{
-					if(cameraOffset!=503 && (Math.abs(cameraOffset) >= Constants.CAMERA_TOLERANCE)){
+					if(cameraOffset != 503 && (Math.abs(cameraOffset) >= Constants.CAMERA_TOLERANCE)){
 						RobotState.getInstance().setTurretState(RobotState.TurretState.TARGET_FOUND);
 						RobotState.getInstance().setTurretIsLocked(false);
 						RobotState.getInstance().setTurretHint(false);
@@ -173,8 +176,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 				}
 				break;
 			case TAKING_HINT:
-				TurretSubsystem.getInstance().setSetpoint(RobotState.getInstance().getTurretAngle());
-				PIDStartTime = Timer.getFPGATimestamp() - 0.5;  //workaround to give us an extra 0.5 seconds to achieve target
+				TurretSubsystem.getInstance().setSetpoint(RobotState.getInstance().getShooterPreset().turretAngle);
+				PIDStartTime = Timer.getFPGATimestamp() - 1.5;  //workaround to give us an extra 0.5 seconds to achieve target
 				RobotState.getInstance().setTurretState(RobotState.TurretState.RUNNING_PID);
 				RobotState.getInstance().setTurretHint(true);
 				break;
@@ -223,6 +226,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 		else{
 			return true;
 		}
+	}
+	
+	public synchronized boolean getPiAlive(){
+		return piIsAlive;
 	}
 }
  

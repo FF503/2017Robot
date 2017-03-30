@@ -31,10 +31,9 @@ public class ShootSequenceCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	DeflectorSubsystem.getInstance().setSetpoint(RobotState.getInstance().getShooterPreset().deflectorAngle);
-    	RobotState.getInstance().setTurretAngle(RobotState.getInstance().getShooterPreset().turretAngle);
-    	RobotState.getInstance().setTurretState(RobotState.TurretState.TAKING_HINT);
     	ShooterSubsystem.getInstance().setSetpoint(RobotState.getInstance().getShooterPreset().rpm);
     	RobotState.getInstance().setShooterStatus(true);
+    	RobotState.getInstance().setTurretState(RobotState.TurretState.TAKING_HINT);
     	SmartDashboard.putBoolean("Deflector on target", false);
     	startTime = Timer.getFPGATimestamp();
     }
@@ -43,11 +42,20 @@ public class ShootSequenceCommand extends Command {
     protected void execute() {
     	DeflectorSubsystem.getInstance().resetEncoder();
     	SmartDashboard.putBoolean("Deflector on target", DeflectorSubsystem.getInstance().isOnTarget());
-		if(ShooterSubsystem.getInstance().isOnTarget() && DeflectorSubsystem.getInstance().isOnTarget() && RobotState.getInstance().getTurretIsLocked()){
-    		IndexerSubsystem.getInstance().setMotorPower(0.9 * Robot.bot.REVERSE_INDEXER);//was 0.9 for far shots, 0.6 for boiler shot
-			IntakeSubsystem.getInstance().setMotorPower(-.75, -1.0);
-    		RobotState.getInstance().setIndexerStatus(true);
-    		RobotState.getInstance().setIntakeStatus(true);
+		if(ShooterSubsystem.getInstance().isOnTarget() && DeflectorSubsystem.getInstance().isOnTarget()){
+			if(TurretSubsystem.getInstance().getThread().getPiAlive() ){
+				if(RobotState.getInstance().getState() == RobotState.State.AUTON){
+					if(RobotState.getInstance().getTurretIsLocked()){
+						shoot();
+					}
+				}
+				else{
+					shoot();
+				}
+			}
+			else {
+				shoot();
+			}
     	}
     	currTime = Timer.getFPGATimestamp();
     }
@@ -78,6 +86,13 @@ public class ShootSequenceCommand extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     	end();
+    }
+    
+    private void shoot(){
+    	IndexerSubsystem.getInstance().setMotorPower(0.9 * Robot.bot.REVERSE_INDEXER);//was 0.9 for far shots, 0.6 for boiler shot
+		IntakeSubsystem.getInstance().setMotorPower(-.75, -1.0);
+		RobotState.getInstance().setIndexerStatus(true);
+		RobotState.getInstance().setIntakeStatus(true);
     }
 
 }

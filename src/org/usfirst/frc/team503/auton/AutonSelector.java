@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class AutonSelector {
 
-	private SendableChooser<AutonChoices.Alliances> allianceChooser;
+	public SendableChooser<AutonChoices.Alliances> allianceChooser;
 	private SendableChooser<AutonChoices.GearPosition> gearPosChooser;
 	private SendableChooser<AutonChoices.Shoot> shootChooser;
 	private SendableChooser<AutonChoices.BinPosition> binChooser;
