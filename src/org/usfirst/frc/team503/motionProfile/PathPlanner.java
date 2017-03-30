@@ -692,7 +692,7 @@ public class PathPlanner {
 		double[][] rpm  = new double[feetPerSecond.length][feetPerSecond[1].length];
 		for (int i = 0; i < feetPerSecond.length ; i ++ ){
 			rpm[i][0] = feetPerSecond[i][0];
-			rpm[i][1] = (feetPerSecond[i][1] * 60) / (Robot.bot.WHEEL_DIAMETER/12.0 * Math.PI);
+			rpm[i][1] = (((feetPerSecond[i][1] * 60) / (Robot.bot.WHEEL_DIAMETER/12.0 * Math.PI))/6000)*Robot.bot.DRIVE_COUNTS_PER_REV;
 		}
 		return rpm;
 	}

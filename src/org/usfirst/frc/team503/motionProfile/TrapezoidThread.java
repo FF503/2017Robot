@@ -43,7 +43,7 @@ public class TrapezoidThread implements Runnable{
 			leftProfile.control();
 			rightProfile.control();
 		
-			if((leftProfile.getState() == 3) && (rightProfile.getState() == 3)) {
+			if((leftProfile.isFinished()) && (rightProfile.isFinished())) {
 					resetTrapezoid();
 					status = "finished";
 			}
@@ -83,8 +83,10 @@ public class TrapezoidThread implements Runnable{
 	
 	private void initializeTalons() {	
 		System.out.println("initialize talons");
-	 	leftTalon.changeControlMode(TalonControlMode.MotionProfile);
-	 	rightTalon.changeControlMode(TalonControlMode.MotionProfile);
+	 	//leftTalon.changeControlMode(TalonControlMode.MotionProfile);
+	 	//rightTalon.changeControlMode(TalonControlMode.MotionProfile);
+		leftTalon.changeControlMode(TalonControlMode.Speed);
+		rightTalon.changeControlMode(TalonControlMode.Speed);
 	 	leftTalon.setVoltageRampRate(0);
 	 	rightTalon.setVoltageRampRate(0);
 	}

@@ -22,6 +22,10 @@ public class MotionProfile {
 	private static final int kMinPointsInTalon = 10;
 	private static final int kNumLoopsTimeout = 10;
 	
+	//used to maintain finishing
+	private static int currentIndex = 0;
+	private static boolean finishedProfile = false;
+	
 	//nested class for thread which continually pushes points to MPB
 	private class PeriodicRunnable implements Runnable {
 	    public void run() {
@@ -34,9 +38,10 @@ public class MotionProfile {
 	
 	public MotionProfile(CANTalon talon) {
 		this.talon = talon;
-		
+		finishedProfile = false;
 		this.talon.changeMotionControlFramePeriod((int)(Robot.bot.CYCLE_TIME*500)); //5	
-        notifer.startPeriodic(Robot.bot.CYCLE_TIME/2.0); //.005	
+        //notifer.startPeriodic(Robot.bot.CYCLE_TIME/2.0); //.005	
+		notifer.startPeriodic(Robot.bot.CYCLE_TIME);
 	}
 	
 	public void setProfile(double [][] points) {
@@ -44,9 +49,12 @@ public class MotionProfile {
 	}
 	
 	public void reset() {
-		talon.clearMotionProfileTrajectories();
-		talon.set(CANTalon.SetValueMotionProfile.Disable.value);
+		//talon.clearMotionProfileTrajectories();
+		//talon.set(CANTalon.SetValueMotionProfile.Disable.value);
+		talon.setSetpoint(0);
 		state = -1;
+		finishedProfile = false;
+		currentIndex = 0;
 		loopTimeout = -1;
 	}
 	
@@ -58,8 +66,22 @@ public class MotionProfile {
 		return state;
 	}
 	
+	public boolean isFinished(){
+		return finishedProfile;
+	}
+	
+	
 	//Repeated control loop that determines when to execute profile
-	public void control() {	
+	public void control() {
+		if (state >= 0){
+			if (currentIndex > profilePoints.length){
+				finishedProfile = true;
+			}
+			else{
+				talon.set(profilePoints[currentIndex][1]);
+			}
+		}
+		/*
 		talon.getMotionProfileStatus(status);
 
 		if (loopTimeout > 0) {
@@ -103,7 +125,8 @@ public class MotionProfile {
 					break;
 			}
 		}
-		talon.set(setValue.value);
+		talon.set(setValue.value);*/
+		
 	}
 
 	private void startFilling() {
