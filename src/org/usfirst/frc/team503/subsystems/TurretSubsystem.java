@@ -103,9 +103,8 @@ public class TurretSubsystem extends Subsystem {
 			SmartDashboard.putNumber("turretPower", turretPower);
 			turretMotor.set(turretPower); 	
 		} else {
-			SmartDashboard.putNumber("turretPower", 0);
+			SmartDashboard.putNumber("turretPower", 0.0);
 			turretMotor.set(0.0); 
-
 		}
 	}
 	
@@ -123,10 +122,11 @@ public class TurretSubsystem extends Subsystem {
 	public void resetEncoderAtLimitSwitch(){												
 		if(TurretSubsystem.getInstance().getRevLimitSwitch()){
 			turretMotor.setPosition(0); 
+			RobotState.getInstance().setHasTurretReset(true);
     	}
     	else if(TurretSubsystem.getInstance().getFwdLimitSwitch()){
     		turretMotor.setPosition(Robot.bot.TURRET_ROTATIONS_IN_RANGE);   
-    		
+    		RobotState.getInstance().setHasTurretReset(true);
     	}
 	}
 	

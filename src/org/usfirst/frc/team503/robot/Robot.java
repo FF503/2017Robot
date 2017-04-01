@@ -3,8 +3,10 @@ package org.usfirst.frc.team503.robot;
 
 import org.usfirst.frc.team503.auton.AutonSelector;
 import org.usfirst.frc.team503.commands.ArcadeDriveCommand;
+import org.usfirst.frc.team503.commands.DriveStraightDistanceCommand;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
 import org.usfirst.frc.team503.commands.TeleopDeflectorCommand;
+import org.usfirst.frc.team503.commands.TeleopGearIntakeCommand;
 import org.usfirst.frc.team503.subsystems.DeflectorSubsystem;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 import org.usfirst.frc.team503.subsystems.GyroSubsystem;
@@ -21,7 +23,6 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -35,10 +36,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	public static RobotHardwarePracticeBot bot = null;
-	private static double startTime;
+
 	private Command autonCommand = null; 
 	private NetworkTable table;
 	private Solenoid lightSolenoid; 
+	private double startTime;
 	/**
 	 * RobotInit - Fires when robot is powered-up 
 	 */
@@ -66,7 +68,7 @@ public class Robot extends IterativeRobot {
 		if (autonCommand != null){
 			autonCommand.cancel();
 		}
-		DrivetrainSubsystem.getInstance().stopTrapezoidControl();    	
+	//	DrivetrainSubsystem.getInstance().stopTrapezoidControl();    	
 		DrivetrainSubsystem.getInstance().percentVoltageMode();
 		ShooterSubsystem.getInstance().setMotorPower(0.0);
 		IndexerSubsystem.getInstance().setMotorPower(0.0);
@@ -93,20 +95,14 @@ public class Robot extends IterativeRobot {
 			lightSolenoid = new Solenoid(Robot.bot.lowGoalLightPort);
 	    	lightSolenoid.set(true);
 		}
-
 		startTime = Timer.getFPGATimestamp();
 		RobotState.getInstance().setState(RobotState.State.AUTON);
 		//AutonSelector.getInstance().startAuton();
-		double[][] dumpbinForward = {
-				{0, 22.5},
-				{4, 22.5},
-				{7,20.0}
-		};
 		TurretSubsystem.getInstance().getThread().startTurret();
+		(new DriveStraightDistanceCommand(48.0, 3.0, true)).start();
 		RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.PegNearHopperBlue);
-		(new WaitCommand(3)).start();
-		(new ShootSequenceCommand()).start();
-		//(new RunMotionProfileCommand(dumpbinForward,3,1,true)).start();
+		(new ShootSequenceCommand(true)).start();
+		(new ShootSequenceCommand(false)).start();
 	}
 
 	/**
@@ -141,7 +137,7 @@ public class Robot extends IterativeRobot {
 		if (autonCommand != null){
 			autonCommand.cancel();
 		}
-		DrivetrainSubsystem.getInstance().stopTrapezoidControl();    	
+		//DrivetrainSubsystem.getInstance().stopTrapezoidControl();    	
     	DrivetrainSubsystem.getInstance().resetEncoders();
 		RobotState.getInstance().setState(RobotState.State.TELEOP);
 	    startTime = Timer.getFPGATimestamp();
@@ -151,7 +147,9 @@ public class Robot extends IterativeRobot {
     		TurretSubsystem.getInstance().getThread().startTurret();
     		//(new TeleopTurretCommand()).start();
         	(new TeleopDeflectorCommand()).start();
+        	(new TeleopGearIntakeCommand()).start();
     	}
+    	startTime = Timer.getFPGATimestamp();
 	}
 
 	/**
@@ -161,7 +159,9 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		//DrivetrainSubsystem.getInstance().populateLog(startTime);
+		SmartDashboard.putNumber("Time Remaining", 150 - (Timer.getFPGATimestamp() - startTime));
 		if (!Robot.bot.getName().equals("ProgrammingBot")){
+			SmartDashboard.putNumber("encoder kounts", (DrivetrainSubsystem.getInstance().getLeftMaster().getEncPosition() + DrivetrainSubsystem.getInstance().getRightMaster().getEncPosition())/2);
 			SmartDashboard.putNumber("Shooter RPM", ShooterSubsystem.getInstance().getSpeed());
 			SmartDashboard.putNumber("Shooter position", ShooterSubsystem.getInstance().getPosition());
 			SmartDashboard.putNumber("Peg Angle", table.getNumber("Degrees", 0.0));

@@ -27,7 +27,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  	private Notifier handler;
  	private boolean startTurret;
  	private boolean piIsAlive;
- 	private boolean resetAtZero;
  	
  	public TurretThread (){
  		handler = new Notifier(this);
@@ -36,7 +35,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 		startTime = Timer.getFPGATimestamp();
 		startTurret = false;
 		discardImage = false;
-		resetAtZero = false;
 		lastHeartbeat = 0.0;
 		curHeartbeat = 0.0;
 		onTargetStartTime = startTime;
@@ -53,10 +51,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  		startTurret = true;
  		if(RobotState.getInstance().getState()==RobotState.State.AUTON){
  			if(AutonSelector.getInstance().allianceChooser.getSelected() == AutonChoices.Alliances.RED){
- 				RobotState.getInstance().setResetTurret(true);
+ 				RobotState.getInstance().setTurretResetSide(true);
  			}
  			else{
- 				RobotState.getInstance().setResetTurret(false);
+ 				RobotState.getInstance().setTurretResetSide(false);
  			}
  			RobotState.getInstance().setTurretState(RobotState.TurretState.RESET_TURRET);
  		}
@@ -94,9 +92,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 			case DISABLED:
 				TurretSubsystem.getInstance().setMotorPower(0);
 				break;
-			//Turret is in teleop control and is looking to find a target
 			case RESET_TURRET:
-				TurretSubsystem.getInstance().resetTurret(RobotState.getInstance().getResetTurret());
+				TurretSubsystem.getInstance().resetTurret(RobotState.getInstance().getTurretResetSide());
 				if(TurretSubsystem.getInstance().getFwdLimitSwitch()||TurretSubsystem.getInstance().getRevLimitSwitch()){
 					TurretSubsystem.getInstance().getMotor().enableForwardSoftLimit(true);
 					TurretSubsystem.getInstance().getMotor().enableReverseSoftLimit(true);
@@ -104,6 +101,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 					RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
 				}
 				break;
+			//Turret is in teleop control and is looking to find a target
 			case SEEKING_TARGET:
 				if(discardImage){
 					discardImage = false;
@@ -111,9 +109,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 				if(cameraOffset == 503){
 					cameraOffset = 0.0;			
 				}
-				/*if(RobotState.getInstance().getTurretHint()){
-					RobotState.getInstance().setTurretState(RobotState.TurretState.TAKING_HINT);
-				}*/
 				if((cameraOffset != 0.0) && piIsAlive){
 					RobotState.getInstance().setTurretState(RobotState.TurretState.TARGET_FOUND);
 				}
@@ -177,7 +172,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 				break;
 			case TAKING_HINT:
 				TurretSubsystem.getInstance().setSetpoint(RobotState.getInstance().getShooterPreset().turretAngle);
-				PIDStartTime = Timer.getFPGATimestamp() - 1.5;  //workaround to give us an extra 0.5 seconds to achieve target
+				PIDStartTime = Timer.getFPGATimestamp() - 1.0;  //workaround to give us an extra 0.5 seconds to achieve target
 				RobotState.getInstance().setTurretState(RobotState.TurretState.RUNNING_PID);
 				RobotState.getInstance().setTurretHint(true);
 				break;

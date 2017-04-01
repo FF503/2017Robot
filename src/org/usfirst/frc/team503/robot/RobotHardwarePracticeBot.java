@@ -22,16 +22,18 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final int lowerIntakeID = 0;
 	public final int upperIntakeID = 4;
 	public final int indexerID = 3;
+	public final int gearIntakeID = 5;
 	public final int driveSolenoidID1 = 0;
 	public final int driveSolenoidID2 = 1;
-	public final int outerGearSolenoidID1 = 2;
-	public final int outerGearSolenoidID2 = 3;
-	public final int innerGearSolenoidID1 = 4;
-	public final int innerGearSolenoidID2 = 5;
+	public final int liftGearSolenoidID1 = 4;
+	public final int liftGearSolenoidID2 = 5;
+	public final int extendGearSolenoidID1 = 2;
+	public final int extendGearSolenoidID2 = 3;
 	public final int climberSpark1Port = 1;
 	public final int climberSpark2Port = 2;
-	public final int leftUltrasonicPort = 1;     //was 0
-	public final int rightUltrasonicPort = 2;    // was 1 
+	public final int leftUltrasonicPort = 1;     //was 1
+	public final int rightUltrasonicPort = 0;    // was 2 
+	
 	
 	private final double TURRET_DIAMETER = 13.0;
 	public final double TURRET_ROTATIONS_IN_RANGE = 12.203857421875;
@@ -46,11 +48,18 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	
 	public final double WHEEL_DIAMETER = 4.0;
 	public final double WHEEL_BASE = 32.5;
-	public final double CYCLE_TIME = 0.01;	 //was .05
+	public final double CYCLE_TIME = 0.01;	 
+	public final double INCHES_PER_ROTATION = WHEEL_DIAMETER * Math.PI;
 	public final int DRIVE_COUNTS_PER_REV = 512;
+	public final double DRIVE_PULSES_PER_REV = DRIVE_COUNTS_PER_REV * 16.0;
+	public final double INCHES_PER_COUNT = INCHES_PER_ROTATION/DRIVE_PULSES_PER_REV;
 	public final double DRIVE_P = 0.00018;//0.00015;
 	public final double DRIVE_I = 0.0000000; //0.0
 	public final double DRIVE_D = 6.5; //1.6
+	
+	public final double POSITION_P = 0.017;//0.00015;
+	public final double POSITION_I = 0.0000000; //0.0
+	public final double POSITION_D = 0.025;//6.5; //1.6
 	public final double LEFT_DRIVE_F  = 0.2157; //.2157
 	public final double RIGHT_DRIVE_F = 0.2154; //.2154
 	
@@ -65,7 +74,7 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final double SHOOT_F = 0.0188;
 	public final double SHOOT_TOLERANCE = 50.0;
 	
-	public final double TURRET_CYCLE_TIME = .005; //seconds
+	public final double TURRET_CYCLE_TIME = .01; //.005 seconds
 	
 	public final double minAutonDriveTurnPower = 0.03; //0.05
 	public final double maxAutonDriveTurnPower = 0.07; //0.1
@@ -95,7 +104,8 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public double TURRET_P = 0.38;
 	public double TURRET_I = 0.0;
 	public double TURRET_D = 5.0;
-	public int lowGoalLightPort;	
+	public final boolean hasLowGoalLight = true;
+	public final int lowGoalLightPort = 6;	
 	
 	@Override
 	public void initialize(){
@@ -120,6 +130,11 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	
 	@Override 
 	public boolean hasGearPlacer(){
+		return false;
+	}
+	
+	@Override 
+	public boolean hasGearIntake(){
 		return true;
 	}
 	

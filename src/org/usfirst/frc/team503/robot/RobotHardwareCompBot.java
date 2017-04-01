@@ -32,6 +32,9 @@ public class RobotHardwareCompBot extends RobotHardware {
 	public final double DRIVE_P = 0.00013;//0.00015;
 	public final double DRIVE_I = 0.0000000; //0.0
 	public final double DRIVE_D = 0.5;//6.5; //1.6
+	public final double POSITION_P = 0.00013;//0.00015;
+	public final double POSITION_I = 0.0000000; //0.0
+	public final double POSITION_D = 0.5;//6.5; //1.6
 	public final double LEFT_DRIVE_F  = 0.1208; 
 	public final double RIGHT_DRIVE_F = 0.1229;
 	
@@ -39,14 +42,14 @@ public class RobotHardwareCompBot extends RobotHardware {
 	public final double maxAutonDriveTurnPower = 0.07; //0.1
 	public final double AUTON_DRIVE_P = 50;
 	
-	private static final double TURRET_DIAMETER = 13.0;
-	public static final double TURRET_ROTATIONS_IN_RANGE = 257.495361328125;
-	public static final double TURRET_TOLERANCE = 1.0;
-	public static final double TURRET_TEETH_BETWEEN_LIMIT_SWITCHES = 8.5;
-	public static final double TURRET_TOTAL_TEETH = 156.0;
-	public static final double TURRET_DEGREES_BETWEEN_LIMIT_SWITCHES = TURRET_TEETH_BETWEEN_LIMIT_SWITCHES/TURRET_TOTAL_TEETH * 360;
-	public static final double TURRET_DEGREES_IN_RANGE = 360 - TURRET_DEGREES_BETWEEN_LIMIT_SWITCHES;
-	public static final double TURRET_DEGREES_PER_ROTATION = TURRET_DEGREES_IN_RANGE/TURRET_ROTATIONS_IN_RANGE;
+	private final double TURRET_DIAMETER = 13.0;
+	public double TURRET_ROTATIONS_IN_RANGE = 257.495361328125;
+	public double TURRET_TOLERANCE = 1.0;
+	public double TURRET_TEETH_BETWEEN_LIMIT_SWITCHES = 8.5;
+	public final double TURRET_TOTAL_TEETH = 156.0;
+	public final double TURRET_DEGREES_BETWEEN_LIMIT_SWITCHES = TURRET_TEETH_BETWEEN_LIMIT_SWITCHES/TURRET_TOTAL_TEETH * 360;
+	public final double TURRET_DEGREES_IN_RANGE = 360 - TURRET_DEGREES_BETWEEN_LIMIT_SWITCHES;
+	public final double TURRET_DEGREES_PER_ROTATION = TURRET_DEGREES_IN_RANGE/TURRET_ROTATIONS_IN_RANGE;
 	
 	public final boolean REVERSE_LEFT_SENSOR = true;
 

@@ -13,12 +13,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 
 public class GearPlacerSubsystem extends Subsystem {
-	static DoubleSolenoid outerGearSolenoid;
-	static DoubleSolenoid innerGearSolenoid;
+	private DoubleSolenoid outerGearSolenoid;
+	private DoubleSolenoid innerGearSolenoid;
 	public GearPlacerSubsystem(){
 		if (Robot.bot.hasGearPlacer()){
-			outerGearSolenoid = new DoubleSolenoid(Robot.bot.outerGearSolenoidID1, Robot.bot.outerGearSolenoidID2);
-			innerGearSolenoid = new DoubleSolenoid(Robot.bot.innerGearSolenoidID1, Robot.bot.innerGearSolenoidID2);
+		//outerGearSolenoid = new DoubleSolenoid(Robot.bot.outerGearSolenoidID1, Robot.bot.outerGearSolenoidID2);
+	//		innerGearSolenoid = new DoubleSolenoid(Robot.bot.innerGearSolenoidID1, Robot.bot.innerGearSolenoidID2);
 		}
 		else{
 			outerGearSolenoid = null;

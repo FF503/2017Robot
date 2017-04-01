@@ -76,6 +76,10 @@ public abstract class RobotHardware {
 		return false;
 	}
 	
+	public boolean hasGearIntake(){
+		return false;
+	}
+	
 	public boolean hasClimber(){
 		return false;
 	}

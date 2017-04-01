@@ -30,6 +30,7 @@ public class RobotState extends Subsystem {
 	private double turretAngle;
 	private boolean hint;
 	private boolean resetAtZero;
+	private boolean turretHasReset;
     	
 	public RobotState() {
 		shooterIsRunning = false; 
@@ -46,6 +47,7 @@ public class RobotState extends Subsystem {
 		gearPlacerFront = false; //closed
 		hint = false;
 		resetAtZero = false;
+		turretHasReset = false;
 		robotState = State.DISABLED;
 		turretState = TurretState.DISABLED;
 		shootingPreset = ShootingPresets.HopperRed;
@@ -80,11 +82,19 @@ public class RobotState extends Subsystem {
 		
 	}
 	
-	public synchronized boolean getResetTurret(){
+	public synchronized boolean getHasTurretReset(){
+		return turretHasReset;
+	}
+	
+	public synchronized void setHasTurretReset(boolean hasReset){
+		turretHasReset = hasReset; 
+	}
+	
+	public synchronized boolean getTurretResetSide(){
 		return resetAtZero;
 	}
 	
-	public synchronized void setResetTurret(boolean resetAtZero){
+	public synchronized void setTurretResetSide(boolean resetAtZero){
 		this.resetAtZero = resetAtZero;
 	}
 	

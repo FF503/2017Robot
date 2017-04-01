@@ -1,8 +1,11 @@
-/*package org.usfirst.frc.team503.robot.commands;
+package org.usfirst.frc.team503.commands;
 
-import org.usfirst.frc.team503.robot.RobotMap;
-import org.usfirst.frc.team503.robot.subsystems.NavSensorSubsystem;
-import org.usfirst.frc.team503.robot.subsystems.NewDrivetrainSubsystem;
+import org.usfirst.frc.team503.subsystems.GyroSubsystem;
+import org.usfirst.frc.team503.utils.Constants;
+
+import com.ctre.CANTalon.TalonControlMode;
+
+import org.usfirst.frc.team503.robot.Robot;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 import org.usfirst.frc.team503.subsystems.GyroSubsystem;
 
@@ -14,13 +17,18 @@ public class DriveStraightDistanceCommand extends Command {
 	private double inches;
 	private double initAngle;
 	private double timeout;
+	private double pidvalue; 
+	private boolean reverse;
 	Timer time;
 	
-    public DriveStraightDistanceCommand(double inches, double timeout) {
+    public DriveStraightDistanceCommand(double inches, double timeout, boolean reverse) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	DrivetrainSubsystem.getInstance().resetEncoders();
+    	DrivetrainSubsystem.getInstance().percentVoltageMode();
     	this.inches = inches;
     	this.timeout = timeout;
+    	this.reverse = reverse;
     }
 
     // Called just before this Command runs the first time
@@ -28,61 +36,58 @@ public class DriveStraightDistanceCommand extends Command {
     	time = new Timer();
     	time.start();
     	
-    	DrivetrainSubsystem.getInstance().setSetpoint(inches);
-    	DrivetrainSubsystem.getInstance().enable();  
-    	SmartDashboard.putNumber("Setpoint=", inches);
+    	if(reverse){
+    		DrivetrainSubsystem.getInstance().setSetpoint(-inches);
+    	}
+    	else{
+    		DrivetrainSubsystem.getInstance().setSetpoint(inches);
+    	}
+    	SmartDashboard.putNumber("Position PID Setpoint", inches);
         GyroSubsystem.resetGyro();
-    	
-    	initAngle=0;
-    //	NewDrivetrainSubsystem.instance.tankDrive(-RobotMap.AUTON_DRIVE_SPEED, -RobotMap.AUTON_DRIVE_SPEED, false);
+    	initAngle = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	SmartDashboard.putNumber("pidOutput=", RobotMap.drivePIDOutput);
-    	SmartDashboard.putNumber("encoder kounts", NewDrivetrainSubsystem.instance.getEncoderCount());
-    	SmartDashboard.putNumber("HOW FAR DID IT GO??????", NewDrivetrainSubsystem.instance.getEncoderDistance());
-    	SmartDashboard.putNumber("GETYAW HAHAHAHA",NavSensorSubsystem.ahrs.getYaw() );
-    	
-    	if(NavSensorSubsystem.ahrs.getYaw()>(initAngle+RobotMap.COMPASS_TOLERANCE)){
-    		NewDrivetrainSubsystem.instance.tankDrive((-RobotMap.drivePIDOutput*3.0/4),-RobotMap.drivePIDOutput, false);
-    	}
-    	else if(NavSensorSubsystem.ahrs.getYaw()<(initAngle-RobotMap.COMPASS_TOLERANCE)){
-    		NewDrivetrainSubsystem.instance.tankDrive(-RobotMap.drivePIDOutput, (-RobotMap.drivePIDOutput *3/4), false);
+    	//go get the output of the PID controller 
+		pidvalue = -DrivetrainSubsystem.getInstance().getPidOutput();
+
+    	SmartDashboard.putNumber("Position PID output", pidvalue);
+    	SmartDashboard.putNumber("Position PID error", DrivetrainSubsystem.getInstance().getError());
+    	SmartDashboard.putBoolean("Position PID On Target", DrivetrainSubsystem.getInstance().pidIsOnTarget());
+    	if(reverse){
+    		if(GyroSubsystem.gyro.getYaw()>(initAngle+Constants.DRIVE_HEADING_TOLERANCE)){
+        		DrivetrainSubsystem.getInstance().tankDrive(pidvalue, pidvalue*0.75, false);
+        	}
+        	else if(GyroSubsystem.gyro.getYaw()<(initAngle-Constants.DRIVE_HEADING_TOLERANCE)){
+        		DrivetrainSubsystem.getInstance().tankDrive(pidvalue*0.75, pidvalue, false);
+        	}
+        	else{
+        		DrivetrainSubsystem.getInstance().tankDrive(pidvalue, pidvalue, false);
+        	}
     	}
     	else{
-    		NewDrivetrainSubsystem.instance.tankDrive(-RobotMap.drivePIDOutput, -RobotMap.drivePIDOutput, false);
+    		if(GyroSubsystem.gyro.getYaw()>(initAngle+Constants.DRIVE_HEADING_TOLERANCE)){
+        		DrivetrainSubsystem.getInstance().tankDrive((pidvalue * 0.75),pidvalue, false);
+        	}
+        	else if(GyroSubsystem.gyro.getYaw()<(initAngle-Constants.DRIVE_HEADING_TOLERANCE)){
+        		DrivetrainSubsystem.getInstance().tankDrive(pidvalue, (pidvalue * 0.75), false);
+        	}
+        	else{
+        		DrivetrainSubsystem.getInstance().tankDrive(pidvalue, pidvalue, false);
+        	}
     	}
-		//NewDrivetrainSubsystem.instance.tankDrive(-RobotMap.drivePIDOutput, -RobotMap.drivePIDOutput, false);
-    	NavSensorSubsystem.instance.sendDashboardData();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-       boolean wearedone = false; 
-    	// if actual distance traveled on encoders > than set point we have reached destination  
-    //	if (NewDrivetrainSubsystem.driveEncoder.getDistance() >= NewDrivetrainSubsystem.instance.getSetpoint()-1.0) 
-    	if (NewDrivetrainSubsystem.instance.onTarget()) {
-    	    wearedone = true; 
-    	} else {
-    		wearedone = false; 
-    	}
-    	
-    	if(time.get()> timeout){
-    		wearedone = true;
-    	}
-    	//SmartDashboard.putBoolean("Drive On target?", wearedone);
-    	//return NewDrivetrainSubsystem.instance.onTarget();
-    	//return RobotMap.drivePIDOutput < .06;
-    	return wearedone; 
-        //return NewDrivetrainSubsystem.instance.isEncoderStopped();
-
+    	return DrivetrainSubsystem.getInstance().pidIsOnTarget() || time.get()>timeout;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	//SmartDashboard.putString("At End", "Yes");
-    	NewDrivetrainSubsystem.instance.tankDrive(0, 0, false);
+    	DrivetrainSubsystem.getInstance().resetController();
+    	DrivetrainSubsystem.getInstance().tankDrive(0, 0, false);
     }
 
     // Called when another command which requires one or more of the same
@@ -91,4 +96,3 @@ public class DriveStraightDistanceCommand extends Command {
     	end();
     }
 }
-*/

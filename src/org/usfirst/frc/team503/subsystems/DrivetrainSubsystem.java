@@ -3,29 +3,35 @@ package org.usfirst.frc.team503.subsystems;
 import org.usfirst.frc.team503.motionProfile.TrapezoidThread;
 import org.usfirst.frc.team503.robot.Robot;
 import org.usfirst.frc.team503.robot.RobotState;
+import org.usfirst.frc.team503.utils.Constants;
+import org.usfirst.frc.team503.utils.SynchronousPID;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class DrivetrainSubsystem extends Subsystem {
+public class DrivetrainSubsystem extends Subsystem{
 
    // Put methods for controlling this subsystem
    // here. Call these from Commands.
 	
 	private CANTalon leftMaster, leftSlave, rightMaster, rightSlave;
+	private SynchronousPID pidController;
 	private DoubleSolenoid driveSolenoid;
-	private double talonLeftPos, talonRightPos, talonLeftRPM, talonRightRPM, rightSpeed, leftSpeed;
+	private double talonLeftPos, talonRightPos, talonLeftRPM, talonRightRPM, rightSpeed, leftSpeed, talonLeftRot, talonRightRot;
 	private double curTime, difTime, lastTime;         
-	private TrapezoidThread trapThread;
+	//private TrapezoidThread trapThread;
 	private static int currentProfileID;
 	public boolean profileHasFinished = false;
 	private boolean firstLogFileRun = true;
+	private double enc; 
   
    public DrivetrainSubsystem() {
 	   	System.out.println("constructing drive train");
@@ -57,12 +63,47 @@ public class DrivetrainSubsystem extends Subsystem {
 	   rightMaster.reverseSensor(Robot.bot.REVERSE_RIGHT_SENSOR);
 	   leftMaster.reverseOutput(Robot.bot.REVERSE_LEFT_OUTPUT);
 	   rightMaster.reverseOutput(Robot.bot.REVERSE_RIGHT_OUTPUT);
+	   
+	   pidController = new SynchronousPID();
+	   pidController.setPID(Robot.bot.POSITION_P, Robot.bot.POSITION_I, Robot.bot.POSITION_D);
+	   pidController.setInputRange(-10000000, 10000000);
+	   pidController.setOutputRange(-0.9, 0.9);
+	   pidController.reset();
+	  
 	   setBrakeMode(true);
 	   	
 	   	    	
-	   	trapThread = new TrapezoidThread(leftMaster, rightMaster);	
+	  // 	trapThread = new TrapezoidThread(leftMaster, rightMaster);	
    }
-
+   
+   public boolean pidIsOnTarget(){
+	   return pidController.onTarget(Constants.DRIVE_PID_TOLERANCE);
+   }
+   
+   public double getError(){
+	   return pidController.getError();
+   }
+   
+   public double getPidOutput() {
+	   return pidController.calculate(getAvgEncCounts() * Robot.bot.INCHES_PER_COUNT);
+   }
+ 
+   public double getAvgEncCounts() {
+	   return (rightMaster.getEncPosition() + -leftMaster.getEncPosition()) / 2.0;
+   }
+   
+   public double getAvgEncRotations(){
+	   return (rightMaster.getPosition() + leftMaster.getPosition()) / 2.0;
+   }
+   
+   public void setSetpoint(double val){
+	   pidController.setSetpoint(val);
+   }
+   
+   public void resetController(){
+	   pidController.reset();
+   }
+   
    public void setBrakeMode(boolean value){
 	   rightMaster.enableBrakeMode(value);
 	   leftMaster.enableBrakeMode(value);	
@@ -102,19 +143,21 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
    
 	private void startTrapezoidControl(double[][] leftPoints, double[][] rightPoints,int trapID) {	
-		trapThread.activateTrap(leftPoints, rightPoints, trapID);
+		//trapThread.activateTrap(leftPoints, rightPoints, trapID);
 	}
 	
 	public void stopTrapezoidControl() {
-		trapThread.resetTrapezoid();
+	//	trapThread.resetTrapezoid();
 	}
 	
 	public synchronized int getTrapID(){
-		return trapThread.getID();
+		//return trapThread.getID();
+		return 0;
 	}
 
 	public synchronized String getTrapStatus(){
-		return trapThread.getStatus();
+		//return trapThread.getStatus();
+		return null;
 	}
    
    public void percentVoltageMode(){
@@ -130,9 +173,8 @@ public class DrivetrainSubsystem extends Subsystem {
    }
     
     public void resetEncoders(){
-   	 	System.out.println("reset encoders");
-   	 	leftMaster.setEncPosition(0);
-		rightMaster.setEncPosition(0);
+   	 	leftMaster.setPosition(0.0);
+		rightMaster.setPosition(0.0);
 	}
     
 	private static DrivetrainSubsystem instance = new DrivetrainSubsystem();
@@ -221,23 +263,21 @@ public class DrivetrainSubsystem extends Subsystem {
    }    
    
    public TrapezoidThread getTrapThread() {
-		return trapThread;
+		//return trapThread;
+	   return null;
 	}
    
-   public void sendDashboardData(){
-      	talonLeftPos = leftMaster.getEncPosition();
-  		talonLeftRPM = leftMaster.getSpeed();
-  		talonRightPos = rightMaster.getEncPosition();
-  		talonRightRPM = rightMaster.getSpeed();
-  		leftSpeed = leftMaster.getEncVelocity();
-  		rightSpeed = rightMaster.getEncVelocity();
-  		  	   	
-		SmartDashboard.putNumber("Talon right velocity", rightSpeed);
-		SmartDashboard.putNumber("Talon left velocity", leftSpeed);
-		SmartDashboard.putNumber("Talon left Position", talonLeftPos);
-		SmartDashboard.putNumber("Talon left rpm", talonLeftRPM);
-		SmartDashboard.putNumber("Talon right Position", -talonRightPos);
-		SmartDashboard.putNumber("Talon right rpm", -talonRightRPM);
+   public void sendDashboardData(){  		  	   	
+		SmartDashboard.putNumber("Talon right velocity", rightMaster.getEncVelocity());
+		SmartDashboard.putNumber("Talon left velocity", -leftMaster.getEncVelocity());
+		SmartDashboard.putNumber("Talon left Position", -leftMaster.getEncPosition());
+		SmartDashboard.putNumber("Average talon pos", getAvgEncCounts());
+		SmartDashboard.putNumber("Average talon rotations", getAvgEncRotations());
+		SmartDashboard.putNumber("Talon left rpm", -leftMaster.getSpeed());
+		SmartDashboard.putNumber("Talon right Position", rightMaster.getEncPosition());
+		SmartDashboard.putNumber("Talon right rpm", rightMaster.getSpeed());
+		SmartDashboard.putNumber("Talon left rotations", leftMaster.getPosition());
+		SmartDashboard.putNumber("Talon right rotations", rightMaster.getPosition());
 		SmartDashboard.putBoolean("Motion profile is finished", profileHasFinished);
    }
    
@@ -256,6 +296,8 @@ public class DrivetrainSubsystem extends Subsystem {
    		talonRightRPM = rightMaster.getSpeed();
    		leftSpeed = leftMaster.getEncVelocity();
    		rightSpeed = rightMaster.getEncVelocity();
+   		talonLeftRot = leftMaster.getPosition();
+   		talonRightRot = rightMaster.getPosition();
    	
        	System.out.format("%s\n", "Time," + ((double)(curTime-startTime)/1000.0));
    		System.out.format("%s\n", "Talon left position: " + talonLeftPos);
@@ -267,5 +309,6 @@ public class DrivetrainSubsystem extends Subsystem {
    		lastTime = curTime;
    	}   	
    }
-}
 
+
+}

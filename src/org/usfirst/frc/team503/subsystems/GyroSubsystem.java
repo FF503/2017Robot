@@ -20,7 +20,7 @@ public class GyroSubsystem extends Subsystem implements PIDOutput{
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	
-	public AHRS gyro;
+	public static AHRS gyro;
 	
 	private boolean calibration_complete = false;
 	private double turnToAngleRate;
@@ -85,7 +85,7 @@ public class GyroSubsystem extends Subsystem implements PIDOutput{
     	return turnController.onTarget();
     }
     
-    public void resetGyro(){
+    public static void resetGyro(){
     	gyro.reset();
     }
     

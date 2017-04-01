@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ShootSequenceCommand extends Command {
 	double startTime, currTime;
+	boolean startHint, autonStart;
 	
     public ShootSequenceCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -26,6 +27,16 @@ public class ShootSequenceCommand extends Command {
     	requires(ShooterSubsystem.getInstance());
     	requires(IndexerSubsystem.getInstance());
     	requires(DeflectorSubsystem.getInstance());
+    	startHint = false;
+    	autonStart = false;
+    }
+    
+    public ShootSequenceCommand(boolean autonStart){
+    	requires(ShooterSubsystem.getInstance());
+    	requires(IndexerSubsystem.getInstance());
+    	requires(DeflectorSubsystem.getInstance());
+    	startHint = false;
+    	this.autonStart = autonStart;
     }
 
     // Called just before this Command runs the first time
@@ -33,7 +44,9 @@ public class ShootSequenceCommand extends Command {
     	DeflectorSubsystem.getInstance().setSetpoint(RobotState.getInstance().getShooterPreset().deflectorAngle);
     	ShooterSubsystem.getInstance().setSetpoint(RobotState.getInstance().getShooterPreset().rpm);
     	RobotState.getInstance().setShooterStatus(true);
-    	RobotState.getInstance().setTurretState(RobotState.TurretState.TAKING_HINT);
+    	if(RobotState.getInstance().getHasTurretReset()){
+    		RobotState.getInstance().setTurretState(RobotState.TurretState.TAKING_HINT);
+    	}
     	SmartDashboard.putBoolean("Deflector on target", false);
     	startTime = Timer.getFPGATimestamp();
     }
@@ -41,6 +54,12 @@ public class ShootSequenceCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	DeflectorSubsystem.getInstance().resetEncoder();
+    	if(RobotState.getInstance().getTurretHint()){
+    		startHint = true;
+    	}
+    	if(RobotState.getInstance().getHasTurretReset() && !startHint){
+    		RobotState.getInstance().setTurretState(RobotState.TurretState.TAKING_HINT);
+    	}
     	SmartDashboard.putBoolean("Deflector on target", DeflectorSubsystem.getInstance().isOnTarget());
 		if(ShooterSubsystem.getInstance().isOnTarget() && DeflectorSubsystem.getInstance().isOnTarget()){
 			if(TurretSubsystem.getInstance().getThread().getPiAlive() ){
@@ -62,8 +81,11 @@ public class ShootSequenceCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(RobotState.getInstance().getState()==RobotState.State.TELEOP){
+    	if(RobotState.getInstance().getState() == RobotState.State.TELEOP){
             return OI.getEndShoot();
+    	}
+    	else if(RobotState.getInstance().getState() == RobotState.State.AUTON){
+    		return autonStart;
     	}
     	else{
     		return false;
