@@ -5,7 +5,7 @@ public class Constants {
 	public static final double TURN_RATIO = .05;
 	public static final double SHOOTER_SPEED = 4500;
 	public static final double SHOOT_TIME_FOR_10_BALLS = 7.5;
-	public static final double DISTANCE_TO_PEG = 18.0;
+	public static final double DISTANCE_TO_PEG = 14.0;
 	public static final double DRIVE_PID_TOLERANCE = 1.0;
 	public static final double DRIVE_HEADING_TOLERANCE = 1.5;
 	public static final double GEAR_DEPLOY_TIME = 1.0;

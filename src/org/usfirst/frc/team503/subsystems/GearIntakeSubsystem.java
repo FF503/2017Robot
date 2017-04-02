@@ -62,7 +62,13 @@ public class GearIntakeSubsystem extends Subsystem {
 	}
 	
 	public double getIRVoltage(){
-		return gearIRSensor.getVoltage();
+		if (Robot.bot.hasGearIR()){
+			return gearIRSensor.getVoltage();
+		}
+		else{
+			return 0.0;
+		}
+		
 	}
 	
 	public boolean isGearIn(){

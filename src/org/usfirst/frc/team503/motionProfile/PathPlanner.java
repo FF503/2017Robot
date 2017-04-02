@@ -86,10 +86,10 @@ public class PathPlanner {
 
 	public static void print(double[] path)
 	{
-		System.out.println("X: \t Y:");
+		//System.out.println("X: \t Y:");
 
-		for(double u: path)
-			System.out.println(u);
+		//for(double u: path)
+			//System.out.println(u);
 	}
 
 
@@ -100,10 +100,10 @@ public class PathPlanner {
 	 */
 	public static void print(double[][] path)
 	{
-		System.out.println("X: \t Y:");
+		//System.out.println("X: \t Y:");
 
-		for(double[] u: path)
-			System.out.println(u[0]+ "\t" +u[1]);
+		//for(double[] u: path)
+			//System.out.println(u[0]+ "\t" +u[1]);
 	}
 
 	/**

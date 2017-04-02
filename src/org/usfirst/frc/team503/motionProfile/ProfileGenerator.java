@@ -93,7 +93,7 @@ public class ProfileGenerator {
 	public double[][] getLeftProfile(){
 		try {
 			String fileContents = getFileContentsAsString(FILE_PATH);
-			System.out.println(fileContents);
+		//	System.out.println(fileContents);
 			splitProfiles = splitSides(fileContents);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

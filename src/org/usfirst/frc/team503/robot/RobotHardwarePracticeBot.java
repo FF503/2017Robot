@@ -94,14 +94,14 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final double DEFLECTOR_TOLERANCE = 1.0;
 	public final boolean DEFLECTOR_REVERSE_SENSOR = true;
 
-	public double GYRO_P = 0.035;     //was 0.0125
+	public double GYRO_P = 0.037;     //was 0.035
 	public double GYRO_I = 0.0;		//was 0.0
-	public double GYRO_D = 0.0600;		//was 0.0
+	public double GYRO_D = 0.0600;		//was 0.06
 	public double GYRO_TOLERANCE = 1.0;
 	
 	public final double DISTANCE_BETWEEN_ULTRASONICS = 13.7;
-	public final double LEFT_ULTRASONIC_VOLTS_PER_INCH = 0.229492164 / 25; 
-	public final double RIGHT_ULTRASONIC_VOLTS_PER_INCH = 0.218505837 / 25;
+	public final double LEFT_ULTRASONIC_VOLTS_PER_INCH = 0.01020952;                   //was 0.229492164 / 25; 
+	public final double RIGHT_ULTRASONIC_VOLTS_PER_INCH = 0.00935872;                       //was 0.218505837 / 25;
 	
 	public final double REVERSE_INDEXER = -1.0;
 	
@@ -137,7 +137,7 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	
 	@Override
 	public boolean hasGearIR(){
-		return true;
+		return false;
 	}
 	
 	@Override 

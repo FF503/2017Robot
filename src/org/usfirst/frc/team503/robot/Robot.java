@@ -100,6 +100,7 @@ public class Robot extends IterativeRobot {
 		UltrasonicSubsystem.getInstance().enableUltrasonicSensors();
 		RobotState.getInstance().setState(RobotState.State.AUTON);
 		TurretSubsystem.getInstance().getThread().startTurret();
+		System.out.println("coming out of start turret");
 		AutonSelector.getInstance().startAuton();
 		//(new TestAuton()).start();
 	}
@@ -143,8 +144,10 @@ public class Robot extends IterativeRobot {
     	(new ArcadeDriveCommand()).start();
     	if (!Robot.bot.getName().equals("ProgrammingBot")){
     		TurretSubsystem.getInstance().getThread().startTurret();
+    		System.out.println("coming out of start turret teleop" + TurretSubsystem.getInstance().getThread().getStartTurret());
     		//(new TeleopTurretCommand()).start();
         	(new TeleopDeflectorCommand()).start();
+        	
     	}
     	startTime = Timer.getFPGATimestamp();
 	}

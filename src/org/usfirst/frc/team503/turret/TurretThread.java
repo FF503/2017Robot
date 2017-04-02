@@ -41,14 +41,25 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  	}
  	
  	public void run(){
+ 		//System.out.println("in run" + startTurret);
  		if(startTurret){
+ 			//System.out.println("before turret control");
  			turretControl();
+ 		//	System.out.println("after turret control");
  		}
+ 		
+ 		
  	}
  	
+ 	public synchronized boolean getStartTurret(){
+ 		return startTurret;
+ 	}
+ 	public synchronized void setStartTurret(boolean val){
+ 		startTurret = val;
+ 	}
  	public synchronized void startTurret(){
+ 		System.out.println("trying to start");
  		RobotState.getInstance().setTurretStatus(true);
- 		startTurret = true;
  		startTime = Timer.getFPGATimestamp();
  		onTargetStartTime = startTime;
  		if(RobotState.getInstance().getState()==RobotState.State.AUTON){
@@ -59,15 +70,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  				else if(AutonSelector.getInstance().gearPosChooser.getSelected() == AutonChoices.GearPosition.DO_NOTHING){
  					RobotState.getInstance().setTurretResetSide(true);
  				}
+ 				else if (AutonSelector.getInstance().gearPosChooser.getSelected() == AutonChoices.GearPosition.CENTER){
+ 					RobotState.getInstance().setTurretResetSide(false);
+ 				}
  				else{
- 					RobotState.getInstance().setTurretResetSide(true);
+ 					RobotState.getInstance().setTurretResetSide(false);
  				}
  			}
  			else{
  				if(AutonSelector.getInstance().gearPosChooser.getSelected() == AutonChoices.GearPosition.LEFT){
-						RobotState.getInstance().setTurretResetSide(true);
+						RobotState.getInstance().setTurretResetSide(false);
 				}
 				else if(AutonSelector.getInstance().gearPosChooser.getSelected() == AutonChoices.GearPosition.DO_NOTHING){
+					RobotState.getInstance().setTurretResetSide(true);
+				}
+				else if(AutonSelector.getInstance().gearPosChooser.getSelected() == AutonChoices.GearPosition.CENTER){
 					RobotState.getInstance().setTurretResetSide(false);
 				}
 				else{
@@ -79,6 +96,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  		else{
  			RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
  		}
+ 		startTurret = true;
  	}
  	
  	public synchronized void stopTurret(){
@@ -101,10 +119,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 		SmartDashboard.putBoolean("discard image", discardImage);
 		SmartDashboard.putBoolean("pi is alive", piIsAlive);
 		SmartDashboard.putString("Turret state", RobotState.getInstance().getTurretState().toString());
-	//	System.out.println("Time: " + Timer.getFPGATimestamp() + " Angle: " + cameraOffset + " " + isRobotMoving());
 		
 		//state machine
-		//System.out.println(RobotState.getInstance().getTurretState().toString());
+		//System.out.println( " turret state: " + RobotState.getInstance().getTurretState().toString());
 		switch(RobotState.getInstance().getTurretState()){
 			//disabled state
 			case DISABLED:
@@ -190,6 +207,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 				}
 				break;
 			case TAKING_HINT:
+				System.out.println("got to taking hint state");
 				TurretSubsystem.getInstance().setSetpoint(RobotState.getInstance().getShooterPreset().turretAngle);
 				PIDStartTime = Timer.getFPGATimestamp() - 1.0;  //workaround to give us an extra 0.5 seconds to achieve target
 				RobotState.getInstance().setTurretState(RobotState.TurretState.RUNNING_PID);

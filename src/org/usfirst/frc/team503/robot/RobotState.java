@@ -13,6 +13,7 @@ public class RobotState extends Subsystem {
 
     // Put methods for controlling this subsystem
 	private boolean shooterIsRunning;
+	private boolean readyToFire;
 	private boolean intakeIsRunning;
 	private boolean currentDriveGear;
 	private boolean indexerIsRunning;
@@ -44,6 +45,7 @@ public class RobotState extends Subsystem {
 		climberIsAccelerated = false;
 		turretIsRunning = false;
 		driveTrainIsReversed = false;
+		readyToFire = false;
 		gearPlacerBack = false; //closed
 		gearPlacerFront = false; //closed
 		hint = false;
@@ -70,7 +72,7 @@ public class RobotState extends Subsystem {
 	}
 	
 	public enum ShootingPresets{
-		NoTracking(30.0, 4500, 503), Batter(18.0,4000,271.0), HopperRed(37, 4250, 6.0), CenterPegBlue(29.9,4500,503), CenterPegRed(30.0, 4500, 503), PegNearHopperBlue(36.0, 5050, 304.0), PegNearHopperRed(37.5, 4525,301), HopperBlue(32.0,4350,204.0);
+		NoTracking(30.0, 4500, 503), Batter(18.0,4000,271.0), HopperRed(40, 4150, 6.0), CenterPegBlue(29.9,4500,503), CenterPegRed(40.0, 5000, 223.0099056523927), PegNearHopperBlue(38.0, 4525, 272.0), PegNearHopperRed(37.5, 4525,301), HopperBlue(32.0,4350,204.0);
 		//pegnearhopperblue 272, 34, 4950
 		//hopperred 34, 4400
 		
@@ -83,6 +85,13 @@ public class RobotState extends Subsystem {
 			this.turretAngle = turretAngle;
 		}
 		
+	}
+	
+	public void setReadyToFire(boolean r){
+		readyToFire = r;
+	}
+	public boolean getReadyToFire(){
+		return readyToFire;
 	}
 	
 	public void setGearIntakeRunning(boolean run){

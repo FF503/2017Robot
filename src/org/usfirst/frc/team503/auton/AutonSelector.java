@@ -120,11 +120,11 @@ public class AutonSelector {
 					switch(shootChoice) {
 					case SHOOT:
 						//Red Alliance, Center Gear, Don't Dump Any Bin, Shoot
-						(new CenterPegCenterStartBlue(true)).start();
+						(new CenterPegCenterStartRed(true)).start();
 						break;
 					case DONT_SHOOT:
 						//Red Alliance, Center Gear, Don't Dump Any Bin, Don't Shoot
-						(new CenterPegCenterStartBlue(false)).start();
+						(new CenterPegCenterStartRed(false)).start();
 						break;
 					}
 					break;

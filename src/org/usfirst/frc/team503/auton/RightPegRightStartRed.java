@@ -4,6 +4,7 @@ import org.usfirst.frc.team503.commands.DriveStraightDistanceCommand;
 import org.usfirst.frc.team503.commands.GyroTurnCommand;
 import org.usfirst.frc.team503.commands.PlaceGearCommand;
 import org.usfirst.frc.team503.commands.RaiseGearPlacer;
+import org.usfirst.frc.team503.commands.SetReadyToFire;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
 import org.usfirst.frc.team503.robot.RobotState;
 
@@ -28,40 +29,36 @@ public class RightPegRightStartRed extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	if(shoot){
-			if (dump){
-				RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperRed);
-			}
-			else{
-				RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.PegNearHopperRed);
-			}
-			
-		}
+
     	addParallel(new RaiseGearPlacer());    	
 		//addSequential(new RunMotionProfileCommand(leftPinLeftStart, 2, 1, true));
-    	addSequential(new DriveStraightDistanceCommand(58.5, 4.0, true));
+    	addSequential(new DriveStraightDistanceCommand(58.5, 3.0, true));
 		addSequential(new GyroTurnCommand(-60));
-		/*if (shoot){
-		//	addParallel(new SpinUpShooterCommnad());
-		}
-		if(shoot&&!dump){
-			addSequential(new AutonDriveCommand());
-			addParallel(new PlaceGearCommand());
-		}*/
-	
-			addSequential(new AutonDriveCommand());
-			addSequential(new PlaceGearCommand());
+		
+		addSequential(new DriveStraightDistanceCommand(36.0, 2.0, true));
+		addSequential(new AutonDriveCommand2());
+		addSequential(new PlaceGearCommand());
 		
 		if (dump){
 		//	addSequential(new RunMotionProfileCommand(dumpBinForward, 2, 1, false)); //1.5
-			addSequential(new DriveStraightDistanceCommand(66, 5.0,false));
-			addSequential(new GyroTurnCommand(30, true));
-			addParallel(new DriveStraightDistanceCommand(44.4, 3.5, false));
+			addSequential(new DriveStraightDistanceCommand(24, 1.5, false));
+			addSequential(new GyroTurnCommand(-60, true));
+	    	addSequential(new DriveStraightDistanceCommand(60, 2.0,false));
+	    	addSequential(new GyroTurnCommand(30, false));
+			if(shoot){
+				RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperRed);
+				addSequential(new ShootSequenceCommand(true));
+				addParallel(new ShootSequenceCommand(false));
+			}
+			addSequential(new DriveStraightDistanceCommand(15.0, 1.0, false));
+			addSequential(new SetReadyToFire());
 			//addSequential(new RunMotionProfileCommand(hitBin, 2, 1, false));	//1
 		}
-		if (shoot){
-			addSequential(new ShootSequenceCommand());
+		else if(shoot){
+			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.PegNearHopperRed);
+			addSequential(new ShootSequenceCommand(true));
+			addParallel(new ShootSequenceCommand(false));
+			addSequential(new SetReadyToFire());
 		}
-		
     }
 }

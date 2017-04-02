@@ -4,6 +4,7 @@ import org.usfirst.frc.team503.commands.DriveStraightDistanceCommand;
 import org.usfirst.frc.team503.commands.GyroTurnCommand;
 import org.usfirst.frc.team503.commands.PlaceGearCommand;
 import org.usfirst.frc.team503.commands.RaiseGearPlacer;
+import org.usfirst.frc.team503.commands.SetReadyToFire;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
 import org.usfirst.frc.team503.robot.RobotState;
 
@@ -43,11 +44,15 @@ public class DumpBinRed extends CommandGroup {
     	addParallel(new RaiseGearPlacer());    	
 		addSequential(new DriveStraightDistanceCommand(110, 3.0,true));//115
 		addSequential(new GyroTurnCommand(-90));
-		addSequential(new DriveStraightDistanceCommand(36,2.5,false));
 		if(shoot){
 			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperRed);
 			addSequential(new ShootSequenceCommand(true));
-			addSequential(new ShootSequenceCommand(false));
+			addParallel(new ShootSequenceCommand(false));
+			
 		}
+		addSequential(new DriveStraightDistanceCommand(36,2.5,false));
+		addSequential(new SetReadyToFire());
+		
+		
     }
 }

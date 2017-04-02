@@ -1,7 +1,10 @@
 package org.usfirst.frc.team503.auton;
 
+import org.usfirst.frc.team503.commands.DriveStraightDistanceCommand;
+import org.usfirst.frc.team503.commands.GyroTurnCommand;
 import org.usfirst.frc.team503.commands.PlaceGearCommand;
 import org.usfirst.frc.team503.commands.RaiseGearPlacer;
+import org.usfirst.frc.team503.commands.SetReadyToFire;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
 import org.usfirst.frc.team503.robot.RobotState;
 
@@ -29,10 +32,14 @@ public class TestAuton extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new RaiseGearPlacer());
-		addSequential(new AutonDriveCommand());
-		addParallel(new PlaceGearCommand());
-/*		RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.PegNearHopperRed);
-		addSequential(new ShootSequenceCommand());
-*/    }
+    	addSequential(new DriveStraightDistanceCommand(24, 1.5, false));
+		addSequential(new GyroTurnCommand(-60, true));
+    	addSequential(new DriveStraightDistanceCommand(60, 5.0,false));
+    	addSequential(new GyroTurnCommand(30, false));
+		RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperRed);
+		addSequential(new ShootSequenceCommand(true));
+		addParallel(new ShootSequenceCommand(false));
+		addSequential(new DriveStraightDistanceCommand(10, 3.5, false));
+		addSequential(new SetReadyToFire());
+   }
 }

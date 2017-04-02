@@ -33,6 +33,7 @@ public class DeflectorSubsystem extends Subsystem {
 		deflectorMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 		deflectorMotor.setForwardSoftLimit(0.0);
 		deflectorMotor.setReverseSoftLimit(-Robot.bot.DEFLECTOR_MAX_COUNTS);
+		deflectorMotor.configMaxOutputVoltage(9);
 		deflectorMotor.enableReverseSoftLimit(true);
 		deflectorMotor.enableForwardSoftLimit(false);
 		//deflectorMotor.setAllowableClosedLoopErr((int)(kTurretOnTargetTolerance /kTurretDegreesPerTick));
