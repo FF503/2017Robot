@@ -26,7 +26,7 @@ public class RaiseGearPlacer extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	addSequential(new RaiseGearIntakeCommand());
-    	addSequential(new WaitCommand(0.3));
+    	addSequential(new WaitCommand(0.7));
     	addSequential(new ExtendGearIntakeCommand());
     }
 }

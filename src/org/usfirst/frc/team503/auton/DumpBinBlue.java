@@ -1,14 +1,13 @@
 package org.usfirst.frc.team503.auton;
 
-import org.usfirst.frc.team503.commands.CloseGearPlacerCommand;
+import org.usfirst.frc.team503.commands.DriveStraightDistanceCommand;
 import org.usfirst.frc.team503.commands.GyroTurnCommand;
-import org.usfirst.frc.team503.commands.OpenGearPlacerCommand;
+import org.usfirst.frc.team503.commands.PlaceGearCommand;
+import org.usfirst.frc.team503.commands.RaiseGearPlacer;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
-import org.usfirst.frc.team503.motionProfile.RunMotionProfileCommand;
 import org.usfirst.frc.team503.robot.RobotState;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class DumpBinBlue extends CommandGroup {
 
@@ -29,22 +28,13 @@ public class DumpBinBlue extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	double[][] dumpbinForward = {
-				{0, 22.5},
-				{-6.3, 22.5} //6.6
-		};
-    	
-    	double[][] hitBin ={
-    			{0,0},
-    			{3.9,0}
-    	};
-  
-    	addParallel(new CloseGearPlacerCommand());    	
-		addSequential(new RunMotionProfileCommand(dumpbinForward, 2, 1, true));
-		addSequential(new GyroTurnCommand(90));
-		addSequential(new RunMotionProfileCommand(hitBin, 2, 1, false));
+
+    	addParallel(new RaiseGearPlacer());    	
+		addSequential(new DriveStraightDistanceCommand(75.6,3.0,true));
+		addSequential(new GyroTurnCommand(-90));
+		addSequential(new DriveStraightDistanceCommand(46.8,2.5,false));
 		if(shoot){
-			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperBlue);
+			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperRed);
 			addSequential(new ShootSequenceCommand());
 		}
     }

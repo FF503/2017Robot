@@ -24,8 +24,6 @@ public class DriveStraightDistanceCommand extends Command {
     public DriveStraightDistanceCommand(double inches, double timeout, boolean reverse) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	DrivetrainSubsystem.getInstance().resetEncoders();
-    	DrivetrainSubsystem.getInstance().percentVoltageMode();
     	this.inches = inches;
     	this.timeout = timeout;
     	this.reverse = reverse;
@@ -35,7 +33,9 @@ public class DriveStraightDistanceCommand extends Command {
     protected void initialize() {
     	time = new Timer();
     	time.start();
-    	
+    	DrivetrainSubsystem.getInstance().resetEncoders();
+    	DrivetrainSubsystem.getInstance().percentVoltageMode();
+    	DrivetrainSubsystem.getInstance().resetController();
     	if(reverse){
     		DrivetrainSubsystem.getInstance().setSetpoint(-inches);
     	}

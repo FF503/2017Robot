@@ -1,6 +1,7 @@
 package org.usfirst.frc.team503.subsystems;
 
 import org.usfirst.frc.team503.robot.Robot;
+import org.usfirst.frc.team503.robot.RobotState;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
@@ -8,6 +9,7 @@ import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -68,6 +70,13 @@ public class ShooterSubsystem extends Subsystem {
 	
 	public boolean isOnTarget(){
 		return (shooterMotor.getControlMode() == TalonControlMode.Speed && getError() < Robot.bot.SHOOT_TOLERANCE);
+	}
+	
+	public void sendDashboardData(){
+		SmartDashboard.putNumber("Shooter RPM", ShooterSubsystem.getInstance().getSpeed());
+		SmartDashboard.putNumber("Shooter position", ShooterSubsystem.getInstance().getPosition());
+		SmartDashboard.putNumber("Shooter Current", ShooterSubsystem.getInstance().getCurrent());
+		SmartDashboard.putString("Shooting preset", RobotState.getInstance().getShooterPreset().toString());
 	}
 	
     public void initDefaultCommand() {

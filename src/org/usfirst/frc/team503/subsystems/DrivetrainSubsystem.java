@@ -173,8 +173,8 @@ public class DrivetrainSubsystem extends Subsystem{
    }
     
     public void resetEncoders(){
-   	 	leftMaster.setPosition(0.0);
-		rightMaster.setPosition(0.0);
+   	 	leftMaster.setEncPosition(0);
+		rightMaster.setEncPosition(0);
 	}
     
 	private static DrivetrainSubsystem instance = new DrivetrainSubsystem();

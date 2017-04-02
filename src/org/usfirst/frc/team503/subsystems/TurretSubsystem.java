@@ -132,10 +132,10 @@ public class TurretSubsystem extends Subsystem {
 	
 	public void resetTurret(boolean zero){
 		if(zero){
-        	setMotorPower(-.2);
+        	setMotorPower(-.4);
     	}
     	else{
-    		setMotorPower(0.2);
+    		setMotorPower(0.4);
     	}
 	}
 	

@@ -1,11 +1,14 @@
 package org.usfirst.frc.team503.robot;
 
+import org.usfirst.frc.team503.commands.AutomaticGearIntakeCommand;
 import org.usfirst.frc.team503.commands.ChangeShooterPresetCommand;
 import org.usfirst.frc.team503.commands.ClimbCommand;
 import org.usfirst.frc.team503.commands.ClimbFasterCommand;
 import org.usfirst.frc.team503.commands.LowerGearPlacer;
 import org.usfirst.frc.team503.commands.RaiseGearPlacer;
+import org.usfirst.frc.team503.commands.ResetAutonCommand;
 import org.usfirst.frc.team503.commands.ReverseDriveTrainCommand;
+import org.usfirst.frc.team503.commands.ReverseGearIntakeCommand;
 import org.usfirst.frc.team503.commands.ShiftToHighGear;
 import org.usfirst.frc.team503.commands.ShiftToLowGear;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
@@ -71,8 +74,8 @@ public class OI {
 	private static JoystickButton frontGearButton = new JoystickButton(operatorJoystick, 4);
 	private static JoystickButton endShoot = new JoystickButton(operatorJoystick, 5);
 	private static JoystickButton shootRPMButton = new JoystickButton(operatorJoystick, 6);
-	private static JoystickButton incrementPreset = new JoystickButton(operatorJoystick, 7);
-	private static JoystickButton decrementPreset = new JoystickButton(operatorJoystick, 8);
+	private static JoystickButton resetAutonButton = new JoystickButton(operatorJoystick, 7);
+	private static JoystickButton incrementPreset = new JoystickButton(operatorJoystick, 8);
 	
 	private static JoystickButton goToTurretPosition = new JoystickButton(operatorJoystick, 7);
 	private static JoystickButton goToDeflectorButton = new JoystickButton(operatorJoystick, 8);
@@ -91,8 +94,10 @@ public class OI {
 		//closeGearMechButton.whenPressed(new CloseGearPlacerCommand());
 		raiseGearMechButton.whenPressed(new RaiseGearPlacer());
 		lowerGearMechButton.whenPressed(new LowerGearPlacer());
-		//intakeGearButton.whileHeld(new TeleopGearIntakeCommand());
-		//reverseIntakeGearButton.whileHeld(new TeleopGearIntakeCommand());
+		intakeGearButton.whenPressed(new AutomaticGearIntakeCommand());
+		reverseIntakeGearButton.whenPressed(new ReverseGearIntakeCommand());
+		reverseIntakeGearButton.whenReleased(new ReverseGearIntakeCommand());
+		resetAutonButton.whenPressed(new ResetAutonCommand());
 		incrementPreset.whenPressed(new ChangeShooterPresetCommand());
 		climbButton.whenPressed(new ClimbCommand());
 		reverseDriveTrainButton.whenPressed(new ReverseDriveTrainCommand());
@@ -107,7 +112,7 @@ public class OI {
 	}
 	
 	public static boolean getDecrementPreset(){
-		return decrementPreset.get();
+		return resetAutonButton.get();
 	}
 	
 	public static double getDriverLeftYValue(){

@@ -31,6 +31,7 @@ public class RobotState extends Subsystem {
 	private boolean hint;
 	private boolean resetAtZero;
 	private boolean turretHasReset;
+	private boolean intakeGearRunning;
     	
 	public RobotState() {
 		shooterIsRunning = false; 
@@ -48,6 +49,7 @@ public class RobotState extends Subsystem {
 		hint = false;
 		resetAtZero = false;
 		turretHasReset = false;
+		intakeGearRunning = false;
 		robotState = State.DISABLED;
 		turretState = TurretState.DISABLED;
 		shootingPreset = ShootingPresets.HopperRed;
@@ -68,9 +70,10 @@ public class RobotState extends Subsystem {
 	}
 	
 	public enum ShootingPresets{
-		Batter(18.0,4000,271.0), HopperRed(29.9,4300,0), CenterPeg(29.9,4500,503), PegNearHopperBlue(36.0, 5050, 272.0), PegNearHopperRed(32.0, 5050,301), HopperBlue(32.0,4350,204.0);
-		//livonia peg near hopper 266.66537145811753
-		//livonia batter 283.5324107344833
+		NoTracking(30.0, 4500, 503), Batter(18.0,4000,271.0), HopperRed(37, 4250, 6.0), CenterPegBlue(29.9,4500,503), CenterPegRed(30.0, 4500, 503), PegNearHopperBlue(36.0, 5050, 304.0), PegNearHopperRed(37.5, 4525,301), HopperBlue(32.0,4350,204.0);
+		//pegnearhopperblue 272, 34, 4950
+		//hopperred 34, 4400
+		
 		public double deflectorAngle;
 		public int rpm;
 		public double turretAngle; 
@@ -80,6 +83,14 @@ public class RobotState extends Subsystem {
 			this.turretAngle = turretAngle;
 		}
 		
+	}
+	
+	public void setGearIntakeRunning(boolean run){
+		intakeGearRunning = run;
+	}
+	
+	public boolean getGearIntakeRunning(){
+		return intakeGearRunning;
 	}
 	
 	public synchronized boolean getHasTurretReset(){
@@ -127,6 +138,7 @@ public class RobotState extends Subsystem {
 	}
 	
 	public synchronized void setTurretState(TurretState state){
+		System.out.println("Previous state:" + turretState.toString() + "Next state:" + state.toString());
 		turretState = state;
 	}
 	

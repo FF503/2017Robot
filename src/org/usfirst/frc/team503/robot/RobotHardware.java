@@ -88,7 +88,15 @@ public abstract class RobotHardware {
 	{
 		return false;
 	}
+	
+	public boolean hasGearIR(){
+		return false;
+	}
 
+	public boolean hasGearLED(){
+		return false;
+	}
+	
 	public RobotHardware()
 	{
 		dummyBot = this;

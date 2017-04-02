@@ -17,14 +17,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class AutonDriveCommand extends Command {
 	double angle, difference;
 	NetworkTable table;
-	double count;
 	double startTime, currTime;
 	double turnMultiplier;
 	
     public AutonDriveCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	count = 0;
     }
 
     // Called just before this Command runs the first time
@@ -44,7 +42,7 @@ public class AutonDriveCommand extends Command {
     	SmartDashboard.putNumber("Peg Angle", angle);
     	if(/*UltrasonicSubsystem.getInstance().getUltrasonicDistance() > 2 4.0 && */angle != 0.0){   //was 36 
     		//DrivetrainSubsystem.getInstance().arcadeDrive(.2, angle*.05, false);
-    		turnMultiplier = 1-((UltrasonicSubsystem.getInstance().getLeftUltrasonicDistance() - Constants.DISTANCE_TO_PEG)/(Robot.bot.AUTON_DRIVE_P-Constants.DISTANCE_TO_PEG));
+    		turnMultiplier = 1-((UltrasonicSubsystem.getInstance().getUltrasonicDistance() - Constants.DISTANCE_TO_PEG)/(Robot.bot.AUTON_DRIVE_P-Constants.DISTANCE_TO_PEG));
     		if (turnMultiplier < Robot.bot.minAutonDriveTurnPower){
     			turnMultiplier = Robot.bot.minAutonDriveTurnPower;
     		}
@@ -52,13 +50,13 @@ public class AutonDriveCommand extends Command {
     			turnMultiplier = Robot.bot.maxAutonDriveTurnPower;
     		}
     		SmartDashboard.putNumber("mult", turnMultiplier);
-    		DrivetrainSubsystem.getInstance().arcadeDrive(0.35, turnMultiplier * angle , false);
+    		DrivetrainSubsystem.getInstance().arcadeDrive(0.3, turnMultiplier * angle , false);
     	} 
     	
     	else {
     	//	difference = UltrasonicSubsystem.getInstance().getRightUltrasonicDistance() - UltrasonicSubsystem.getInstance().getLeftUltrasonicDistance();
     	//	DrivetrainSubsystem.getInstance().arcadeDrive(.20, 	difference*.05, false);
-    		DrivetrainSubsystem.getInstance().arcadeDrive(.20, 	0, false);
+    		DrivetrainSubsystem.getInstance().arcadeDrive(0.3, 0, false);
     		//	if(Math.abs(GyroSubsystem.getInstance().gyro.getYaw()) > Robot.bot.GYRO_TOLERANCE){
 		//		if(GyroSubsystem.getInstance().gyro.getYaw()< -Robot.bot.GYRO_TOLERANCE){
 		//			DrivetrainSubsystem.getInstance().arcadeDrive(0, .3, false);
@@ -73,8 +71,8 @@ public class AutonDriveCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	SmartDashboard.putBoolean("Auton drive isFinished",(UltrasonicSubsystem.getInstance().getLeftUltrasonicDistance() < Constants.DISTANCE_TO_PEG));
-    	return (UltrasonicSubsystem.getInstance().getLeftUltrasonicDistance()< Constants.DISTANCE_TO_PEG);
+    	SmartDashboard.putBoolean("Auton drive isFinished",(UltrasonicSubsystem.getInstance().getUltrasonicDistance() < Constants.DISTANCE_TO_PEG));
+    	return (UltrasonicSubsystem.getInstance().getUltrasonicDistance()< Constants.DISTANCE_TO_PEG);
     }	
 
     protected void end(){

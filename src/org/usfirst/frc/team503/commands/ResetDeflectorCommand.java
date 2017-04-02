@@ -17,7 +17,7 @@ public class ResetDeflectorCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	DeflectorSubsystem.getInstance().setMotorPower(-0.1);
+    	DeflectorSubsystem.getInstance().setMotorPower(0.1);
     }
 
     // Called repeatedly when this Command is scheduled to run

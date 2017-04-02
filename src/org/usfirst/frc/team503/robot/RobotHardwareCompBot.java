@@ -44,7 +44,7 @@ public class RobotHardwareCompBot extends RobotHardware {
 	
 	private final double TURRET_DIAMETER = 13.0;
 	public double TURRET_ROTATIONS_IN_RANGE = 257.495361328125;
-	public double TURRET_TOLERANCE = 1.0;
+	public double TURRET_TOLERANCE = 0.5;//1.0
 	public double TURRET_TEETH_BETWEEN_LIMIT_SWITCHES = 8.5;
 	public final double TURRET_TOTAL_TEETH = 156.0;
 	public final double TURRET_DEGREES_BETWEEN_LIMIT_SWITCHES = TURRET_TEETH_BETWEEN_LIMIT_SWITCHES/TURRET_TOTAL_TEETH * 360;

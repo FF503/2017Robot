@@ -79,7 +79,6 @@ public class AutonChoices{
 		public ITable getTable() { return null; }
 
 		@Override
-		public String getSmartDashboardType() { return null; }
-		
+		public String getSmartDashboardType() { return null; }	
 	}
 }

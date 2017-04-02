@@ -47,6 +47,8 @@ public class ShootSequenceCommand extends Command {
     	if(RobotState.getInstance().getHasTurretReset()){
     		RobotState.getInstance().setTurretState(RobotState.TurretState.TAKING_HINT);
     	}
+		RobotState.getInstance().setTurretState(RobotState.TurretState.TAKING_HINT);
+
     	SmartDashboard.putBoolean("Deflector on target", false);
     	startTime = Timer.getFPGATimestamp();
     }

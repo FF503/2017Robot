@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class AutonSelector {
 
 	public SendableChooser<AutonChoices.Alliances> allianceChooser;
-	private SendableChooser<AutonChoices.GearPosition> gearPosChooser;
-	private SendableChooser<AutonChoices.Shoot> shootChooser;
-	private SendableChooser<AutonChoices.BinPosition> binChooser;
+	public SendableChooser<AutonChoices.GearPosition> gearPosChooser;
+	public SendableChooser<AutonChoices.Shoot> shootChooser;
+	public SendableChooser<AutonChoices.BinPosition> binChooser;
 	
 	
 	/**
@@ -120,11 +120,11 @@ public class AutonSelector {
 					switch(shootChoice) {
 					case SHOOT:
 						//Red Alliance, Center Gear, Don't Dump Any Bin, Shoot
-						(new CenterPegCenterStart(true)).start();
+						(new CenterPegCenterStartBlue(true)).start();
 						break;
 					case DONT_SHOOT:
 						//Red Alliance, Center Gear, Don't Dump Any Bin, Don't Shoot
-						(new CenterPegCenterStart(false)).start();
+						(new CenterPegCenterStartBlue(false)).start();
 						break;
 					}
 					break;
@@ -211,11 +211,11 @@ public class AutonSelector {
 					switch(shootChoice) {
 					case SHOOT:
 						//Blue Alliance, Center Gear, Don't Dump Any Bin, Shoot
-						(new CenterPegCenterStart(true)).start();
+						(new CenterPegCenterStartBlue(true)).start();
 						break;
 					case DONT_SHOOT:
 						//Blue Alliance, Center Gear, Don't Dump Any Bin, Don't Shoot
-						(new CenterPegCenterStart(false)).start();
+						(new CenterPegCenterStartBlue(false)).start();
 						SmartDashboard.putString("starting auton","reached it");
 						break;
 					}

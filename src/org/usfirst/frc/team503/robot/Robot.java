@@ -2,13 +2,12 @@
 package org.usfirst.frc.team503.robot;
 
 import org.usfirst.frc.team503.auton.AutonSelector;
+import org.usfirst.frc.team503.auton.TestAuton;
 import org.usfirst.frc.team503.commands.ArcadeDriveCommand;
-import org.usfirst.frc.team503.commands.DriveStraightDistanceCommand;
-import org.usfirst.frc.team503.commands.ShootSequenceCommand;
 import org.usfirst.frc.team503.commands.TeleopDeflectorCommand;
-import org.usfirst.frc.team503.commands.TeleopGearIntakeCommand;
 import org.usfirst.frc.team503.subsystems.DeflectorSubsystem;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
+import org.usfirst.frc.team503.subsystems.GearIntakeSubsystem;
 import org.usfirst.frc.team503.subsystems.GyroSubsystem;
 //import org.usfirst.frc.team503.subsystems.GyroSubsystem;
 import org.usfirst.frc.team503.subsystems.IndexerSubsystem;
@@ -58,6 +57,9 @@ public class Robot extends IterativeRobot {
 		if(Robot.bot.hasDriveCamera()){
 			CameraServer.getInstance().startAutomaticCapture();
 		}
+		if (Robot.bot.hasLowGoalLight){
+			lightSolenoid = new Solenoid(Robot.bot.lowGoalLightPort);
+		}
 	}
  
 	/**
@@ -90,19 +92,16 @@ public class Robot extends IterativeRobot {
 	 * autonomousInit - fires when Auto mode is selected   nv
 	 */
 	@Override
-	public void autonomousInit() {
+	public void autonomousInit() {	
 		if (Robot.bot.hasLowGoalLight){
-			lightSolenoid = new Solenoid(Robot.bot.lowGoalLightPort);
-	    	lightSolenoid.set(true);
+			lightSolenoid.set(true);
 		}
 		startTime = Timer.getFPGATimestamp();
+		UltrasonicSubsystem.getInstance().enableUltrasonicSensors();
 		RobotState.getInstance().setState(RobotState.State.AUTON);
-		//AutonSelector.getInstance().startAuton();
 		TurretSubsystem.getInstance().getThread().startTurret();
-		(new DriveStraightDistanceCommand(48.0, 3.0, true)).start();
-		RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.PegNearHopperBlue);
-		(new ShootSequenceCommand(true)).start();
-		(new ShootSequenceCommand(false)).start();
+		AutonSelector.getInstance().startAuton();
+		//(new TestAuton()).start();
 	}
 
 	/**
@@ -114,16 +113,14 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		
 		if (!Robot.bot.getName().equals("ProgrammingBot")){
-			SmartDashboard.putNumber("Shooter Motor Speed", ShooterSubsystem.getInstance().getSpeed());
 			SmartDashboard.putNumber("Peg Angle", table.getNumber("Degrees", 0.0));
-			SmartDashboard.putBoolean("Front Gear Placer", RobotState.getInstance().getGearPlacerFront());
-			SmartDashboard.putBoolean("Back Gear Placer", RobotState.getInstance().getGearPlacerBack());
-			SmartDashboard.putString("Shooting preset", RobotState.getInstance().getShooterPreset().toString());
+			ShooterSubsystem.getInstance().sendDashboardData();
 			UltrasonicSubsystem.getInstance().sendDashboardData();
 			DeflectorSubsystem.getInstance().sendDashboardData();
 			TurretSubsystem.getInstance().sendDashboardData();
 			DrivetrainSubsystem.getInstance().sendDashboardData();
 			GyroSubsystem.getInstance().sendDashboardData();
+			GearIntakeSubsystem.getInstance().sendDashboardData();
 		}
 	}
 
@@ -140,6 +137,7 @@ public class Robot extends IterativeRobot {
 		//DrivetrainSubsystem.getInstance().stopTrapezoidControl();    	
     	DrivetrainSubsystem.getInstance().resetEncoders();
 		RobotState.getInstance().setState(RobotState.State.TELEOP);
+		UltrasonicSubsystem.getInstance().enableUltrasonicSensors();
 	    startTime = Timer.getFPGATimestamp();
 	    //start commands that use joysticks and dpads manually from Robot.java
     	(new ArcadeDriveCommand()).start();
@@ -147,7 +145,6 @@ public class Robot extends IterativeRobot {
     		TurretSubsystem.getInstance().getThread().startTurret();
     		//(new TeleopTurretCommand()).start();
         	(new TeleopDeflectorCommand()).start();
-        	(new TeleopGearIntakeCommand()).start();
     	}
     	startTime = Timer.getFPGATimestamp();
 	}
@@ -161,19 +158,14 @@ public class Robot extends IterativeRobot {
 		//DrivetrainSubsystem.getInstance().populateLog(startTime);
 		SmartDashboard.putNumber("Time Remaining", 150 - (Timer.getFPGATimestamp() - startTime));
 		if (!Robot.bot.getName().equals("ProgrammingBot")){
-			SmartDashboard.putNumber("encoder kounts", (DrivetrainSubsystem.getInstance().getLeftMaster().getEncPosition() + DrivetrainSubsystem.getInstance().getRightMaster().getEncPosition())/2);
-			SmartDashboard.putNumber("Shooter RPM", ShooterSubsystem.getInstance().getSpeed());
-			SmartDashboard.putNumber("Shooter position", ShooterSubsystem.getInstance().getPosition());
 			SmartDashboard.putNumber("Peg Angle", table.getNumber("Degrees", 0.0));
-			SmartDashboard.putBoolean("Front Gear Placer", RobotState.getInstance().getGearPlacerFront());
-			SmartDashboard.putBoolean("Back Gear Placer", RobotState.getInstance().getGearPlacerBack());
-			SmartDashboard.putNumber("Shooter Current", ShooterSubsystem.getInstance().getCurrent());
-			SmartDashboard.putString("Shooting preset", RobotState.getInstance().getShooterPreset().toString());
+			ShooterSubsystem.getInstance().sendDashboardData();
 			DeflectorSubsystem.getInstance().sendDashboardData();
 			TurretSubsystem.getInstance().sendDashboardData();
 			UltrasonicSubsystem.getInstance().sendDashboardData();
 			GyroSubsystem.getInstance().sendDashboardData();
 			DrivetrainSubsystem.getInstance().sendDashboardData();
+			GearIntakeSubsystem.getInstance().sendDashboardData();
 		}
 	}
 	
@@ -182,8 +174,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testInit(){
-		lightSolenoid = new Solenoid(Robot.bot.lowGoalLightPort);
-    	lightSolenoid.set(true);
+    	if(Robot.bot.hasLowGoalLight){
+    		lightSolenoid.set(true);
+    	}
 		Logger.froglog("In Roborio Test Mode...initiating Power On Self Test (POST) Diagnostics ...");
 		RobotState.getInstance().setState(RobotState.State.TEST);
 	}

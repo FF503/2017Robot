@@ -49,12 +49,30 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  	public synchronized void startTurret(){
  		RobotState.getInstance().setTurretStatus(true);
  		startTurret = true;
+ 		startTime = Timer.getFPGATimestamp();
+ 		onTargetStartTime = startTime;
  		if(RobotState.getInstance().getState()==RobotState.State.AUTON){
  			if(AutonSelector.getInstance().allianceChooser.getSelected() == AutonChoices.Alliances.RED){
- 				RobotState.getInstance().setTurretResetSide(true);
+ 				if(AutonSelector.getInstance().gearPosChooser.getSelected() == AutonChoices.GearPosition.RIGHT){
+ 						RobotState.getInstance().setTurretResetSide(false);
+ 				}
+ 				else if(AutonSelector.getInstance().gearPosChooser.getSelected() == AutonChoices.GearPosition.DO_NOTHING){
+ 					RobotState.getInstance().setTurretResetSide(true);
+ 				}
+ 				else{
+ 					RobotState.getInstance().setTurretResetSide(true);
+ 				}
  			}
  			else{
- 				RobotState.getInstance().setTurretResetSide(false);
+ 				if(AutonSelector.getInstance().gearPosChooser.getSelected() == AutonChoices.GearPosition.LEFT){
+						RobotState.getInstance().setTurretResetSide(true);
+				}
+				else if(AutonSelector.getInstance().gearPosChooser.getSelected() == AutonChoices.GearPosition.DO_NOTHING){
+					RobotState.getInstance().setTurretResetSide(false);
+				}
+				else{
+					RobotState.getInstance().setTurretResetSide(false);
+				}
  			}
  			RobotState.getInstance().setTurretState(RobotState.TurretState.RESET_TURRET);
  		}
@@ -98,6 +116,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 					TurretSubsystem.getInstance().getMotor().enableForwardSoftLimit(true);
 					TurretSubsystem.getInstance().getMotor().enableReverseSoftLimit(true);
 					TurretSubsystem.getInstance().setMotorPower(0);
+		    		RobotState.getInstance().setHasTurretReset(true);
 					RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
 				}
 				break;
@@ -160,7 +179,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 					}
 				}
 				else{
-					if(cameraOffset != 503 && (Math.abs(cameraOffset) >= Constants.CAMERA_TOLERANCE)){
+					if(cameraOffset != 503 && (Math.abs(cameraOffset) >= Robot.bot.TURRET_TOLERANCE)){
 						RobotState.getInstance().setTurretState(RobotState.TurretState.TARGET_FOUND);
 						RobotState.getInstance().setTurretIsLocked(false);
 						RobotState.getInstance().setTurretHint(false);
@@ -215,7 +234,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 		SmartDashboard.putNumber("heartbeat update time", heartbeatUpdateTime);
 		if (heartbeatUpdateTime >= 2.0){
 			table.putNumber("Degrees", 0.0);
-			RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
 			return false;
 		}
 		else{

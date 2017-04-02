@@ -32,18 +32,23 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final int climberSpark1Port = 1;
 	public final int climberSpark2Port = 2;
 	public final int leftUltrasonicPort = 1;     //was 1
-	public final int rightUltrasonicPort = 0;    // was 2 
-	
+	public final int rightUltrasonicPort = 0;    // was 2
+	public final int ultrasonicDIOPort = 0;
+	public final int gearIRPort = 3;	
+	public final int gearLEDPort = 7;
+	public final boolean hasLowGoalLight = true;
+	public final int lowGoalLightPort = 6;
 	
 	private final double TURRET_DIAMETER = 13.0;
 	public final double TURRET_ROTATIONS_IN_RANGE = 12.203857421875;
-	public final double TURRET_TOLERANCE = 1.0;
+	public final double TURRET_TOLERANCE = 0.75;
 	public final double TURRET_TEETH_BETWEEN_LIMIT_SWITCHES = 8.5;
 	public final double TURRET_TOTAL_TEETH = 156.0;
 	public final double TURRET_DEGREES_BETWEEN_LIMIT_SWITCHES = TURRET_TEETH_BETWEEN_LIMIT_SWITCHES/TURRET_TOTAL_TEETH * 360;
 	public final double TURRET_DEGREES_IN_RANGE = 360 - TURRET_DEGREES_BETWEEN_LIMIT_SWITCHES;
 	public final double TURRET_DEGREES_PER_ROTATION = TURRET_DEGREES_IN_RANGE/TURRET_ROTATIONS_IN_RANGE;
-	
+	public final double TURRET_CYCLE_TIME = .005; //.005 seconds
+
 	public final double REVERSE_UPPER_INTAKE = 1.0;
 	
 	public final double WHEEL_DIAMETER = 4.0;
@@ -68,16 +73,15 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final boolean REVERSE_LEFT_OUTPUT = false;
 	public final boolean REVERSE_RIGHT_OUTPUT = true;
 	
-	public final double SHOOT_P = 0.7; //0.1 //0.7
+	public final double SHOOT_P = 1.8; //0.7
 	public final double SHOOT_I = 0.0; //0.0
-	public final double SHOOT_D = 100.0; //0.005
+	public final double SHOOT_D = 90.0; //100.0
 	public final double SHOOT_F = 0.0188;
 	public final double SHOOT_TOLERANCE = 50.0;
 	
-	public final double TURRET_CYCLE_TIME = .01; //.005 seconds
-	
-	public final double minAutonDriveTurnPower = 0.03; //0.05
-	public final double maxAutonDriveTurnPower = 0.07; //0.1
+	public final double minAutonDriveTurnPower = 0.05; //0.05
+	public final double maxAutonDriveTurnPower = 0.09; //0.1
+	public final double ULTRASONIC_CONTROL_P = 140.0;
 	public final double AUTON_DRIVE_P = 50;
 	
 	public final double DEFLECTOR_P = .035;
@@ -96,16 +100,14 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public double GYRO_TOLERANCE = 1.0;
 	
 	public final double DISTANCE_BETWEEN_ULTRASONICS = 13.7;
-	public final double LEFT_ULTRASONIC_VOLTS_PER_INCH = 0.00950404;   //was .01064453016
-	public final double RIGHT_ULTRASONIC_VOLTS_PER_INCH = 0.01035156144;
+	public final double LEFT_ULTRASONIC_VOLTS_PER_INCH = 0.229492164 / 25; 
+	public final double RIGHT_ULTRASONIC_VOLTS_PER_INCH = 0.218505837 / 25;
 	
 	public final double REVERSE_INDEXER = -1.0;
 	
 	public double TURRET_P = 0.38;
 	public double TURRET_I = 0.0;
-	public double TURRET_D = 5.0;
-	public final boolean hasLowGoalLight = true;
-	public final int lowGoalLightPort = 6;	
+	public double TURRET_D = 5.0;	
 	
 	@Override
 	public void initialize(){
@@ -124,8 +126,18 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 		return true;
 	}
 	
+	@Override
+	public boolean hasGearLED(){
+		return true;
+	}
+	
 	public boolean hasDriveCamera(){
 		return false;
+	}
+	
+	@Override
+	public boolean hasGearIR(){
+		return true;
 	}
 	
 	@Override 

@@ -1,17 +1,16 @@
 package org.usfirst.frc.team503.auton;
 
-import org.usfirst.frc.team503.commands.CloseGearPlacerCommand;
-import org.usfirst.frc.team503.commands.OpenGearPlacerCommand;
+import org.usfirst.frc.team503.commands.DriveStraightDistanceCommand;
+import org.usfirst.frc.team503.commands.PlaceGearCommand;
+import org.usfirst.frc.team503.commands.RaiseGearPlacer;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
-import org.usfirst.frc.team503.motionProfile.RunMotionProfileCommand;
 import org.usfirst.frc.team503.robot.RobotState;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class CenterPegCenterStart extends CommandGroup {
+public class CenterPegCenterStartBlue extends CommandGroup {
 
-    public CenterPegCenterStart(boolean shoot) {
+    public CenterPegCenterStartBlue(boolean shoot) {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -38,13 +37,13 @@ public class CenterPegCenterStart extends CommandGroup {
     			{5,13.5}
     	};
     	
-		addSequential(new CloseGearPlacerCommand());
-		addSequential(new RunMotionProfileCommand(centerPinCenterStart, 2, 1, true));
+    	addParallel(new RaiseGearPlacer());    	
+		addSequential(new DriveStraightDistanceCommand(48,3.0,true));
 		addSequential(new AutonDriveCommand());
-		addSequential(new OpenGearPlacerCommand());
+		addSequential(new PlaceGearCommand());
 		if(shoot){
-			addSequential(new RunMotionProfileCommand(backUpFromCenterPin, 2, 1, false));
-			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.CenterPeg); 
+			addSequential(new DriveStraightDistanceCommand(48,3.0,true));
+			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.CenterPegBlue); 
 			addSequential(new ShootSequenceCommand());
 		}
     }
