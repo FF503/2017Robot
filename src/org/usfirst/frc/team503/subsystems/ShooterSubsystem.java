@@ -64,6 +64,10 @@ public class ShooterSubsystem extends Subsystem {
 		return shooterMotor.getOutputCurrent();
 	}
 	
+	public double getVoltage(){
+		return shooterMotor.getOutputVoltage();
+	}
+	
 	public double getError(){
 		return getSetpoint() - getSpeed();
 	}
@@ -76,6 +80,7 @@ public class ShooterSubsystem extends Subsystem {
 		SmartDashboard.putNumber("Shooter RPM", ShooterSubsystem.getInstance().getSpeed());
 		SmartDashboard.putNumber("Shooter position", ShooterSubsystem.getInstance().getPosition());
 		SmartDashboard.putNumber("Shooter Current", ShooterSubsystem.getInstance().getCurrent());
+		SmartDashboard.putNumber("Shooter voltage", getVoltage());
 		SmartDashboard.putString("Shooting preset", RobotState.getInstance().getShooterPreset().toString());
 	}
 	

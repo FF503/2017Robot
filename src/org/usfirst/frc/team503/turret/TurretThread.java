@@ -82,7 +82,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 						RobotState.getInstance().setTurretResetSide(false);
 				}
 				else if(AutonSelector.getInstance().gearPosChooser.getSelected() == AutonChoices.GearPosition.DO_NOTHING){
-					RobotState.getInstance().setTurretResetSide(true);
+					RobotState.getInstance().setTurretResetSide(false);
 				}
 				else if(AutonSelector.getInstance().gearPosChooser.getSelected() == AutonChoices.GearPosition.CENTER){
 					RobotState.getInstance().setTurretResetSide(true);

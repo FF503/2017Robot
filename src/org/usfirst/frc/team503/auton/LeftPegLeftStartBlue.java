@@ -39,14 +39,14 @@ public class LeftPegLeftStartBlue extends CommandGroup {
 		addSequential(new PlaceGearCommand());
 		if (dump){
 		//	addSequential(new RunMotionProfileCommand(dumpBinForward, 2, 1, false)); //1.5
-			addSequential(new DriveStraightDistanceCommand(66, 5.0,false));
+			addSequential(new DriveStraightDistanceCommand(41, 5.0,false));
 			addSequential(new GyroTurnCommand(30, true));
 			if(shoot){
 				RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperBlue);
 				addSequential(new ShootSequenceCommand(true));
 				addParallel(new ShootSequenceCommand(false));
 			}
-			addSequential(new DriveStraightDistanceCommand(44.4, 3.5, false));
+			addSequential(new DriveStraightDistanceCommand(51, 3.5, false));
 			addSequential(new SetReadyToFire());
 			//addSequential(new RunMotionProfileCommand(hitBin, 2, 1, false));	//1
 		}
