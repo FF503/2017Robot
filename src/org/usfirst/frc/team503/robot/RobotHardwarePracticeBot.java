@@ -137,7 +137,7 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	
 	@Override
 	public boolean hasGearIR(){
-		return false;
+		return true;
 	}
 	
 	@Override 
