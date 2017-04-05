@@ -3,6 +3,7 @@ package org.usfirst.frc.team503.commands;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 import org.usfirst.frc.team503.subsystems.GyroSubsystem;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -11,10 +12,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class GyroTurnCommand extends Command {
 	NetworkTable table;
 	double angle;
+	double startTime, endTime;
     public GyroTurnCommand(double angle) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);   	
     	this.angle = angle;
+    	
     }
     public GyroTurnCommand(double angle, boolean relativeToCamera){
     	table = NetworkTable.getTable("LG_Camera");
@@ -41,6 +44,7 @@ public class GyroTurnCommand extends Command {
     	GyroSubsystem.getInstance().resetGyro();
     	SmartDashboard.putBoolean("turn on target", false);
 	    GyroSubsystem.getInstance().setSetpoint(angle);
+	    startTime = Timer.getFPGATimestamp();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -58,6 +62,8 @@ public class GyroTurnCommand extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	DrivetrainSubsystem.getInstance().tankDrive(0, 0, false);
+    	endTime = Timer.getFPGATimestamp();
+    	SmartDashboard.putNumber("gyro PID runtime", endTime - startTime);
     }
 
     // Called when another command which requires one or more of the same

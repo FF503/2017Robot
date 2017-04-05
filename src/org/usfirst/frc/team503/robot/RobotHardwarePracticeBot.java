@@ -34,7 +34,7 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final int leftUltrasonicPort = 1;     //was 1
 	public final int rightUltrasonicPort = 0;    // was 2
 	public final int ultrasonicDIOPort = 0;
-	public final int gearIRPort = 3;	
+	public final int gearIRPort = 4;	
 	public final int gearLEDPort = 7;
 	public final boolean hasLowGoalLight = true;
 	public final int lowGoalLightPort = 6;
