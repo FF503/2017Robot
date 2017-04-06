@@ -89,7 +89,7 @@ public class DrivetrainSubsystem extends Subsystem{
    }
  
    public double getAvgEncCounts() {
-	   return (rightMaster.getEncPosition() + -leftMaster.getEncPosition()) / 2.0;
+	   return (-rightMaster.getEncPosition() + leftMaster.getEncPosition()) / 2.0;	//right neg for comp, left neg for practice
    }
    
    public double getAvgEncRotations(){
@@ -268,14 +268,14 @@ public class DrivetrainSubsystem extends Subsystem{
 	}
    
    public void sendDashboardData(){  		  	   	
-		SmartDashboard.putNumber("Talon right velocity", rightMaster.getEncVelocity());
-		SmartDashboard.putNumber("Talon left velocity", -leftMaster.getEncVelocity());
-		SmartDashboard.putNumber("Talon left Position", -leftMaster.getEncPosition());
+		SmartDashboard.putNumber("Talon right velocity", -rightMaster.getEncVelocity());//right neg for comp, left neg for practice
+		SmartDashboard.putNumber("Talon left velocity", leftMaster.getEncVelocity());
+		SmartDashboard.putNumber("Talon left Position", leftMaster.getEncPosition());
 		SmartDashboard.putNumber("Average talon pos", getAvgEncCounts());
 		SmartDashboard.putNumber("Average talon rotations", getAvgEncRotations());
-		SmartDashboard.putNumber("Talon left rpm", -leftMaster.getSpeed());
-		SmartDashboard.putNumber("Talon right Position", rightMaster.getEncPosition());
-		SmartDashboard.putNumber("Talon right rpm", rightMaster.getSpeed());
+		SmartDashboard.putNumber("Talon left rpm", leftMaster.getSpeed());
+		SmartDashboard.putNumber("Talon right Position", -rightMaster.getEncPosition());
+		SmartDashboard.putNumber("Talon right rpm", -rightMaster.getSpeed());
 		SmartDashboard.putNumber("Talon left rotations", leftMaster.getPosition());
 		SmartDashboard.putNumber("Talon right rotations", rightMaster.getPosition());
 		SmartDashboard.putBoolean("Motion profile is finished", profileHasFinished);

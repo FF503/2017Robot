@@ -83,6 +83,7 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final double maxAutonDriveTurnPower = 0.09; //0.1
 	public final double ULTRASONIC_CONTROL_P = 140.0;
 	public final double AUTON_DRIVE_P = 50;
+	public final double DRIVE_COEF = 1.0;
 	
 	public final double DEFLECTOR_P = .035;
 	public final double DEFLECTOR_I = 0.00004;

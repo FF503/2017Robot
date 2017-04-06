@@ -5,6 +5,7 @@ import org.usfirst.frc.team503.auton.AutonSelector;
 import org.usfirst.frc.team503.auton.TestAuton;
 import org.usfirst.frc.team503.commands.ArcadeDriveCommand;
 import org.usfirst.frc.team503.commands.TeleopDeflectorCommand;
+import org.usfirst.frc.team503.commands.TeleopTurretCommand;
 import org.usfirst.frc.team503.subsystems.DeflectorSubsystem;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 import org.usfirst.frc.team503.subsystems.GearIntakeSubsystem;
@@ -34,7 +35,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static RobotHardwarePracticeBot bot = null;
+	public static RobotHardwareCompBot bot = null;
 
 	private Command autonCommand = null; 
 	private NetworkTable table;
@@ -47,7 +48,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
         NetworkTable.globalDeleteAll(); //Removes unused garbage from SmartDashboard
         NetworkTable.initialize();      //Initialize Network Tables
-        bot = new RobotHardwarePracticeBot();
+        bot = new RobotHardwareCompBot();
 		bot.initialize();
 		bot.logSmartDashboard();         /*put name of selected bot on smartdashboard */
 		OI.initialize();
@@ -76,7 +77,7 @@ public class Robot extends IterativeRobot {
 		IndexerSubsystem.getInstance().setMotorPower(0.0);
 		DeflectorSubsystem.getInstance().setMotorPower(0.0);
 		DrivetrainSubsystem.getInstance().tankDrive(0.0,0.0,false);
-		TurretSubsystem.getInstance().getThread().stopTurret();
+		//TurretSubsystem.getInstance().getThread().stopTurret();
 		RobotState.getInstance().setState(RobotState.State.DISABLED);
 	}
 
@@ -100,7 +101,6 @@ public class Robot extends IterativeRobot {
 		UltrasonicSubsystem.getInstance().enableUltrasonicSensors();
 		RobotState.getInstance().setState(RobotState.State.AUTON);
 		TurretSubsystem.getInstance().getThread().startTurret();
-		System.out.println("coming out of start turret");
 		AutonSelector.getInstance().startAuton();
 		//(new TestAuton()).start();
 	}
@@ -144,7 +144,7 @@ public class Robot extends IterativeRobot {
     	(new ArcadeDriveCommand()).start();
     	if (!Robot.bot.getName().equals("ProgrammingBot")){
     		TurretSubsystem.getInstance().getThread().startTurret();
-    		System.out.println("coming out of start turret teleop" + TurretSubsystem.getInstance().getThread().getStartTurret());
+//    		System.out.println("coming out of start turret teleop" + TurretSubsystem.getInstance().getThread().getStartTurret());
     		//(new TeleopTurretCommand()).start();
         	(new TeleopDeflectorCommand()).start();
         	

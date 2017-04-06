@@ -24,7 +24,7 @@ public class DriveStraightDistanceCommand extends Command {
     public DriveStraightDistanceCommand(double inches, double timeout, boolean reverse) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	this.inches = inches;
+    	this.inches = inches * Robot.bot.DRIVE_COEF;
     	this.timeout = timeout;
     	this.reverse = reverse;
     }

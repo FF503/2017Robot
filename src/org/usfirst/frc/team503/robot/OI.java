@@ -60,6 +60,7 @@ public class OI {
 	private static JoystickButton shiftToLowGearButton = new JoystickButton(driverJoystick,5);
 	private static JoystickButton shiftToHighGearButton = new JoystickButton(driverJoystick,6);
 	private static JoystickButton reverseDriveTrainButton = new JoystickButton(driverJoystick, 7);
+	
 	private static JoystickButton placeGearButton = new JoystickButton(driverJoystick, 8);
 	private static JoystickButton turnPIDButton = new JoystickButton(driverJoystick, 8);
 	
@@ -89,7 +90,6 @@ public class OI {
 		shiftToHighGearButton.whenPressed(new ShiftToHighGear());
 		//backGearButton.whenPressed(new ToggleGearPlacerBack(false));
 		//frontGearButton.whenPressed(new ToggleGearPlacerFront(false));
-		//placeGearButton.whenPressed(new );
 	//	openGearMechButton.whenPressed(new OpenGearPlacerCommand());
 		//closeGearMechButton.whenPressed(new CloseGearPlacerCommand());
 		raiseGearMechButton.whenPressed(new RaiseGearPlacer());
@@ -104,7 +104,7 @@ public class OI {
 		climbFasterButton.whenPressed(new ClimbFasterCommand());
 		//turnPIDButton.whenPressed(new GyroTurnCommand(60));
 		//goToDeflectorButton.whenPressed(new GoToDeflectorCommand(30.0));
-		//goToTurretPosition.whenPressed(new TurnTurretCommand(15.0, false));	
+		//goToTurretPosition.whenPressed(new TurnTurretCommand(50.0, false));	
 	}
 	
 	public static boolean getIncrementPreset(){

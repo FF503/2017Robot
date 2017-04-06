@@ -32,14 +32,6 @@ public class TestAuton extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new DriveStraightDistanceCommand(24, 1.5, false));
-		addSequential(new GyroTurnCommand(-60, true));
-    	addSequential(new DriveStraightDistanceCommand(60, 5.0,false));
-    	addSequential(new GyroTurnCommand(30, false));
-		RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperRed);
-		addSequential(new ShootSequenceCommand(true));
-		addParallel(new ShootSequenceCommand(false));
-		addSequential(new DriveStraightDistanceCommand(10, 3.5, false));
-		addSequential(new SetReadyToFire());
+    	addSequential(new DriveStraightDistanceCommand(24 * 0.9, 1.5, true));
    }
 }
