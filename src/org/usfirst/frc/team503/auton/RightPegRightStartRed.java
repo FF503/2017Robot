@@ -33,7 +33,7 @@ public class RightPegRightStartRed extends CommandGroup {
     	addParallel(new RaiseGearPlacer());    	
 		//addSequential(new RunMotionProfileCommand(leftPinLeftStart, 2, 1, true));
     	addSequential(new DriveStraightDistanceCommand(58.5, 3.0, true));
-		addSequential(new GyroTurnCommand(-60));
+		addSequential(new GyroTurnCommand(-55));
 		
 		addSequential(new DriveStraightDistanceCommand(36.0, 2.0, true));
 		addSequential(new AutonDriveCommand2());

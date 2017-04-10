@@ -41,14 +41,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  	}
  	
  	public void run(){
- 		//System.out.println("in run" + startTurret);
  		if(startTurret){
- 			//System.out.println("before turret control");
  			turretControl();
- 		//	System.out.println("after turret control");
- 		}
- 		
- 		
+ 		}	
  	}
  	
  	public synchronized boolean getStartTurret(){
@@ -58,7 +53,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  		startTurret = val;
  	}
  	public synchronized void startTurret(){
- 		System.out.println("trying to start");
  		RobotState.getInstance().setTurretStatus(true);
  		startTime = Timer.getFPGATimestamp();
  		onTargetStartTime = startTime;
@@ -156,6 +150,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 			case TARGET_FOUND:
 				//delay to account for pi lag
 				Timer.delay(.4);
+				isPiAlive();
 				cameraOffset = getCameraAngle();
 				if(cameraOffset != 0.0){
 					discardImage = true;
@@ -207,7 +202,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 				}
 				break;
 			case TAKING_HINT:
-				System.out.println("got to taking hint state");
 				TurretSubsystem.getInstance().setSetpoint(RobotState.getInstance().getShooterPreset().turretAngle);
 				PIDStartTime = Timer.getFPGATimestamp() - 1.0;  //workaround to give us an extra 0.5 seconds to achieve target
 				RobotState.getInstance().setTurretState(RobotState.TurretState.RUNNING_PID);

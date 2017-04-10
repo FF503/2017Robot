@@ -26,6 +26,8 @@ public class AutomaticGearIntakeCommand extends CommandGroup {
         // arm.
     	addSequential(new LowerGearPlacer());
     	addSequential(new GearIntakeCommand());
-    	addSequential(new RaiseGearPlacer());
+    //	addSequential(new WaitCommand(0.1));
+    	addParallel(new RaiseGearPlacer());
+    	addSequential(new TurnGearInLightOn());
     }
 }

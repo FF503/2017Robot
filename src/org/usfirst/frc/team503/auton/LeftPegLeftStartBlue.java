@@ -32,7 +32,7 @@ public class LeftPegLeftStartBlue extends CommandGroup {
  
     	addParallel(new RaiseGearPlacer());    	
 		//addSequential(new RunMotionProfileCommand(leftPinLeftStart, 2, 1, true));
-    	addSequential(new DriveStraightDistanceCommand(59.4, 3.0, true));
+    	addSequential(new DriveStraightDistanceCommand(55, 2.0, true));//59.5
 		addSequential(new GyroTurnCommand(60));
 		addSequential(new DriveStraightDistanceCommand(36.0, 2.0, true));
 		addSequential(new AutonDriveCommand2());

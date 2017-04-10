@@ -42,7 +42,7 @@ public class DumpBinRed extends CommandGroup {
     	};
     	
     	addParallel(new RaiseGearPlacer());    	
-		addSequential(new DriveStraightDistanceCommand(110, 3.0,true));//115
+		addSequential(new DriveStraightDistanceCommand(75, 3.0,true));//128//110
 		addSequential(new GyroTurnCommand(-90));
 		if(shoot){
 			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperRed);
@@ -50,7 +50,7 @@ public class DumpBinRed extends CommandGroup {
 			addParallel(new ShootSequenceCommand(false));
 			
 		}
-		addSequential(new DriveStraightDistanceCommand(36,2.5,false));
+		addSequential(new DriveStraightDistanceCommand(42,2.5,false));//36
 		addSequential(new SetReadyToFire());
 		
 		

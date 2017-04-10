@@ -26,7 +26,6 @@ public class UltrasonicSubsystem extends Subsystem {
 			rightUltrasonic = new UltrasonicSensor(Robot.bot.rightUltrasonicPort);
 			ultrasonicHeartbeat = new DigitalOutput(Robot.bot.ultrasonicDIOPort);
 			values = new double[9];
-			//ultra = new Ultrasonic(6,6);
 	}
 	private static UltrasonicSubsystem instance = new UltrasonicSubsystem();                                        
     
@@ -54,8 +53,7 @@ public class UltrasonicSubsystem extends Subsystem {
 			values[i] = (getRightUltrasonicDistance()+getLeftUltrasonicDistance())/2.0; 
 		}
 		Arrays.sort(values);
-		System.out.println();
-		return values[(values.length+1)/2];
+		return values[values.length/2];
 	}
 	
 	public void enableUltrasonicSensors(){

@@ -76,7 +76,6 @@ public class AutonDriveCommand extends Command {
     }	
 
     protected void end(){
-    	System.out.println("finished auton drive command");
     	DrivetrainSubsystem.getInstance().tankDrive(0, 0, false);
     }
     

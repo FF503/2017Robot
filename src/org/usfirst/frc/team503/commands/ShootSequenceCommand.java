@@ -64,16 +64,25 @@ public class ShootSequenceCommand extends Command {
 			if(TurretSubsystem.getInstance().getThread().getPiAlive() ){
 				if(RobotState.getInstance().getState() == RobotState.State.AUTON){
 					if(RobotState.getInstance().getTurretIsLocked() && RobotState.getInstance().getReadyToFire()){
+						DeflectorSubsystem.getInstance().setMotorPower(0.0);
 						shoot();
 					}
 				}
 				else{
+					DeflectorSubsystem.getInstance().setMotorPower(0.0);
 					shoot();
 				}
 			}
 			else {
+				DeflectorSubsystem.getInstance().setMotorPower(0.0);
 				shoot();
 			}
+    	}
+		if (OI.getDPADUp()){
+    		DeflectorSubsystem.getInstance().setSetpoint(DeflectorSubsystem.getInstance().getAngle() + 2.0);
+    	}
+    	else if (OI.getDPADDown()){
+    		DeflectorSubsystem.getInstance().setSetpoint(DeflectorSubsystem.getInstance().getAngle() - 2.0);
     	}
     	currTime = Timer.getFPGATimestamp();
     }

@@ -24,12 +24,12 @@ public class ReverseGearIntakeCommand extends Command {
     	else{
     		GearIntakeSubsystem.getInstance().setGearIntakeMotorPower(0.0);
     	}
-    	if(GearIntakeSubsystem.getInstance().isGearIn()){
+    	/*if(GearIntakeSubsystem.getInstance().isGearIn()){
     		GearIntakeSubsystem.getInstance().setGearLED(true);
     	}
     	else{
     		GearIntakeSubsystem.getInstance().setGearLED(false);	
-    	}
+    	}*/
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -40,7 +40,6 @@ public class GyroTurnCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	System.out.println("in gyro");
     	GyroSubsystem.getInstance().resetGyro();
     	SmartDashboard.putBoolean("turn on target", false);
 	    GyroSubsystem.getInstance().setSetpoint(angle);
@@ -49,7 +48,7 @@ public class GyroTurnCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	DrivetrainSubsystem.getInstance().tankDrive(-GyroSubsystem.getInstance().getTurnToAngleRate() , GyroSubsystem.getInstance().getTurnToAngleRate() , false);
+		DrivetrainSubsystem.getInstance().tankDrive(-GyroSubsystem.getInstance().getTurnToAngleRate() , GyroSubsystem.getInstance().getTurnToAngleRate() , false);
     	SmartDashboard.putNumber("Gyro PID RotatetoAngle=", GyroSubsystem.getInstance().getTurnToAngleRate());
     }
 
@@ -64,6 +63,7 @@ public class GyroTurnCommand extends Command {
     	DrivetrainSubsystem.getInstance().tankDrive(0, 0, false);
     	endTime = Timer.getFPGATimestamp();
     	SmartDashboard.putNumber("gyro PID runtime", endTime - startTime);
+    	SmartDashboard.putNumber("Gyro End Angle", GyroSubsystem.gyro.getYaw());
     }
 
     // Called when another command which requires one or more of the same

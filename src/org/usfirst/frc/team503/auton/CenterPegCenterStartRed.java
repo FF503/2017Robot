@@ -52,5 +52,8 @@ public class CenterPegCenterStartRed extends CommandGroup {
 			addParallel(new ShootSequenceCommand(false));
 			addSequential(new SetReadyToFire());
 		}
+		else{
+			addSequential(new DriveStraightDistanceCommand(12,2.0,false));
+		}
     }
 }

@@ -2,10 +2,9 @@
 package org.usfirst.frc.team503.robot;
 
 import org.usfirst.frc.team503.auton.AutonSelector;
-import org.usfirst.frc.team503.auton.TestAuton;
 import org.usfirst.frc.team503.commands.ArcadeDriveCommand;
+import org.usfirst.frc.team503.commands.DeflectorOverrideCommand;
 import org.usfirst.frc.team503.commands.TeleopDeflectorCommand;
-import org.usfirst.frc.team503.commands.TeleopTurretCommand;
 import org.usfirst.frc.team503.subsystems.DeflectorSubsystem;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
 import org.usfirst.frc.team503.subsystems.GearIntakeSubsystem;
@@ -41,6 +40,7 @@ public class Robot extends IterativeRobot {
 	private NetworkTable table;
 	private Solenoid lightSolenoid; 
 	private double startTime;
+
 	/**
 	 * RobotInit - Fires when robot is powered-up 
 	 */
@@ -77,7 +77,7 @@ public class Robot extends IterativeRobot {
 		IndexerSubsystem.getInstance().setMotorPower(0.0);
 		DeflectorSubsystem.getInstance().setMotorPower(0.0);
 		DrivetrainSubsystem.getInstance().tankDrive(0.0,0.0,false);
-		//TurretSubsystem.getInstance().getThread().stopTurret();
+		TurretSubsystem.getInstance().getThread().stopTurret();
 		RobotState.getInstance().setState(RobotState.State.DISABLED);
 	}
 
@@ -102,6 +102,7 @@ public class Robot extends IterativeRobot {
 		RobotState.getInstance().setState(RobotState.State.AUTON);
 		TurretSubsystem.getInstance().getThread().startTurret();
 		AutonSelector.getInstance().startAuton();
+		
 		//(new TestAuton()).start();
 	}
 
@@ -146,8 +147,8 @@ public class Robot extends IterativeRobot {
     		TurretSubsystem.getInstance().getThread().startTurret();
 //    		System.out.println("coming out of start turret teleop" + TurretSubsystem.getInstance().getThread().getStartTurret());
     		//(new TeleopTurretCommand()).start();
-        	(new TeleopDeflectorCommand()).start();
-        	
+        	//(new TeleopDeflectorCommand()).start();
+        	//(new DeflectorOverrideCommand()).start();
     	}
     	startTime = Timer.getFPGATimestamp();
 	}
@@ -167,6 +168,7 @@ public class Robot extends IterativeRobot {
 			TurretSubsystem.getInstance().sendDashboardData();
 			UltrasonicSubsystem.getInstance().sendDashboardData();
 			GyroSubsystem.getInstance().sendDashboardData();
+			SmartDashboard.putBoolean("Climber is Running",RobotState.getInstance().getClimberStatus());
 			DrivetrainSubsystem.getInstance().sendDashboardData();
 			GearIntakeSubsystem.getInstance().sendDashboardData();
 		}

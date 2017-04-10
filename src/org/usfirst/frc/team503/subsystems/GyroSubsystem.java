@@ -63,7 +63,7 @@ public class GyroSubsystem extends Subsystem implements PIDOutput{
     	
 	    turnController = new PIDController(Robot.bot.GYRO_P, Robot.bot.GYRO_I, Robot.bot.GYRO_D, gyro, this);
 	    turnController.setInputRange(-180.0,  180.0);
-	    turnController.setOutputRange(-0.6,0.6);
+	    turnController.setOutputRange(-0.8,0.8);
 	    turnController.setPercentTolerance(Robot.bot.GYRO_TOLERANCE);
 	    turnController.setContinuous(true);
     	turnController.enable();

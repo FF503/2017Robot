@@ -72,7 +72,7 @@ public class RobotState extends Subsystem {
 	}
 	
 	public enum ShootingPresets{
-		NoTracking(30.0, 4500, 503), Batter(18.0,4000,271.0), HopperRed(40, 4150, 6.0), CenterPegBlue(40.0,4450,10), CenterPegRed(40.0, 5000, 223.0099056523927), PegNearHopperBlue(38.0, 4525, 272.0), PegNearHopperRed(37.5, 4525,301), FarPegBlue(35.0,4500,503), HopperBlue(32.0,4350,198.0);
+		NoTracking(30.0, 4500, 503), Batter(13.0,3950,285.0), HopperRed(26, 4425, 6.0), CenterPegBlue(29.0,4700, 0.0), CenterPegRed(33.0, 5100, 223.0099056523927), PegNearHopperBlue(28, 4700, 272.0), PegNearHopperRed(30.5, 4550,301), FarPegBlue(35.0,4500,503), HopperBlue(22.0,4200,198.0);
 		//pegnearhopperblue 272, 34, 4950
 		//hopperred 34, 4400
 		

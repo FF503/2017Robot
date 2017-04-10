@@ -4,6 +4,8 @@ import org.usfirst.frc.team503.commands.AutomaticGearIntakeCommand;
 import org.usfirst.frc.team503.commands.ChangeShooterPresetCommand;
 import org.usfirst.frc.team503.commands.ClimbCommand;
 import org.usfirst.frc.team503.commands.ClimbFasterCommand;
+import org.usfirst.frc.team503.commands.GoToDeflectorCommand;
+import org.usfirst.frc.team503.commands.GyroTurnCommand;
 import org.usfirst.frc.team503.commands.LowerGearPlacer;
 import org.usfirst.frc.team503.commands.RaiseGearPlacer;
 import org.usfirst.frc.team503.commands.ResetAutonCommand;
@@ -79,7 +81,7 @@ public class OI {
 	private static JoystickButton incrementPreset = new JoystickButton(operatorJoystick, 8);
 	
 	private static JoystickButton goToTurretPosition = new JoystickButton(operatorJoystick, 7);
-	private static JoystickButton goToDeflectorButton = new JoystickButton(operatorJoystick, 8);
+	private static JoystickButton goToDeflectorButton = new JoystickButton(operatorJoystick, 7);
 
 	public static void initialize(){
 		//	shootRPMButton.whenPressed(new ToggleShootRPMCommand());
@@ -102,7 +104,7 @@ public class OI {
 		climbButton.whenPressed(new ClimbCommand());
 		reverseDriveTrainButton.whenPressed(new ReverseDriveTrainCommand());
 		climbFasterButton.whenPressed(new ClimbFasterCommand());
-		//turnPIDButton.whenPressed(new GyroTurnCommand(60));
+		//turnPIDButton.whenPressed(new GyroTurnCommand(90));
 		//goToDeflectorButton.whenPressed(new GoToDeflectorCommand(30.0));
 		//goToTurretPosition.whenPressed(new TurnTurretCommand(50.0, false));	
 	}

@@ -34,7 +34,6 @@ public class DrivetrainSubsystem extends Subsystem{
 	private double enc; 
   
    public DrivetrainSubsystem() {
-	   	System.out.println("constructing drive train");
 	   	leftMaster = new CANTalon(Robot.bot.leftMasterID);
 		leftSlave = new CANTalon(Robot.bot.leftSlaveID);
 		rightMaster = new CANTalon(Robot.bot.rightMasterID);
@@ -183,14 +182,18 @@ public class DrivetrainSubsystem extends Subsystem{
 		return instance;
 	}
 	
-	private void setMotorOutputs(double leftSpeed, double rightSpeed, boolean reverse){		
+	public void setMotorOutputs(double leftSpeed, double rightSpeed, boolean reverse){		
 		if(reverse){
 			leftMaster.set(leftSpeed);
 			rightMaster.set(-rightSpeed);
+			SmartDashboard.putNumber("Left motor power", leftSpeed);
+			SmartDashboard.putNumber("Right motor power", -rightSpeed);
 		}
 		else{
 			leftMaster.set(-leftSpeed); 
 			rightMaster.set(rightSpeed); 
+			SmartDashboard.putNumber("Left motor power", -leftSpeed);
+			SmartDashboard.putNumber("Right motor power", rightSpeed);
 		}
 	}
 	

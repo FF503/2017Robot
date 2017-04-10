@@ -42,6 +42,7 @@ public class CenterPegCenterStartBlue extends CommandGroup {
 		addSequential(new DriveStraightDistanceCommand(48,3.0,true));
 		addSequential(new AutonDriveCommand2());
 		addSequential(new PlaceGearCommand());
+		
 		if(shoot){
 			addSequential(new DriveStraightDistanceCommand(48,3.0,false));
 			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.CenterPegBlue); 
@@ -49,5 +50,9 @@ public class CenterPegCenterStartBlue extends CommandGroup {
 			addParallel(new ShootSequenceCommand(false));
 			addSequential(new SetReadyToFire());
 		}
+		else{
+			addSequential(new DriveStraightDistanceCommand(12,2.0,false));
+		}
+			
     }
 }
