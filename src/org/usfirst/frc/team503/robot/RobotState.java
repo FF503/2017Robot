@@ -27,6 +27,7 @@ public class RobotState extends Subsystem {
 	private boolean turretIsLocked;
 	private State robotState;
 	private TurretState turretState;
+	
 	private ShootingPresets shootingPreset;
 	private double turretAngle;
 	private boolean hint;
@@ -65,6 +66,26 @@ public class RobotState extends Subsystem {
 	
 	public enum State{
 		DISABLED, AUTON, TELEOP, TEST, ENABLED;
+	}
+	
+	public enum AllianceColor{
+		RED, BLUE;
+	}
+	
+	public enum Peg{
+		LEFT, RIGHT, CENTER, NONE;
+	}
+	
+	public enum DoNothingAuton{
+		DO_NOTHING, DO_SOMETHING;
+	}
+	
+	public enum DumpBin{
+		DUMP_BIN, DONT_DUMP_BIN;
+	}
+	
+	public enum Shoot{
+		SHOOT, DONT_SHOOT;
 	}
 	
 	public enum TurretState{

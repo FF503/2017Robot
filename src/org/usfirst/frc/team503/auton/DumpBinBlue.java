@@ -30,7 +30,7 @@ public class DumpBinBlue extends CommandGroup {
         // arm.
 
     	addParallel(new RaiseGearPlacer());    	
-		addSequential(new DriveStraightDistanceCommand(57,3.0,true));//81
+		addSequential(new DriveStraightDistanceCommand(57,3.0,true));//81 at livonia
 		addSequential(new GyroTurnCommand(90));
 		if(shoot){
 			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperBlue);

@@ -42,7 +42,7 @@ public class DumpBinRed extends CommandGroup {
     	};
     	
     	addParallel(new RaiseGearPlacer());    	
-		addSequential(new DriveStraightDistanceCommand(75, 3.0,true));//128//110
+		addSequential(new DriveStraightDistanceCommand(75, 3.0,true));//128 at livonia //110
 		addSequential(new GyroTurnCommand(-90));
 		if(shoot){
 			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperRed);

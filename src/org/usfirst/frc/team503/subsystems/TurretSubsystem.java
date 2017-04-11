@@ -146,6 +146,7 @@ public class TurretSubsystem extends Subsystem {
 		SmartDashboard.putNumber("Turret angle", TurretSubsystem.getInstance().getAngle());
 		SmartDashboard.putNumber("Turret error", TurretSubsystem.getInstance().getError());
 		SmartDashboard.putBoolean("Turret onTarget", isOnTarget());
+		SmartDashboard.putBoolean("Turret is locked", RobotState.getInstance().getTurretIsLocked());
 	}
 
     public void initDefaultCommand() {
