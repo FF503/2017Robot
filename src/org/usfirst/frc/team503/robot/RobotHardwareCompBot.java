@@ -25,26 +25,32 @@ public class RobotHardwareCompBot extends RobotHardware {
 		
 	public final double REVERSE_UPPER_INTAKE = -1.0;
 
-	public final double WHEEL_DIAMETER = 4.1;
+	public final double WHEEL_DIAMETER = 4.2;
 	public final double WHEEL_BASE = 32.5;
 	public final double CYCLE_TIME = 0.05;	
 	public final double INCHES_PER_ROTATION = WHEEL_DIAMETER * Math.PI;
 	public final int DRIVE_COUNTS_PER_REV = 512;
 	public final double DRIVE_PULSES_PER_REV = DRIVE_COUNTS_PER_REV * 16.0;
-	public final double INCHES_PER_COUNT = INCHES_PER_ROTATION/DRIVE_PULSES_PER_REV;	
+	public final double INCHES_PER_COUNT = 0.0015;//INCHES_PER_ROTATION/DRIVE_PULSES_PER_REV;	
 	public final double DRIVE_P = 0.00013;//0.00015;
 	public final double DRIVE_I = 0.0000000; //0.0
 	public final double DRIVE_D = 0.5;//6.5; //1.6
-	public final double POSITION_P = 0.017;//0.00015;
+//	public final double POSITION_P = 0.017;//0.00015;
+//	public final double POSITION_I = 0.0000000; //0.0
+//	public final double POSITION_D = 0.05; //0.03
+//	public final double POSITION_P = 0.017;//0.00015;
+//	public final double POSITION_I = 0.0000000; //0.0
+//	public final double POSITION_D = 0.03;//6.5; //1.6
+	public final double POSITION_P = 0.013;//0.00015;
 	public final double POSITION_I = 0.0000000; //0.0
-	public final double POSITION_D = 0.03;
+	public final double POSITION_D = 0.03;//6.5; //1.6
 	public final double LEFT_DRIVE_F  = 0.1208; 
 	public final double RIGHT_DRIVE_F = 0.1229;
 	
 	public final double minAutonDriveTurnPower = 0.03; //0.05
 	public final double maxAutonDriveTurnPower = 0.07; //0.1
 	public final double AUTON_DRIVE_P = 50;
-	public final double DRIVE_COEF = 0.92;
+	public final double DRIVE_COEF = 1.0;//0.92;
 	
 	private final double TURRET_DIAMETER = 13.0;
 	public double TURRET_ROTATIONS_IN_RANGE = 12.159912109375;
@@ -62,17 +68,17 @@ public class RobotHardwareCompBot extends RobotHardware {
 	
 	public final double REVERSE_INDEXER = 1.0;
 	
-	public final double SHOOT_P = 0.7; //0.1
+	public final double SHOOT_P = 5.0; //0.7
 	public final double SHOOT_I = 0.0; //0.0
-	public final double SHOOT_D = 100.0; //0.005
+	public final double SHOOT_D = 150.0; //100.0
 	public final double SHOOT_F = 0.0188;
 	public final double SHOOT_TOLERANCE = 50.0;
 	
 	public final double TURRET_CYCLE_TIME = .005; //seconds
 	
-	public double GYRO_P = 0.033;     //was 0.066
+	public double GYRO_P = 0.035;     //was 0.066
 	public double GYRO_I = 0.0;		//was 0.0
-	public double GYRO_D = 0.06; //.06	
+	public double GYRO_D = 0.08; //.06	
 	public double GYRO_TOLERANCE = 1.0;
 		
 	public final double DEFLECTOR_P = .25;

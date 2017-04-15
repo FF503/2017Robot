@@ -42,7 +42,7 @@ public class CenterPegCenterStartRed extends CommandGroup {
     	};
     	
     	addParallel(new RaiseGearPlacer());    	
-		addSequential(new DriveStraightDistanceCommand(43,3.0,true));
+		addSequential(new DriveStraightDistanceCommand(43,2.0,true));
 		addSequential(new AutonDriveCommand2());
 		addSequential(new PlaceGearCommand());
 		if(shoot){
@@ -53,7 +53,7 @@ public class CenterPegCenterStartRed extends CommandGroup {
 			addSequential(new SetReadyToFire());
 		}
 		else{
-			addSequential(new DriveStraightDistanceCommand(12,2.0,false));
+			addSequential(new DriveStraightDistanceCommand(12,1.0,false));
 		}
     }
 }

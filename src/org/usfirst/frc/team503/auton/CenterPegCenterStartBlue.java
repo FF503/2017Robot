@@ -39,19 +39,19 @@ public class CenterPegCenterStartBlue extends CommandGroup {
     	};
     	
     	addParallel(new RaiseGearPlacer());    	
-		addSequential(new DriveStraightDistanceCommand(48,3.0,true));
+		addSequential(new DriveStraightDistanceCommand(48,2.0,true));
 		addSequential(new AutonDriveCommand2());
 		addSequential(new PlaceGearCommand());
 		
 		if(shoot){
-			addSequential(new DriveStraightDistanceCommand(48,3.0,false));
+			addSequential(new DriveStraightDistanceCommand(48,2.0,false));
 			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.CenterPegBlue); 
 			addSequential(new ShootSequenceCommand(true));
 			addParallel(new ShootSequenceCommand(false));
 			addSequential(new SetReadyToFire());
 		}
 		else{
-			addSequential(new DriveStraightDistanceCommand(12,2.0,false));
+			addSequential(new DriveStraightDistanceCommand(12,1.0,false));
 		}
 			
     }

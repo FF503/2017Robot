@@ -106,7 +106,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 		//Tells pi if it wants angle values or not
 		table.putBoolean("Discard", discardImage);
 		//gets camera angle from pi
-		cameraOffset = getCameraAngle();
+		/*if (RobotState.getInstance().getState() == RobotState.State.AUTON){
+			cameraOffset = 0.0;
+		}
+		else*/{
+			cameraOffset = getCameraAngle();
+			
+		}
 		//populate smart dashboard with some useful data
 		SmartDashboard.putNumber("get camera angle", getCameraAngle());
 		SmartDashboard.putNumber("camera offset", cameraOffset);
@@ -128,7 +134,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 					TurretSubsystem.getInstance().getMotor().enableReverseSoftLimit(true);
 					TurretSubsystem.getInstance().setMotorPower(0);
 		    		RobotState.getInstance().setHasTurretReset(true);
-					RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
+					//RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
 				}
 				break;
 			//Turret is in teleop control and is looking to find a target
@@ -167,6 +173,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 		 		TurretSubsystem.getInstance().resetEncoderAtLimitSwitch();
 		 		PIDCurrTime = Timer.getFPGATimestamp();
 		 		RobotState.getInstance().setTurretIsLocked(false);
+				discardImage = true;
 		 		if ((PIDCurrTime - PIDStartTime) > 1.0){
 		 			RobotState.getInstance().setTurretState(RobotState.TurretState.ON_TARGET);
 		 			cameraOffset = 503;		 			
@@ -203,9 +210,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 				break;
 			case TAKING_HINT:
 				TurretSubsystem.getInstance().setSetpoint(RobotState.getInstance().getShooterPreset().turretAngle);
-				PIDStartTime = Timer.getFPGATimestamp() - 1.0;  //workaround to give us an extra 0.5 seconds to achieve target
+				PIDStartTime = Timer.getFPGATimestamp() + 2.0;  //workaround to give us an extra 0.5 seconds to achieve target
 				RobotState.getInstance().setTurretState(RobotState.TurretState.RUNNING_PID);
 				RobotState.getInstance().setTurretHint(true);
+				discardImage = true;
 				break;
 		}
 	}
@@ -248,6 +256,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 			table.putNumber("Degrees", 0.0);
 			return false;
 		}
+		
+		/*if (RobotState.getInstance().getState() == RobotState.State.AUTON){
+			return false;
+		}*/
 		else{
 			return true;
 		}

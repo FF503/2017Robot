@@ -2,6 +2,8 @@
 package org.usfirst.frc.team503.robot;
 
 import org.usfirst.frc.team503.auton.AutonSelector;
+import org.usfirst.frc.team503.auton.TestAuton;
+import org.usfirst.frc.team503.utils.NetworkTableCollecter;
 import org.usfirst.frc.team503.commands.ArcadeDriveCommand;
 import org.usfirst.frc.team503.commands.DeflectorOverrideCommand;
 import org.usfirst.frc.team503.commands.TeleopDeflectorCommand;
@@ -101,6 +103,8 @@ public class Robot extends IterativeRobot {
 		UltrasonicSubsystem.getInstance().enableUltrasonicSensors();
 		RobotState.getInstance().setState(RobotState.State.AUTON);
 		TurretSubsystem.getInstance().getThread().startTurret();
+		NetworkTableCollecter collecter = new NetworkTableCollecter();
+		collecter.collectNetworkTableDate();
 		AutonSelector.getInstance().startAuton();
 		
 		//(new TestAuton()).start();
@@ -169,6 +173,7 @@ public class Robot extends IterativeRobot {
 			UltrasonicSubsystem.getInstance().sendDashboardData();
 			GyroSubsystem.getInstance().sendDashboardData();
 			SmartDashboard.putBoolean("Climber is Running",RobotState.getInstance().getClimberStatus());
+			SmartDashboard.putBoolean("Gear intake is Running",RobotState.getInstance().getGearIntakeRunning());
 			DrivetrainSubsystem.getInstance().sendDashboardData();
 			GearIntakeSubsystem.getInstance().sendDashboardData();
 		}

@@ -27,6 +27,12 @@ public class RobotState extends Subsystem {
 	private boolean turretIsLocked;
 	private State robotState;
 	private TurretState turretState;
+	private AllianceColor allianceColor;
+	private Peg peg;
+	private DoNothingAuton doNothingAuton;
+	private DumpBin dumpBin;
+	private Shoot shoot;
+	
 	
 	private ShootingPresets shootingPreset;
 	private double turretAngle;
@@ -56,6 +62,13 @@ public class RobotState extends Subsystem {
 		robotState = State.DISABLED;
 		turretState = TurretState.DISABLED;
 		shootingPreset = ShootingPresets.HopperRed;
+		allianceColor = AllianceColor.BLUE;
+		peg = Peg.NONE;
+		doNothingAuton = DoNothingAuton.DO_NOTHING;
+		dumpBin = DumpBin.DONT_DUMP_BIN;
+		shoot = Shoot.DONT_SHOOT;
+		
+		
 	}	
 	
 	private static RobotState instance = new RobotState();
@@ -72,20 +85,60 @@ public class RobotState extends Subsystem {
 		RED, BLUE;
 	}
 	
+	public AllianceColor getAllianceColorOption(){
+		return allianceColor;
+	}
+	
+	public void setAllianceColorOption(AllianceColor allianceColor){
+		this.allianceColor = allianceColor;
+	}
+	
 	public enum Peg{
 		LEFT, RIGHT, CENTER, NONE;
+	}
+	
+	public Peg getPegOption(){
+		return peg;
+	}
+	
+	public void setPegOption(Peg val){
+		this.peg = val;
 	}
 	
 	public enum DoNothingAuton{
 		DO_NOTHING, DO_SOMETHING;
 	}
 	
+	public DoNothingAuton getDoNothingOption(){
+		return doNothingAuton;
+	}
+	
+	public void setDoNothingAuton(DoNothingAuton val){
+		this.doNothingAuton = val;
+	}
+	
 	public enum DumpBin{
 		DUMP_BIN, DONT_DUMP_BIN;
 	}
 	
+	public DumpBin getDumpBinOption(){
+		return dumpBin;
+	}
+	
+	public void setDumpBinOption(DumpBin val){
+		this.dumpBin = val;
+	}
+	
 	public enum Shoot{
 		SHOOT, DONT_SHOOT;
+	}
+	
+	public Shoot getShootOption(){
+		return shoot;
+	}
+	
+	public void setShootOption(Shoot val){
+		this.shoot = val;
 	}
 	
 	public enum TurretState{
@@ -93,7 +146,7 @@ public class RobotState extends Subsystem {
 	}
 	
 	public enum ShootingPresets{
-		NoTracking(30.0, 4500, 503), Batter(13.0,3950,285.0), HopperRed(26, 4425, 6.0), CenterPegBlue(29.0,4700, 0.0), CenterPegRed(33.0, 5100, 223.0099056523927), PegNearHopperBlue(28, 4700, 272.0), PegNearHopperRed(30.5, 4550,301), FarPegBlue(35.0,4500,503), HopperBlue(22.0,4200,198.0);
+		NoTracking(30.0, 4500, 503), Batter(13.0,3950,285.0), HopperRed(26, 4475, 8.0), CenterPegBlue(29.0,4700, 0.0), CenterPegRed(31.0, 4975, 219.5), PegNearHopperBlue(28, 4700, 270.0), PegNearHopperRed(28.0, 4700,299), FarPegBlue(35.0,4500,503), HopperBlue(23.0,4125,199.0);
 		//pegnearhopperblue 272, 34, 4950
 		//hopperred 34, 4400
 		

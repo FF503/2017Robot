@@ -88,7 +88,14 @@ public class DrivetrainSubsystem extends Subsystem{
    }
  
    public double getAvgEncCounts() {
-	   return (-rightMaster.getEncPosition() + leftMaster.getEncPosition()) / 2.0;	//right neg for comp, left neg for practice
+	   return -rightMaster.getEncPosition();			   
+	 /*  if (Math.abs(-rightMaster.getEncPosition()) > Math.abs(leftMaster.getEncPosition())){
+		   return (-rightMaster.getEncPosition());
+	   }
+	   else{
+		   return (leftMaster.getEncPosition());
+	   }*/
+	  // return (-rightMaster.getEncPosition() + leftMaster.getEncPosition()) / 2.0;	//right neg for comp, left neg for practice
    }
    
    public double getAvgEncRotations(){

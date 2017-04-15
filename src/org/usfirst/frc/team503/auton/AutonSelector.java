@@ -1,5 +1,7 @@
 package org.usfirst.frc.team503.auton;
 
+import org.usfirst.frc.team503.robot.RobotState;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -69,6 +71,215 @@ public class AutonSelector {
 	 * 
 	 */
 	public void startAuton() {
+//		switch(RobotState.getInstance().getDoNothingOption()){
+//		case DO_NOTHING:
+//			break;
+//		case DO_SOMETHING:
+//			switch(RobotState.getInstance().getAllianceColorOption()){
+//			case RED:
+//				switch(RobotState.getInstance().getPegOption()){
+//				case CENTER:
+//					switch(RobotState.getInstance().getShootOption()){
+//					case SHOOT:
+//						switch(RobotState.getInstance().getDumpBinOption()){
+//						case DUMP_BIN:
+//							System.out.println("Running Red, center, shoot, dump");
+//							break;
+//						case DONT_DUMP_BIN:
+//							System.out.println("Running Red, center, shoot, dont dump");
+//							break;
+//						}
+//						break;
+//					case DONT_SHOOT:
+//						switch(RobotState.getInstance().getDumpBinOption()){
+//						case DUMP_BIN:
+//							System.out.println("Running Red, center, dont shoot, dump");
+//							break;
+//						case DONT_DUMP_BIN:
+//							System.out.println("Running Red, center, dont shoot, dont dump");
+//							break;
+//						}
+//						break;
+//					}
+//					break;
+//				case LEFT:
+//					switch(RobotState.getInstance().getShootOption()){
+//					case SHOOT:
+//						switch(RobotState.getInstance().getDumpBinOption()){
+//						case DUMP_BIN:
+//							System.out.println("Running Red, left, shoot, dump");
+//							break;
+//						case DONT_DUMP_BIN:
+//							System.out.println("Running Red, left, shoot, dont dump");
+//							break;
+//						}
+//						break;
+//					case DONT_SHOOT:
+//						switch(RobotState.getInstance().getDumpBinOption()){
+//						case DUMP_BIN:
+//							System.out.println("Running Red, left, dont shoot, dump");
+//							break;
+//						case DONT_DUMP_BIN:
+//							System.out.println("Running Red, left, dont shoot, dont dump");
+//							break;
+//						}
+//						break;
+//					}
+//					break;
+//				case RIGHT:
+//					switch(RobotState.getInstance().getShootOption()){
+//					case SHOOT:
+//						switch(RobotState.getInstance().getDumpBinOption()){
+//						case DUMP_BIN:
+//							System.out.println("Running Red, right, shoot, dump");
+//							break;
+//						case DONT_DUMP_BIN:
+//							System.out.println("Running Red, right, shoot, dont dump");
+//							break;
+//						}
+//						break;
+//					case DONT_SHOOT:
+//						switch(RobotState.getInstance().getDumpBinOption()){
+//						case DUMP_BIN:
+//							System.out.println("Running Red, right, dont shoot, dump");
+//							break;
+//						case DONT_DUMP_BIN:
+//							System.out.println("Running Red, right, shoot, dont dump");
+//							break;
+//						}
+//						break;
+//					}
+//					break;
+//				case NONE:
+//					switch(RobotState.getInstance().getShootOption()){
+//					case SHOOT:
+//						switch(RobotState.getInstance().getDumpBinOption()){
+//						case DUMP_BIN:
+//							System.out.println("Running Red, no peg, shoot, dump");
+//							break;
+//						case DONT_DUMP_BIN:
+//							System.out.println("Running Red, no peg, shoot, dont dump");
+//							break;
+//						}
+//						break;
+//					case DONT_SHOOT:
+//						switch(RobotState.getInstance().getDumpBinOption()){
+//						case DUMP_BIN:
+//							System.out.println("Running Red, no peg, dont shoot, dump");
+//							break;
+//						case DONT_DUMP_BIN:
+//							System.out.println("Running Red, no peg, dont shoot, dont dump");
+//							break;
+//						}
+//						break;
+//					}
+//					break;
+//				}
+//				break;
+//			case BLUE:
+//				switch(RobotState.getInstance().getPegOption()){
+//				case CENTER:
+//					switch(RobotState.getInstance().getShootOption()){
+//					case SHOOT:
+//						switch(RobotState.getInstance().getDumpBinOption()){
+//						case DUMP_BIN:
+//							System.out.println("Running Blue,Center, shoot, dump");
+//							break;
+//						case DONT_DUMP_BIN:
+//							System.out.println("Running Blue,Center, shoot, dont dump");
+//							break;
+//						}
+//						break;
+//					case DONT_SHOOT:
+//						switch(RobotState.getInstance().getDumpBinOption()){
+//						case DUMP_BIN:
+//							System.out.println("Running Blue,Center, dont shoot, dump");
+//							break;
+//						case DONT_DUMP_BIN:
+//							System.out.println("Running Blue,Center, dont shoot, dont dump");
+//							break;
+//						}
+//						break;
+//					}
+//					break;
+//				case LEFT:
+//					switch(RobotState.getInstance().getShootOption()){
+//					case SHOOT:
+//						switch(RobotState.getInstance().getDumpBinOption()){
+//						case DUMP_BIN:
+//							System.out.println("Running Blue, Left, shoot, dump");
+//							break;
+//						case DONT_DUMP_BIN:
+//							System.out.println("Running Blue, Left, shoot, dont dump");
+//							break;
+//						}
+//						break;
+//					case DONT_SHOOT:
+//						switch(RobotState.getInstance().getDumpBinOption()){
+//						case DUMP_BIN:
+//							System.out.println("Running Blue,left, dont shoot, dump");
+//							break;
+//						case DONT_DUMP_BIN:
+//							System.out.println("Running Blue,left, dont shoot, dont dump");
+//							break;
+//						}
+//						break;
+//					}
+//					break;
+//				case RIGHT:
+//					switch(RobotState.getInstance().getShootOption()){
+//					case SHOOT:
+//						switch(RobotState.getInstance().getDumpBinOption()){
+//						case DUMP_BIN:
+//							System.out.println("Running Blue,Right, shoot, dump");
+//							break;
+//						case DONT_DUMP_BIN:
+//							System.out.println("Running Blue,Right, shoot, dont dump");
+//							break;
+//						}
+//						break;
+//					case DONT_SHOOT:
+//						switch(RobotState.getInstance().getDumpBinOption()){
+//						case DUMP_BIN:
+//							System.out.println("Running Blue, right, dont shoot, dump");
+//							break;
+//						case DONT_DUMP_BIN:
+//							System.out.println("Running Blue, right, dont shoot, dont dump");
+//							break;
+//						}
+//						break;
+//					}
+//					break;
+//				case NONE:
+//					switch(RobotState.getInstance().getShootOption()){
+//					case SHOOT:
+//						switch(RobotState.getInstance().getDumpBinOption()){
+//						case DUMP_BIN:
+//							System.out.println("Running Blue, no peg, shoot, dump");
+//							break;
+//						case DONT_DUMP_BIN:
+//							System.out.println("Running Blue,no peg,  shoot,  dont dump");
+//							break;
+//						}
+//						break;
+//					case DONT_SHOOT:
+//						switch(RobotState.getInstance().getDumpBinOption()){
+//						case DUMP_BIN:
+//							System.out.println("Running Blue, no peg, dont shoot, dump");
+//							break;
+//						case DONT_DUMP_BIN:
+//							System.out.println("Running Blue, no peg, dont shoot, dont dump");
+//							break;
+//						}
+//						break;
+//					}
+//					break;
+//				}
+//				break;
+//			}
+//			break;
+//		}
+		
 		AutonChoices.Alliances allianceChoice = allianceChooser.getSelected();
 		AutonChoices.GearPosition gearPositionChoice = gearPosChooser.getSelected();
 		AutonChoices.Shoot shootChoice = shootChooser.getSelected();

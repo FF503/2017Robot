@@ -34,8 +34,7 @@ public class RightPegRightStartRed extends CommandGroup {
 		//addSequential(new RunMotionProfileCommand(leftPinLeftStart, 2, 1, true));
     	addSequential(new DriveStraightDistanceCommand(58.5, 3.0, true));
 		addSequential(new GyroTurnCommand(-55));
-		
-		addSequential(new DriveStraightDistanceCommand(36.0, 2.0, true));
+		addSequential(new DriveStraightDistanceCommand(36.0, 1.5, true));
 		addSequential(new AutonDriveCommand2());
 		addSequential(new PlaceGearCommand());
 		
@@ -59,6 +58,9 @@ public class RightPegRightStartRed extends CommandGroup {
 			addSequential(new ShootSequenceCommand(true));
 			addParallel(new ShootSequenceCommand(false));
 			addSequential(new SetReadyToFire());
+		}
+		else{
+			addSequential(new DriveStraightDistanceCommand(12,1.0,false));
 		}
     }
 }

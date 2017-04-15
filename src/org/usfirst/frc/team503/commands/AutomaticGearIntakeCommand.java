@@ -1,5 +1,7 @@
 package org.usfirst.frc.team503.commands;
 
+import org.usfirst.frc.team503.robot.OI;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -27,7 +29,9 @@ public class AutomaticGearIntakeCommand extends CommandGroup {
     	addSequential(new LowerGearPlacer());
     	addSequential(new GearIntakeCommand());
     //	addSequential(new WaitCommand(0.1));
-    	addParallel(new RaiseGearPlacer());
-    	addSequential(new TurnGearInLightOn());
+    	if(!OI.getReverseGearIntakeButton()){
+    		addParallel(new RaiseGearPlacer());
+        	addSequential(new TurnGearInLightOn());
+    	}
     }
 }

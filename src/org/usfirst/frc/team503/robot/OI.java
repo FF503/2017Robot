@@ -77,8 +77,10 @@ public class OI {
 	private static JoystickButton frontGearButton = new JoystickButton(operatorJoystick, 4);
 	private static JoystickButton endShoot = new JoystickButton(operatorJoystick, 5);
 	private static JoystickButton shootRPMButton = new JoystickButton(operatorJoystick, 6);
-	private static JoystickButton resetAutonButton = new JoystickButton(operatorJoystick, 7);
+	private static JoystickButton decrementPreset = new JoystickButton(operatorJoystick, 7);
 	private static JoystickButton incrementPreset = new JoystickButton(operatorJoystick, 8);
+	private static JoystickButton resetAutonButton = new JoystickButton(operatorJoystick, 9);
+
 	
 	private static JoystickButton goToTurretPosition = new JoystickButton(operatorJoystick, 7);
 	private static JoystickButton goToDeflectorButton = new JoystickButton(operatorJoystick, 7);
@@ -100,6 +102,7 @@ public class OI {
 		reverseIntakeGearButton.whenPressed(new ReverseGearIntakeCommand());
 		reverseIntakeGearButton.whenReleased(new ReverseGearIntakeCommand());
 		resetAutonButton.whenPressed(new ResetAutonCommand());
+		decrementPreset.whenPressed(new ChangeShooterPresetCommand());
 		incrementPreset.whenPressed(new ChangeShooterPresetCommand());
 		climbButton.whenPressed(new ClimbCommand());
 		reverseDriveTrainButton.whenPressed(new ReverseDriveTrainCommand());
@@ -114,7 +117,7 @@ public class OI {
 	}
 	
 	public static boolean getDecrementPreset(){
-		return resetAutonButton.get();
+		return decrementPreset.get();
 	}
 	
 	public static double getDriverLeftYValue(){

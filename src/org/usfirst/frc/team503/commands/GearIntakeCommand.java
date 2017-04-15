@@ -30,7 +30,7 @@ public class GearIntakeCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return GearIntakeSubsystem.getInstance().isGearIn() || OI.getPlaceGear();
+        return GearIntakeSubsystem.getInstance().isGearIn() || OI.getPlaceGear() || OI.getReverseGearIntakeButton();
     }
 
     // Called once after isFinished returns true

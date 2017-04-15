@@ -26,14 +26,14 @@ public class ChangeShooterPresetCommand extends Command {
 				RobotState.getInstance().setShootingPreset(ShootingPresets.values()[RobotState.getInstance().getShooterPreset().ordinal() + 1]);
 			}
 		}
-		/*else if (OI.getDecrementPreset()){
+		else if (OI.getDecrementPreset()){
 			if (RobotState.getInstance().getShooterPreset().ordinal() == 0){
 				RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.values()[RobotState.ShootingPresets.values().length-1]);
 			}
 			else{
 				RobotState.getInstance().setShootingPreset(ShootingPresets.values()[RobotState.getInstance().getShooterPreset().ordinal() - 1]);
 			}
-		}*/
+		}
     }
 
     // Called repeatedly when this Command is scheduled to run

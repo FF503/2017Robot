@@ -6,6 +6,7 @@ import org.usfirst.frc.team503.robot.RobotState;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.CANTalon.VelocityMeasurementPeriod;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -30,6 +31,8 @@ public class ShooterSubsystem extends Subsystem {
 		shooterMotor.setProfile(0);
 		shooterMotor.setPID(Robot.bot.SHOOT_P, Robot.bot.SHOOT_I, Robot.bot.SHOOT_D);
 		shooterMotor.setF(Robot.bot.SHOOT_F);
+		shooterMotor.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_10Ms);
+		shooterMotor.SetVelocityMeasurementWindow(32);
 	}
 	
 	private static ShooterSubsystem instance = new ShooterSubsystem();

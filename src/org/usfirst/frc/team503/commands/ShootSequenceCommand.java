@@ -45,7 +45,6 @@ public class ShootSequenceCommand extends Command {
     	ShooterSubsystem.getInstance().setSetpoint(RobotState.getInstance().getShooterPreset().rpm);
     	RobotState.getInstance().setShooterStatus(true);
 		RobotState.getInstance().setTurretState(RobotState.TurretState.TAKING_HINT);
-
     	SmartDashboard.putBoolean("Deflector on target", false);
     	startTime = Timer.getFPGATimestamp();
     }
@@ -53,17 +52,17 @@ public class ShootSequenceCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	DeflectorSubsystem.getInstance().resetEncoder();
-    	if(RobotState.getInstance().getTurretHint()){
+    	/*if(RobotState.getInstance().getTurretHint()){
     		startHint = true;
     	}
     	if(RobotState.getInstance().getHasTurretReset() && !startHint){
     		RobotState.getInstance().setTurretState(RobotState.TurretState.TAKING_HINT);
-    	}
+    	}*/
     	SmartDashboard.putBoolean("Deflector on target", DeflectorSubsystem.getInstance().isOnTarget());
 		if(ShooterSubsystem.getInstance().isOnTarget() && DeflectorSubsystem.getInstance().isOnTarget()){
 			if(TurretSubsystem.getInstance().getThread().getPiAlive() ){
 				if(RobotState.getInstance().getState() == RobotState.State.AUTON){
-					if(RobotState.getInstance().getTurretIsLocked() && RobotState.getInstance().getReadyToFire()){
+					if(/*RobotState.getInstance().getTurretIsLocked() &&*/ RobotState.getInstance().getReadyToFire()){
 						DeflectorSubsystem.getInstance().setMotorPower(0.0);
 						shoot();
 					}
@@ -93,6 +92,9 @@ public class ShootSequenceCommand extends Command {
             return OI.getEndShoot();
     	}
     	else if(RobotState.getInstance().getState() == RobotState.State.AUTON){
+    		/*if(autonStart){
+    			RobotState.getInstance().setTurretState(RobotState.TurretState.SEEKING_TARGET);
+    		}*/
     		return autonStart;
     	}
     	else{

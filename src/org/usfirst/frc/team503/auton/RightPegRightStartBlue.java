@@ -49,5 +49,8 @@ public class RightPegRightStartBlue extends CommandGroup {
 			addSequential(new DriveStraightDistanceCommand(60.0,3.0,false));
 			addSequential(new SetReadyToFire());
 		}
+		else{
+			addSequential(new DriveStraightDistanceCommand(12,1.0,false));
+		}
     }
 }
