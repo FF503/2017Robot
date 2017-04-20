@@ -401,6 +401,8 @@ public class AutonSelector {
 						break;
 					}
 					break;
+			
+					
 				case NO_BIN: 
 					switch(shootChoice) {
 					case SHOOT:
@@ -475,8 +477,19 @@ public class AutonSelector {
 						break;
 					}
 					break;
+				case RIGHT_BIN:
+					switch(shootChoice){
+					case SHOOT:
+						(new DumpFarBinBlue(true)).start();
+						break;
+					case DONT_SHOOT:
+						(new DumpFarBinBlue(false)).start();
+						break;
+					}
+					break;
 				}
 				break;
+				
 			}
 			break;
 		}

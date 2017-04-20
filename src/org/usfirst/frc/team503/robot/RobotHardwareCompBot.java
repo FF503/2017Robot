@@ -65,6 +65,8 @@ public class RobotHardwareCompBot extends RobotHardware {
 	public final boolean REVERSE_RIGHT_SENSOR = false;
 	public final boolean REVERSE_LEFT_OUTPUT = false;
 	public final boolean REVERSE_RIGHT_OUTPUT = true;
+	public final double REVERSE_RIGHT_ENCODER = -1.0;
+	public final double REVERSE_LEFT_ENCODER = 1.0;
 	
 	public final double REVERSE_INDEXER = 1.0;
 	

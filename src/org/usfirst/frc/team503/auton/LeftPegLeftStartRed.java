@@ -63,6 +63,7 @@ public class LeftPegLeftStartRed extends CommandGroup {
 			//addSequential(new RunMotionProfileCommand(hitBin, 2, 1, false));	//1
 		}
 		if(shoot){
+			addSequential(new DriveStraightDistanceCommand(12,1.0,false));
 			if (dump){
 				RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperRed);
 			}

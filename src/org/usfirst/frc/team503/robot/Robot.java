@@ -36,7 +36,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static RobotHardwareCompBot bot = null;
+	public static RobotHardwarePracticeBot bot = null;
 
 	private Command autonCommand = null; 
 	private NetworkTable table;
@@ -50,7 +50,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
         NetworkTable.globalDeleteAll(); //Removes unused garbage from SmartDashboard
         NetworkTable.initialize();      //Initialize Network Tables
-        bot = new RobotHardwareCompBot();
+        bot = new RobotHardwarePracticeBot();
 		bot.initialize();
 		bot.logSmartDashboard();         /*put name of selected bot on smartdashboard */
 		OI.initialize();
@@ -105,9 +105,9 @@ public class Robot extends IterativeRobot {
 		TurretSubsystem.getInstance().getThread().startTurret();
 		NetworkTableCollecter collecter = new NetworkTableCollecter();
 		collecter.collectNetworkTableDate();
-		AutonSelector.getInstance().startAuton();
+		//AutonSelector.getInstance().startAuton();
 		
-		//(new TestAuton()).start();
+		(new TestAuton()).start();
 	}
 
 	/**

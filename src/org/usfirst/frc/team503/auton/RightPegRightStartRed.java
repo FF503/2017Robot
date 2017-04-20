@@ -57,6 +57,7 @@ public class RightPegRightStartRed extends CommandGroup {
 			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.PegNearHopperRed);
 			addSequential(new ShootSequenceCommand(true));
 			addParallel(new ShootSequenceCommand(false));
+			addSequential(new DriveStraightDistanceCommand(12,1.0,false));
 			addSequential(new SetReadyToFire());
 		}
 		else{

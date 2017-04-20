@@ -81,13 +81,18 @@ public class DriveStraightDistanceCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return DrivetrainSubsystem.getInstance().pidIsOnTarget() || time.get()>timeout;
+    
+    	return DrivetrainSubsystem.getInstance().pidIsOnTarget() || time.get()>timeout || Math.abs(DrivetrainSubsystem.getInstance().getPidOutput()) <= Constants.JOYSTICK_TOLERANCE;
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	DrivetrainSubsystem.getInstance().resetController();
     	DrivetrainSubsystem.getInstance().tankDrive(0, 0, false);
+    	System.out.println("finished drive:" + time.get());
+    	System.out.println("PID on target: "  + DrivetrainSubsystem.getInstance().pidIsOnTarget());
+    	System.out.println("time out: "  + (time.get()>timeout));
+    	System.out.println("PID tolerance"  + (Math.abs(DrivetrainSubsystem.getInstance().getPidOutput()) <= Constants.JOYSTICK_TOLERANCE));
     }
 
     // Called when another command which requires one or more of the same

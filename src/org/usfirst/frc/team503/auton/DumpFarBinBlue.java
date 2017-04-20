@@ -2,7 +2,6 @@ package org.usfirst.frc.team503.auton;
 
 import org.usfirst.frc.team503.commands.DriveStraightDistanceCommand;
 import org.usfirst.frc.team503.commands.GyroTurnCommand;
-import org.usfirst.frc.team503.commands.PlaceGearCommand;
 import org.usfirst.frc.team503.commands.RaiseGearPlacer;
 import org.usfirst.frc.team503.commands.SetReadyToFire;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
@@ -10,9 +9,9 @@ import org.usfirst.frc.team503.robot.RobotState;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class RightPegRightStartBlue extends CommandGroup {
+public class DumpFarBinBlue extends CommandGroup {
 
-    public RightPegRightStartBlue(boolean dump, boolean shoot) {
+    public DumpFarBinBlue(boolean shoot) {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -29,27 +28,16 @@ public class RightPegRightStartBlue extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	
 
     	addParallel(new RaiseGearPlacer());    	
-		//addSequential(new RunMotionProfileCommand(leftPinLeftStart, 2, 1, true));
-    	addSequential(new DriveStraightDistanceCommand(58.5, 3.0, true));
-		addSequential(new GyroTurnCommand(-60));
-		addSequential(new DriveStraightDistanceCommand(42.0, 2.0, true));
-		addSequential(new AutonDriveCommand2());
-		addSequential(new PlaceGearCommand());
-		
+		addSequential(new DriveStraightDistanceCommand(210,2.5,true));//81 at livonia //was 57
+		addSequential(new GyroTurnCommand(90));
 		if(shoot){
-			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.FarPegBlue);
-			addSequential(new DriveStraightDistanceCommand(24.0, 2.0, false));
-			addSequential(new GyroTurnCommand(58));
+			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperBlue);
 			addSequential(new ShootSequenceCommand(true));
 			addParallel(new ShootSequenceCommand());
-			addSequential(new DriveStraightDistanceCommand(72.0,3.0,false));
-			addSequential(new SetReadyToFire());
 		}
-		else{
-			addSequential(new DriveStraightDistanceCommand(12,1.0,false));
-		}
+		addSequential(new DriveStraightDistanceCommand(48,2.5,false)); //was 35 at livonia	
+		addSequential(new SetReadyToFire());
     }
 }

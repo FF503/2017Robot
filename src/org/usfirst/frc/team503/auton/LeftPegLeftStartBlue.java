@@ -51,6 +51,7 @@ public class LeftPegLeftStartBlue extends CommandGroup {
 			//addSequential(new RunMotionProfileCommand(hitBin, 2, 1, false));	//1
 		}
 		else if(shoot){
+			addSequential(new DriveStraightDistanceCommand(12,1.0,false));
 			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.PegNearHopperBlue);
 			addSequential(new ShootSequenceCommand(true));
 			addParallel(new ShootSequenceCommand());

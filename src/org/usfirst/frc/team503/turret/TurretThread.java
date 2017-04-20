@@ -82,7 +82,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 					RobotState.getInstance().setTurretResetSide(true);
 				}
 				else{
-					RobotState.getInstance().setTurretResetSide(false);
+					RobotState.getInstance().setTurretResetSide(true);
 				}
  			}
  			RobotState.getInstance().setTurretState(RobotState.TurretState.RESET_TURRET);

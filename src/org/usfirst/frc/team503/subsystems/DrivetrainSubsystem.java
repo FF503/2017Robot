@@ -88,7 +88,7 @@ public class DrivetrainSubsystem extends Subsystem{
    }
  
    public double getAvgEncCounts() {
-	   return -rightMaster.getEncPosition();			   
+	   return Robot.bot.REVERSE_RIGHT_ENCODER * rightMaster.getEncPosition();			   
 	 /*  if (Math.abs(-rightMaster.getEncPosition()) > Math.abs(leftMaster.getEncPosition())){
 		   return (-rightMaster.getEncPosition());
 	   }
@@ -99,7 +99,12 @@ public class DrivetrainSubsystem extends Subsystem{
    }
    
    public double getAvgEncRotations(){
-	   return (rightMaster.getPosition() + leftMaster.getPosition()) / 2.0;
+	   return (Robot.bot.REVERSE_RIGHT_ENCODER*rightMaster.getPosition() + Robot.bot.REVERSE_LEFT_ENCODER*leftMaster.getPosition()) / 2.0;
+	   
+   }
+   
+   public double getAvgEncDistance(){
+	   return getAvgEncRotations() * Robot.bot.INCHES_PER_ROTATION;
    }
    
    public void setSetpoint(double val){
@@ -265,7 +270,6 @@ public class DrivetrainSubsystem extends Subsystem{
 	
    public void tankDrive(double leftValue, double rightValue, boolean reverse) {
 
-       // square the inputs (while preserving the sign) to increase fine control while permitting full power
        leftValue = limit(leftValue);
        rightValue = limit(rightValue);
 
@@ -278,16 +282,16 @@ public class DrivetrainSubsystem extends Subsystem{
 	}
    
    public void sendDashboardData(){  		  	   	
-		SmartDashboard.putNumber("Talon right velocity", -rightMaster.getEncVelocity());//right neg for comp, left neg for practice
-		SmartDashboard.putNumber("Talon left velocity", leftMaster.getEncVelocity());
-		SmartDashboard.putNumber("Talon left Position", leftMaster.getEncPosition());
+		SmartDashboard.putNumber("Talon right velocity", Robot.bot.REVERSE_RIGHT_ENCODER * rightMaster.getEncVelocity());//right neg for comp, left neg for practice
+		SmartDashboard.putNumber("Talon left velocity", Robot.bot.REVERSE_LEFT_ENCODER * leftMaster.getEncVelocity());
+		SmartDashboard.putNumber("Talon left Position", Robot.bot.REVERSE_LEFT_ENCODER * leftMaster.getEncPosition());
 		SmartDashboard.putNumber("Average talon pos", getAvgEncCounts());
 		SmartDashboard.putNumber("Average talon rotations", getAvgEncRotations());
-		SmartDashboard.putNumber("Talon left rpm", leftMaster.getSpeed());
-		SmartDashboard.putNumber("Talon right Position", -rightMaster.getEncPosition());
-		SmartDashboard.putNumber("Talon right rpm", -rightMaster.getSpeed());
-		SmartDashboard.putNumber("Talon left rotations", leftMaster.getPosition());
-		SmartDashboard.putNumber("Talon right rotations", rightMaster.getPosition());
+		SmartDashboard.putNumber("Talon left rpm", Robot.bot.REVERSE_LEFT_ENCODER * leftMaster.getSpeed());
+		SmartDashboard.putNumber("Talon right Position", Robot.bot.REVERSE_RIGHT_ENCODER * rightMaster.getEncPosition());
+		SmartDashboard.putNumber("Talon right rpm", Robot.bot.REVERSE_RIGHT_ENCODER * rightMaster.getSpeed());
+		SmartDashboard.putNumber("Talon left rotations",  Robot.bot.REVERSE_LEFT_ENCODER * leftMaster.getPosition());
+		SmartDashboard.putNumber("Talon right rotations", Robot.bot.REVERSE_RIGHT_ENCODER * rightMaster.getPosition());
 		SmartDashboard.putBoolean("Motion profile is finished", profileHasFinished);
    }
    
