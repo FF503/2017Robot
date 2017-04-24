@@ -41,11 +41,11 @@ public class AutonDriveCommand2 extends Command {
     	angle = -table.getNumber("Degrees",0.0);
     	SmartDashboard.putNumber("Peg Angle", angle);
 
-    	if(UltrasonicSubsystem.getInstance().getUltrasonicDistance() > 12 && angle != 0.0){   //was 36 
-    		DrivetrainSubsystem.getInstance().arcadeDrive(.25, angle*.07, false);  // 0.2 , 0.05
+    	if(UltrasonicSubsystem.getInstance().getUltrasonicDistance() > Constants.DISTANCE_TO_PEG && angle != 0.0){   //was 36 
+    		DrivetrainSubsystem.getInstance().arcadeDrive(.25, angle*.07, false);  // 0.25
     	} 
     	else {
-    		DrivetrainSubsystem.getInstance().arcadeDrive(0.2, 0, false);
+    		DrivetrainSubsystem.getInstance().arcadeDrive(0.25, 0, false);//.2
 		}
     }
     	

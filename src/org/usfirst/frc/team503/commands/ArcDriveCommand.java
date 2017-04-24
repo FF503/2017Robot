@@ -15,10 +15,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ArcDriveCommand extends Command {
 	private double inchesLeg1;
-	private double inchesArc;
+	private double inchesArc1;
 	private double inchesLeg2;
 	private double inchesTotal; 
-	private double inchesThruArc;
+	private double inchesThruArc1;
 	private double angleTotal; 	
 	private double anglePerInch;
 	private double timeout;
@@ -41,24 +41,24 @@ public class ArcDriveCommand extends Command {
 	private double turnRate;
 		
 	//For testing - inchesLeg1=30, inchesArc=30, anglePerInch=2, angleTotal = 60, inchesLeg2=12, timeout=4, reverse=false 
-    public ArcDriveCommand(double inchesLeg1, double angleTotal,  double inchesLeg2, double timeout, boolean reverse) {
-    	this.inchesLeg1 = inchesLeg1;  
-    	this.angleTotal = angleTotal; 
-    	if(angleTotal>=0){
-    		this.anglePerInch = Robot.bot.ARC_ANGLE_PER_INCH;
-    	}
-    	else{
-    		this.anglePerInch = -Robot.bot.ARC_ANGLE_PER_INCH;
-    	}
-    	this.inchesArc = Math.abs(angleTotal/anglePerInch);
+    public ArcDriveCommand(double inchesLeg1, double angleTotal1, double inchesLeg2, double anglePerInch, double timeout, boolean reverse) {
+    	this.inchesLeg1 = inchesLeg1; 
+		this.angleTotal = angleTotal1;    	
+		if(angleTotal1<0){
+    		this.anglePerInch = -anglePerInch;
+		}
+		else{
+    		this.anglePerInch = anglePerInch;	
+		}
+    	this.inchesArc1 = Math.abs(angleTotal1/anglePerInch);
     	this.inchesLeg2 = inchesLeg2;
     	this.timeout = timeout;
     	this.reverse = reverse;
+    	time = new Timer();
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	time = new Timer();
     	time.start();
     	DrivetrainSubsystem.getInstance().percentVoltageMode();
      	DrivetrainSubsystem.getInstance().resetController(); 
@@ -69,8 +69,8 @@ public class ArcDriveCommand extends Command {
     	pMax = Robot.bot.ARC_DRIVE_MAX;		 				    // maximum power 
     	tolerance = Robot.bot.ARC_GYRO_TOLERANCE;
     	pTurn = Robot.bot.ARC_TURN_P;
-    	inchesThruArc = inchesLeg1 + inchesArc; 
-    	inchesTotal = inchesLeg1 + inchesArc + inchesLeg2; 
+    	inchesThruArc1 = inchesLeg1 + inchesArc1; 
+    	inchesTotal = inchesLeg1 + inchesArc1 + inchesLeg2; 
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -102,15 +102,18 @@ public class ArcDriveCommand extends Command {
         	
     	if(d<inchesLeg1) {
     		thetaSetPoint = 0;
-    		turnRate = 0;
     	}
-    	else if(d<inchesThruArc){
+    	else if(d<inchesThruArc1){
         	thetaSetPoint = thetaSetPoint + anglePerInch * (d - lastD);
-        	turnRate = 5*anglePerInch;
+        	if(angleTotal>0 && thetaSetPoint > angleTotal){
+        		thetaSetPoint = angleTotal;
+        	}
+        	else if(angleTotal < 0 && thetaSetPoint < angleTotal) {
+        		thetaSetPoint = angleTotal;
+        	}
     	}
     	else{
     		thetaSetPoint = angleTotal;
-    		turnRate = 0;
     	}
     	
     	//Calculate our own PID	
@@ -128,31 +131,47 @@ public class ArcDriveCommand extends Command {
         	
     	thetaErr = currYaw - thetaSetPoint;	
     	//pMult = Math.pow(Kp,Math.abs(thetaErr));
-    	if(d>inchesLeg1 && d<inchesThruArc){
-    		pMult = pTurn/Math.abs(thetaErr);
+    	if(d>inchesLeg1 && d<inchesThruArc1){
+    		pMult = pTurn*Math.abs(thetaErr);
     	}
     	else{
-    		pMult = pK/Math.abs(thetaErr);
+    		pMult = pK*Math.abs(thetaErr);
     	}
     	if(pMult>1){
     		pMult = 1;
     	}
     	//calculate motor power - check for saturation (i.e. <-1 or >1)
-    	if(thetaErr > tolerance) {					// if error greater than deadband 
-    		pRight = pMax*pMult;					
-    		pLeft = pMax;				
-    	} 
-    	else if(thetaErr < -tolerance) {			
-    		pRight = pMax;			
-    		pLeft = pMax*pMult;							
-    	} 
-    	else {
-    		pRight = pMax; 					
-    		pLeft = pMax;					
+    	if(reverse){
+        	if(thetaErr > tolerance) {					// if error greater than deadband 
+        		pRight = pMax*(1-pMult);					
+        		pLeft = pMax;				
+        	} 
+        	else if(thetaErr < -tolerance) {			
+        		pRight = pMax;			
+        		pLeft = pMax*(1-pMult);							
+        	} 
+        	else {
+        		pRight = pMax; 					
+        		pLeft = pMax;					
+        	}
+    	}
+    	else{
+        	if(thetaErr > tolerance) {					// if error greater than deadband 
+        		pRight = pMax;					
+        		pLeft = pMax*(1-pMult);				
+        	} 
+        	else if(thetaErr < -tolerance) {			
+        		pRight = pMax*(1-pMult);			
+        		pLeft = pMax;							
+        	} 
+        	else {
+        		pRight = pMax; 					
+        		pLeft = pMax;					
+        	}
     	}
     	
     	//Drive and include a turn (pidvalue = speed, targetAngle = turn degrees)  
-        DrivetrainSubsystem.getInstance().tankDrive(pLeft, pRight, false);
+        DrivetrainSubsystem.getInstance().tankDrive(-pLeft, -pRight, reverse);
         lastD = d;
       
         sendDashboardData();  

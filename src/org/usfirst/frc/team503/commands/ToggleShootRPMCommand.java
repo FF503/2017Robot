@@ -30,7 +30,8 @@ public class ToggleShootRPMCommand extends Command {
         		RobotState.getInstance().setShooterStatus(false);
         	}
         	else{
-        		ShooterSubsystem.getInstance().setSetpoint(Constants.SHOOTER_SPEED);
+        		ShooterSubsystem.getInstance().setMotorPower(1.0);
+        		//ShooterSubsystem.getInstance().setSetpoint(Constants.SHOOTER_SPEED);
             	RobotState.getInstance().setShooterStatus(true);
         	}
     	}
@@ -47,12 +48,10 @@ public class ToggleShootRPMCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	ShooterSubsystem.getInstance().setMotorPower(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }

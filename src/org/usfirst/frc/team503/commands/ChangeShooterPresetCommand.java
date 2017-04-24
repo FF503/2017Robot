@@ -19,6 +19,7 @@ public class ChangeShooterPresetCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	if (OI.getIncrementPreset()){
+    		RobotState.getInstance().setShooterStatus(false);
 			if (RobotState.getInstance().getShooterPreset().ordinal() == RobotState.ShootingPresets.values().length-1){
 				RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.values()[0]);
 			}
@@ -27,6 +28,7 @@ public class ChangeShooterPresetCommand extends Command {
 			}
 		}
 		else if (OI.getDecrementPreset()){
+			RobotState.getInstance().setShooterStatus(false); 
 			if (RobotState.getInstance().getShooterPreset().ordinal() == 0){
 				RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.values()[RobotState.ShootingPresets.values().length-1]);
 			}

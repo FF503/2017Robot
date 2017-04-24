@@ -58,31 +58,42 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  		onTargetStartTime = startTime;
  		if(RobotState.getInstance().getState()==RobotState.State.AUTON){
  			if(AutonSelector.getInstance().allianceChooser.getSelected() == AutonChoices.Alliances.RED){
- 				if(AutonSelector.getInstance().gearPosChooser.getSelected() == AutonChoices.GearPosition.RIGHT){
- 						RobotState.getInstance().setTurretResetSide(false);
+ 				if(AutonSelector.getInstance().startPosChooser.getSelected() == AutonChoices.StartPosition.RIGHT){
+ 						if(AutonSelector.getInstance().binChooser.getSelected() == AutonChoices.BinPosition.RIGHT_BIN){
+ 							RobotState.getInstance().setTurretResetSide(true);
+ 						}
+ 						else{
+ 							RobotState.getInstance().setTurretResetSide(false);
+ 						}
  				}
- 				else if(AutonSelector.getInstance().gearPosChooser.getSelected() == AutonChoices.GearPosition.DO_NOTHING){
+ 				else if(AutonSelector.getInstance().startPosChooser.getSelected() == AutonChoices.StartPosition.BIN){
  					RobotState.getInstance().setTurretResetSide(true);
  				}
- 				else if (AutonSelector.getInstance().gearPosChooser.getSelected() == AutonChoices.GearPosition.CENTER){
+ 				else if (AutonSelector.getInstance().startPosChooser.getSelected() == AutonChoices.StartPosition.CENTER){
  					RobotState.getInstance().setTurretResetSide(false);
  				}
- 				else{
+ 				else if (AutonSelector.getInstance().startPosChooser.getSelected() == AutonChoices.StartPosition.LEFT){
  					RobotState.getInstance().setTurretResetSide(false);
+ 				}
+ 				else if(AutonSelector.getInstance().startPosChooser.getSelected() == AutonChoices.StartPosition.DUAL_BIN){
+ 					RobotState.getInstance().setTurretResetSide(true);
  				}
  			}
  			else{
- 				if(AutonSelector.getInstance().gearPosChooser.getSelected() == AutonChoices.GearPosition.LEFT){
+ 				if(AutonSelector.getInstance().startPosChooser.getSelected() == AutonChoices.StartPosition.LEFT){
 						RobotState.getInstance().setTurretResetSide(false);
 				}
-				else if(AutonSelector.getInstance().gearPosChooser.getSelected() == AutonChoices.GearPosition.DO_NOTHING){
+				else if(AutonSelector.getInstance().startPosChooser.getSelected() == AutonChoices.StartPosition.BIN){
 					RobotState.getInstance().setTurretResetSide(false);
 				}
-				else if(AutonSelector.getInstance().gearPosChooser.getSelected() == AutonChoices.GearPosition.CENTER){
+				else if(AutonSelector.getInstance().startPosChooser.getSelected() == AutonChoices.StartPosition.CENTER){
 					RobotState.getInstance().setTurretResetSide(true);
 				}
-				else{
+				else if(AutonSelector.getInstance().startPosChooser.getSelected() == AutonChoices.StartPosition.RIGHT){
 					RobotState.getInstance().setTurretResetSide(true);
+				}
+				else if (AutonSelector.getInstance().startPosChooser.getSelected() == AutonChoices.StartPosition.DUAL_BIN){
+					RobotState.getInstance().setTurretResetSide(false);
 				}
  			}
  			RobotState.getInstance().setTurretState(RobotState.TurretState.RESET_TURRET);
@@ -109,10 +120,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 		/*if (RobotState.getInstance().getState() == RobotState.State.AUTON){
 			cameraOffset = 0.0;
 		}
-		else*/{
+		else*/
 			cameraOffset = getCameraAngle();
 			
-		}
+		
 		//populate smart dashboard with some useful data
 		SmartDashboard.putNumber("get camera angle", getCameraAngle());
 		SmartDashboard.putNumber("camera offset", cameraOffset);
@@ -238,6 +249,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 	private synchronized double getCameraAngle() {
 		double offset = table.getNumber("Degrees", 0.0);
 		if(checkTargetFound(offset)) {
+			if(offset!=0.0){
+				return offset+Constants.TURRET_OFFSET;
+			}
 			return offset;
 		}
 		return 0.0;

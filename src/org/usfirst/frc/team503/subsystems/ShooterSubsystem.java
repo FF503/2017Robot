@@ -31,8 +31,8 @@ public class ShooterSubsystem extends Subsystem {
 		shooterMotor.setProfile(0);
 		shooterMotor.setPID(Robot.bot.SHOOT_P, Robot.bot.SHOOT_I, Robot.bot.SHOOT_D);
 		shooterMotor.setF(Robot.bot.SHOOT_F);
-		shooterMotor.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_10Ms);
-		shooterMotor.SetVelocityMeasurementWindow(32);
+		shooterMotor.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_100Ms);
+		shooterMotor.SetVelocityMeasurementWindow(64);
 	}
 	
 	private static ShooterSubsystem instance = new ShooterSubsystem();
@@ -67,6 +67,10 @@ public class ShooterSubsystem extends Subsystem {
 		return shooterMotor.getOutputCurrent();
 	}
 	
+	public double getPower(){
+		return getCurrent() * getVoltage();
+	}
+	
 	public double getVoltage(){
 		return shooterMotor.getOutputVoltage();
 	}
@@ -82,9 +86,12 @@ public class ShooterSubsystem extends Subsystem {
 	public void sendDashboardData(){
 		SmartDashboard.putNumber("Shooter RPM", ShooterSubsystem.getInstance().getSpeed());
 		SmartDashboard.putNumber("Shooter position", ShooterSubsystem.getInstance().getPosition());
-		SmartDashboard.putNumber("Shooter Current", ShooterSubsystem.getInstance().getCurrent());
-		SmartDashboard.putNumber("Shooter voltage", getVoltage());
+		SmartDashboard.putNumber("Shooter Current (Amps)", ShooterSubsystem.getInstance().getCurrent());
+		SmartDashboard.putNumber("Shooter power (Watts)", ShooterSubsystem.getInstance().getPower());
+		SmartDashboard.putNumber("Shooter voltage (Volts)", getVoltage());
 		SmartDashboard.putString("Shooting preset", RobotState.getInstance().getShooterPreset().toString());
+		SmartDashboard.putBoolean("Shooter running", RobotState.getInstance().getShooterStatus());
+		SmartDashboard.putBoolean("Shooter ready to fire", RobotState.getInstance().getReadyToFire());
 	}
 	
     public void initDefaultCommand() {

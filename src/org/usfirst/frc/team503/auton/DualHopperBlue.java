@@ -1,7 +1,6 @@
 package org.usfirst.frc.team503.auton;
 
-import org.usfirst.frc.team503.commands.DriveStraightDistanceCommand;
-import org.usfirst.frc.team503.commands.PlaceGearCommand;
+import org.usfirst.frc.team503.commands.ArcDriveCommand;
 import org.usfirst.frc.team503.commands.RaiseGearPlacer;
 import org.usfirst.frc.team503.commands.SetReadyToFire;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
@@ -9,9 +8,12 @@ import org.usfirst.frc.team503.robot.RobotState;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class CenterPegCenterStartBlue extends CommandGroup {
+/**
+ *
+ */
+public class DualHopperBlue extends CommandGroup {
 
-    public CenterPegCenterStartBlue(boolean shoot) {
+    public DualHopperBlue(boolean shoot) {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -28,33 +30,18 @@ public class CenterPegCenterStartBlue extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	double[][] centerPinCenterStart = {
-				{0, 13.5},
-				{-4, 13.5}
-		};
-    	
-    	double[][] backUpFromCenterPin = {
-    			{0,13.5},
-    			{5,13.5}
-    	};
-    	
     	addParallel(new RaiseGearPlacer());    	
-		addSequential(new DriveStraightDistanceCommand(48,2.0,true));
+		//addSequential(new DriveStraightDistanceCommand(110, 3.0,true));//120 at states
+    	addSequential(new ArcDriveCommand(270, -90, 130, .3, 3.0, false));
 		if(shoot){
-			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.CenterPegBlue); 
+			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.FarHopperBlue);
 			addSequential(new ShootSequenceCommand(true));
-			addParallel(new ShootSequenceCommand(false));
+			addParallel(new ShootSequenceCommand(false));		
 		}
-		addSequential(new AutonDriveCommand2());
-		addSequential(new PlaceGearCommand());
-		
-		if(shoot){
-			addSequential(new DriveStraightDistanceCommand(64,2.0,false));//48
+		/*addSequential(new GyroTurnCommand(90));
+		addSequential(new DriveStraightDistanceCommand(96,3.0,false));//42
+*/		if(shoot){
 			addSequential(new SetReadyToFire());
 		}
-		else{
-			addSequential(new DriveStraightDistanceCommand(12,1.0,false));
-		}
-			
     }
 }

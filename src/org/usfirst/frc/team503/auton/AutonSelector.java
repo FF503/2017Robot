@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class AutonSelector {
 
 	public SendableChooser<AutonChoices.Alliances> allianceChooser;
-	public SendableChooser<AutonChoices.GearPosition> gearPosChooser;
+	public SendableChooser<AutonChoices.StartPosition> startPosChooser;
 	public SendableChooser<AutonChoices.Shoot> shootChooser;
 	public SendableChooser<AutonChoices.BinPosition> binChooser;
 	
@@ -24,7 +24,7 @@ public class AutonSelector {
 	public AutonSelector(){
 		//All of the Auton Choosers
 		allianceChooser = new SendableChooser<>();
-		gearPosChooser = new SendableChooser<>();
+		startPosChooser = new SendableChooser<>();
 		shootChooser = new SendableChooser<>();
 		binChooser = new SendableChooser<>();
 	}
@@ -45,10 +45,11 @@ public class AutonSelector {
 		allianceChooser.addObject("[B] Blue", AutonChoices.Alliances.BLUE);
 		
 		//The gear position choices
-		gearPosChooser.addObject("[L] Left", AutonChoices.GearPosition.LEFT);
-		gearPosChooser.addDefault("[C] Center", AutonChoices.GearPosition.CENTER);
-		gearPosChooser.addObject("[R] Right", AutonChoices.GearPosition.RIGHT);
-		gearPosChooser.addObject("[N] Do Nothing", AutonChoices.GearPosition.DO_NOTHING);
+		startPosChooser.addObject("[L] Left Peg", AutonChoices.StartPosition.LEFT);
+		startPosChooser.addDefault("[C] Center Peg", AutonChoices.StartPosition.CENTER);
+		startPosChooser.addObject("[R] Right Peg", AutonChoices.StartPosition.RIGHT);
+		startPosChooser.addObject("[B] Bin", AutonChoices.StartPosition.BIN);
+		startPosChooser.addObject("[D] Dual Bin", AutonChoices.StartPosition.DUAL_BIN);
 		
 		
 		//Whether or not to shoot
@@ -62,7 +63,7 @@ public class AutonSelector {
 		
 		//Putting all of the SendableChoosers onto the SmartDashboard
 		SmartDashboard.putData("Choose Alliance", allianceChooser);
-		SmartDashboard.putData("Choose Gear Position", gearPosChooser);
+		SmartDashboard.putData("Choose Gear Position", startPosChooser);
 		SmartDashboard.putData("Shoot This auton?", shootChooser);
 		SmartDashboard.putData("Choose Bin to Dump", binChooser);
 	}
@@ -281,11 +282,10 @@ public class AutonSelector {
 //		}
 		
 		AutonChoices.Alliances allianceChoice = allianceChooser.getSelected();
-		AutonChoices.GearPosition gearPositionChoice = gearPosChooser.getSelected();
+		AutonChoices.StartPosition gearPositionChoice = startPosChooser.getSelected();
 		AutonChoices.Shoot shootChoice = shootChooser.getSelected();
 		AutonChoices.BinPosition binChoice = binChooser.getSelected();
 		
-		CommandGroup selectedAuton = null;
 		/* Brace yourself for a lot of nested if-else statements
 		 * This is where the commands are determined 
 		 * 
@@ -346,11 +346,11 @@ public class AutonSelector {
 					switch(shootChoice) {
 					case SHOOT:
 						//Red Alliance, Right Gear, Dump Right Bin, Shoot
-						(new RightPegRightStartRed(true, true)).start();
+						(new ArcRightPegRed(true, true)).start();
 						break;
 					case DONT_SHOOT:
 						//Red Alliance, Right Gear, Dump Right Bin, Don't Shoot
-						(new RightPegRightStartRed(true, false)).start();
+						(new ArcRightPegRed(false, true)).start();
 						break;
 					}
 					break;
@@ -368,7 +368,7 @@ public class AutonSelector {
 					break;
 				}
 				break;
-			case DO_NOTHING:
+			case BIN:
 				//Red Alliance, Do Nothing
 				switch(binChoice){
 				case RIGHT_BIN:
@@ -383,6 +383,20 @@ public class AutonSelector {
 					break;
 				}
 				break;
+			case DUAL_BIN:
+				switch(binChoice){
+				case RIGHT_BIN:
+					switch(shootChoice){
+					case SHOOT:
+						(new DualHopperRed(true)).start();
+						break;
+					case DONT_SHOOT:
+						(new DualHopperRed(false)).start();
+						break;
+					}
+					break;					
+				}
+				break;
 			}
 			break;
 		case BLUE:
@@ -393,16 +407,14 @@ public class AutonSelector {
 					switch(shootChoice) {
 					case SHOOT:
 						//Blue Alliance, Left Gear, Dump Left Bin, Shoot
-						(new LeftPegLeftStartBlue(true, true)).start();
+						(new ArcLeftPegBlue(true, true)).start();
 						break;
 					case DONT_SHOOT:
 						//Blue Alliance, Left Gear, Dump Left Bin, Don't Shoot
-						(new LeftPegLeftStartBlue(true, false)).start();
+						(new ArcLeftPegBlue(false, true)).start();
 						break;
 					}
-					break;
-			
-					
+					break;					
 				case NO_BIN: 
 					switch(shootChoice) {
 					case SHOOT:
@@ -462,7 +474,7 @@ public class AutonSelector {
 					break;
 				}
 				break;
-			case DO_NOTHING:
+			case BIN:
 				//Blue Alliance, Do Nothing
 				switch(binChoice){
 				case LEFT_BIN:
@@ -477,19 +489,22 @@ public class AutonSelector {
 						break;
 					}
 					break;
-				case RIGHT_BIN:
+				}
+				break;
+			case DUAL_BIN:
+				switch(binChoice){
+				case LEFT_BIN:
 					switch(shootChoice){
-					case SHOOT:
-						(new DumpFarBinBlue(true)).start();
-						break;
-					case DONT_SHOOT:
-						(new DumpFarBinBlue(false)).start();
-						break;
+						case SHOOT:
+							(new DualHopperBlue(true)).start();
+							break;
+						case DONT_SHOOT:
+							(new DualHopperBlue(false)).start();
+							break;
 					}
 					break;
 				}
 				break;
-				
 			}
 			break;
 		}

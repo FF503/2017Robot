@@ -33,19 +33,28 @@ public class RightPegRightStartBlue extends CommandGroup {
 
     	addParallel(new RaiseGearPlacer());    	
 		//addSequential(new RunMotionProfileCommand(leftPinLeftStart, 2, 1, true));
-    	addSequential(new DriveStraightDistanceCommand(58.5, 3.0, true));
+    	addSequential(new DriveStraightDistanceCommand(63, 3.0, true)); //58.5
+    	if(shoot){
+    		if(dump){
+    		}
+    		else{
+    			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.FarPegBlue);
+    		}
+			addSequential(new ShootSequenceCommand(true));
+			addParallel(new ShootSequenceCommand());
+    	}
 		addSequential(new GyroTurnCommand(-60));
-		addSequential(new DriveStraightDistanceCommand(42.0, 2.0, true));
+		addSequential(new DriveStraightDistanceCommand(36.0, 2.0, true));
 		addSequential(new AutonDriveCommand2());
 		addSequential(new PlaceGearCommand());
 		
-		if(shoot){
-			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.FarPegBlue);
+		if(dump){
+			
+		}
+		else if(shoot){
 			addSequential(new DriveStraightDistanceCommand(24.0, 2.0, false));
-			addSequential(new GyroTurnCommand(58));
-			addSequential(new ShootSequenceCommand(true));
-			addParallel(new ShootSequenceCommand());
-			addSequential(new DriveStraightDistanceCommand(72.0,3.0,false));
+			addSequential(new GyroTurnCommand(60));
+			addSequential(new DriveStraightDistanceCommand(81.0,3.0,false));
 			addSequential(new SetReadyToFire());
 		}
 		else{

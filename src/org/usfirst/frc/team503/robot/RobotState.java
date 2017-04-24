@@ -1,5 +1,8 @@
 package org.usfirst.frc.team503.robot;
 
+import org.usfirst.frc.team503.subsystems.TurretSubsystem;
+import org.usfirst.frc.team503.turret.TurretThread;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -32,15 +35,15 @@ public class RobotState extends Subsystem {
 	private DoNothingAuton doNothingAuton;
 	private DumpBin dumpBin;
 	private Shoot shoot;
-	
-	
 	private ShootingPresets shootingPreset;
 	private double turretAngle;
 	private boolean hint;
 	private boolean resetAtZero;
 	private boolean turretHasReset;
 	private boolean intakeGearRunning;
-    	
+    private double gyroAngle;	
+	
+	
 	public RobotState() {
 		shooterIsRunning = false; 
 		turretIsLocked = false;
@@ -67,8 +70,7 @@ public class RobotState extends Subsystem {
 		doNothingAuton = DoNothingAuton.DO_NOTHING;
 		dumpBin = DumpBin.DONT_DUMP_BIN;
 		shoot = Shoot.DONT_SHOOT;
-		
-		
+		gyroAngle = 0.0;		
 	}	
 	
 	private static RobotState instance = new RobotState();
@@ -146,7 +148,7 @@ public class RobotState extends Subsystem {
 	}
 	
 	public enum ShootingPresets{
-		NoTracking(30.0, 4500, 503), Batter(13.0,3950,285.0), HopperRed(26, 4475, 8.0), CenterPegBlue(29.0,4700, 0.0), CenterPegRed(31.0, 4975, 219.5), PegNearHopperBlue(28, 4700, 270.0), PegNearHopperRed(28.0, 4700,299), FarPegBlue(35.0,4500,7.0), HopperBlue(23.0,4125,199.0);
+		NoTracking(30.0, 4500, 503), Batter(13.0,3650,285.0), HopperRed(25.0, 4270, 13.0), CenterPegBlue(30.0,4500, 7.7), CenterPegRed(30.0, 4850, 224.5), PegNearHopperBlue(28, 4500, 278.0), PegNearHopperRed(24.0, 4500,299.0), FarPegBlue(34.0,5200,12.0), HopperBlue(23.0,3960,203.0), FarHopperBlue(28.0, 4500, 199.0), FarPegRed(34.0, 5450, 207.1);
 		//pegnearhopperblue 272, 34, 4950
 		//hopperred 34, 4400
 		
@@ -159,6 +161,14 @@ public class RobotState extends Subsystem {
 			this.turretAngle = turretAngle;
 		}
 		
+	}
+	
+	public void setGyroAngle(double angle){
+		gyroAngle = angle;
+	}
+	
+	public double getGyroAngle(){
+		return gyroAngle;
 	}
 	
 	public void setReadyToFire(boolean r){
@@ -221,7 +231,7 @@ public class RobotState extends Subsystem {
 	}
 	
 	public synchronized void setTurretState(TurretState state){
-		System.out.println("Previous state:" + turretState.toString() + "Next state:" + state.toString());
+		System.out.println("Previous state: " + turretState.toString() + " Next state: " + state.toString());
 		turretState = state;
 	}
 	

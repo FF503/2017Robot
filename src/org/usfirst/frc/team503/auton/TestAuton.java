@@ -1,8 +1,16 @@
 package org.usfirst.frc.team503.auton;
 
 import org.usfirst.frc.team503.commands.ArcDriveCommand;
+import org.usfirst.frc.team503.commands.DriveStraightDistanceCommand;
+import org.usfirst.frc.team503.commands.GyroTurnCommand;
+import org.usfirst.frc.team503.commands.PlaceGearCommand;
+import org.usfirst.frc.team503.commands.RaiseGearPlacer;
+import org.usfirst.frc.team503.commands.SetReadyToFire;
+import org.usfirst.frc.team503.commands.ShootSequenceCommand;
+import org.usfirst.frc.team503.robot.RobotState;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
  *
@@ -40,6 +48,11 @@ public class TestAuton extends CommandGroup {
     	//addSequential(new PlaceGearCommand());
     	//addSequential(new DriveStraightDistanceCommand(100.0, 5.0, false));
     	//addSequential(new DriveStraightDistanceCommand(48.00,2.0,true));
-    	addSequential(new ArcDriveCommand(48.0, -60.0, 12.0, 2.5, true));
+    	
+    	//addSequential(new DriveStraightDistanceCommand(12.0, 1.0, false));
+    	//addSequential(new WaitCommand(1));
+    	/*addSequential(new AutonDriveCommand2());
+    	;
+    	*/
    }
 }

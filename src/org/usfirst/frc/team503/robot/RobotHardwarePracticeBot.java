@@ -49,7 +49,7 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 //	public final double TURRET_DEGREES_PER_ROTATION = TURRET_DEGREES_IN_RANGE/TURRET_ROTATIONS_IN_RANGE;
 	private final double TURRET_DIAMETER = 13.0;
 	public double TURRET_ROTATIONS_IN_RANGE = 12.159912109375;
-	public double TURRET_TOLERANCE = 1.0;//1.0
+	public double TURRET_TOLERANCE = 0.75;//1.0
 	public double TURRET_TEETH_BETWEEN_LIMIT_SWITCHES = 8.5;
 	public final double TURRET_TOTAL_TEETH = 156.0;
 	public final double TURRET_DEGREES_BETWEEN_LIMIT_SWITCHES = TURRET_TEETH_BETWEEN_LIMIT_SWITCHES/TURRET_TOTAL_TEETH * 360;
@@ -83,21 +83,16 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final double REVERSE_RIGHT_ENCODER = 1.0;
 	public final double REVERSE_LEFT_ENCODER = -1.0;
 	
-	public final double ARC_DRIVE_MAX = 0.6;
-	public final double ARC_DRIVE_P = 0.8;
-	public final double ARC_TURN_P = 0.6;
+	public final double ARC_DRIVE_MAX = 0.8;
+	public final double ARC_DRIVE_P = .05;
+	public final double ARC_TURN_P = .04;
 	public final double ARC_GYRO_TOLERANCE = 0.5;
-	public final double ARC_ANGLE_PER_INCH = 1.0;
+	public final double ARC_ANGLE_PER_INCH = 0.35;//.25
 	
-//	public final double SHOOT_P = 1.8; //0.7
-//	public final double SHOOT_I = 0.0; //0.0
-//	public final double SHOOT_D = 90.0; //100.0
-//	public final double SHOOT_F = 0.0188;
-//	public final double SHOOT_TOLERANCE = 50.0;
-	public final double SHOOT_P = 5.0; //0.7
+	public final double SHOOT_P = 1.0;//1.0 //10.0 
 	public final double SHOOT_I = 0.0; //0.0
-	public final double SHOOT_D = 150.0; //100.0
-	public final double SHOOT_F = 0.0188;
+	public final double SHOOT_D = 15.0;//15.0 //22.0
+	public final double SHOOT_F = 0.0205;//.0188
 	public final double SHOOT_TOLERANCE = 50.0;
 	
 	public final double minAutonDriveTurnPower = 0.05; //0.05
@@ -133,6 +128,7 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public double TURRET_P = 0.38;
 	public double TURRET_I = 0.0;
 	public double TURRET_D = 5.0;	
+	
 	public final double DEFLECTOR_P = .25;
 	public final double DEFLECTOR_I = 0.0002;
 	public final double DEFLECTOR_D = 5.0;
@@ -142,6 +138,7 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final double DEFLECTOR_COUNTS_PER_DEGREE = DEFLECTOR_MAX_COUNTS/(DEFLECTOR_MAX_ANGLE - DEFLECTOR_MIN_ANGLE);
 	public final double DEFLECTOR_TOLERANCE = 1.0;
 	public final boolean DEFLECTOR_REVERSE_SENSOR = true;
+	
 	@Override
 	public void initialize(){
 	}

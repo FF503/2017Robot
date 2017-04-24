@@ -1,6 +1,8 @@
 package org.usfirst.frc.team503.auton;
 
+import org.usfirst.frc.team503.commands.ArcDriveCommand;
 import org.usfirst.frc.team503.commands.DriveStraightDistanceCommand;
+import org.usfirst.frc.team503.commands.GyroTurnCommand;
 import org.usfirst.frc.team503.commands.PlaceGearCommand;
 import org.usfirst.frc.team503.commands.RaiseGearPlacer;
 import org.usfirst.frc.team503.commands.SetReadyToFire;
@@ -8,10 +10,14 @@ import org.usfirst.frc.team503.commands.ShootSequenceCommand;
 import org.usfirst.frc.team503.robot.RobotState;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class CenterPegCenterStartBlue extends CommandGroup {
+/**
+ *
+ */
+public class ArcLeftPegBlue extends CommandGroup {
 
-    public CenterPegCenterStartBlue(boolean shoot) {
+    public ArcLeftPegBlue(boolean shoot, boolean dump) {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -28,33 +34,29 @@ public class CenterPegCenterStartBlue extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	double[][] centerPinCenterStart = {
-				{0, 13.5},
-				{-4, 13.5}
-		};
-    	
-    	double[][] backUpFromCenterPin = {
-    			{0,13.5},
-    			{5,13.5}
-    	};
-    	
-    	addParallel(new RaiseGearPlacer());    	
-		addSequential(new DriveStraightDistanceCommand(48,2.0,true));
-		if(shoot){
-			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.CenterPegBlue); 
-			addSequential(new ShootSequenceCommand(true));
-			addParallel(new ShootSequenceCommand(false));
+    	addParallel(new RaiseGearPlacer());
+    	addSequential(new ArcDriveCommand(168.0, 60.0, 12.0, 0.35, 3.5, true));
+    	if(shoot){
+    		if(dump){
+    	    	RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperBlue);
+    		}
+    		else{
+    			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.PegNearHopperBlue);
+    		}
+        	addSequential(new ShootSequenceCommand(true));
+        	addParallel(new ShootSequenceCommand(false));
+    	}
+    	addSequential(new WaitCommand(0.25));
+    	addSequential(new PlaceGearCommand());
+		if(dump){
+			addSequential(new ArcDriveCommand(5.0, 30.0, 220.0, 0.25, 4.0, false));
+			if(shoot){
+				addSequential(new SetReadyToFire());
+			}
 		}
-		addSequential(new AutonDriveCommand2());
-		addSequential(new PlaceGearCommand());
-		
-		if(shoot){
-			addSequential(new DriveStraightDistanceCommand(64,2.0,false));//48
+		else if(shoot){
+	    	addSequential(new DriveStraightDistanceCommand(12, 0.5, false));
 			addSequential(new SetReadyToFire());
 		}
-		else{
-			addSequential(new DriveStraightDistanceCommand(12,1.0,false));
-		}
-			
     }
 }

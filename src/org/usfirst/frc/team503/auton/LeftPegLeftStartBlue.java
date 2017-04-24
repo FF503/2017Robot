@@ -33,6 +33,16 @@ public class LeftPegLeftStartBlue extends CommandGroup {
     	addParallel(new RaiseGearPlacer());    	
 		//addSequential(new RunMotionProfileCommand(leftPinLeftStart, 2, 1, true));
     	addSequential(new DriveStraightDistanceCommand(61, 2.0, true));//59.5
+    	if(shoot){
+    		if(dump){
+				RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperBlue);
+    		}
+    		else{
+    			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.PegNearHopperBlue);
+    		}
+			addSequential(new ShootSequenceCommand(true));
+			addParallel(new ShootSequenceCommand());
+    	}
 		addSequential(new GyroTurnCommand(60));
 		addSequential(new DriveStraightDistanceCommand(36.0, 2.0, true));
 		addSequential(new AutonDriveCommand2());
@@ -42,7 +52,6 @@ public class LeftPegLeftStartBlue extends CommandGroup {
 			addSequential(new DriveStraightDistanceCommand(41, 5.0,false));
 			addSequential(new GyroTurnCommand(30, true));
 			if(shoot){
-				RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperBlue);
 				addSequential(new ShootSequenceCommand(true));
 				addParallel(new ShootSequenceCommand(false));
 			}
@@ -52,9 +61,6 @@ public class LeftPegLeftStartBlue extends CommandGroup {
 		}
 		else if(shoot){
 			addSequential(new DriveStraightDistanceCommand(12,1.0,false));
-			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.PegNearHopperBlue);
-			addSequential(new ShootSequenceCommand(true));
-			addParallel(new ShootSequenceCommand());
 			addSequential(new SetReadyToFire());
 		}
 		else{

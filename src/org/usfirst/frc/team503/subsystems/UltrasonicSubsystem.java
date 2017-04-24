@@ -33,7 +33,7 @@ public class UltrasonicSubsystem extends Subsystem {
 		return instance;
 	}
 	public double getLeftUltrasonicDistance(){
-		ul = Math.floor((leftUltrasonic.getDistance() * 1000) / 1000);
+		ul = Math.floor((leftUltrasonic.getDistance() * 100000) / 100000);
 		return ul;
 	}
 	public double getLeftUltrasonicVoltage(){
@@ -44,7 +44,7 @@ public class UltrasonicSubsystem extends Subsystem {
 	}
 	
 	public double getRightUltrasonicDistance(){
-		ur = Math.floor((rightUltrasonic.getDistance() * 1000) / 1000);
+		ur = Math.floor((rightUltrasonic.getDistance() * 100000) / 100000);
 		return ur;
 	}
 	public double getUltrasonicDistance(){

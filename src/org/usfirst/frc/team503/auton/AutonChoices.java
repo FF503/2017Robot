@@ -24,8 +24,8 @@ public class AutonChoices{
 		public String getSmartDashboardType() { return null; }
 	}
 	
-	public enum GearPosition implements Sendable {
-		LEFT, CENTER, RIGHT, DO_NOTHING;
+	public enum StartPosition implements Sendable {
+		LEFT, CENTER, RIGHT, BIN, DUAL_BIN;
 
 		@Override
 		public void initTable(ITable subtable) { }

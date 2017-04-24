@@ -31,7 +31,8 @@ public class AutomaticGearIntakeCommand extends CommandGroup {
     //	addSequential(new WaitCommand(0.1));
     	if(!OI.getReverseGearIntakeButton()){
     		addParallel(new RaiseGearPlacer());
-        	addSequential(new TurnGearInLightOn());
+        	addParallel(new TurnGearInLightOn());
+        	addSequential(new RumbleJoystickCommand());
     	}
     }
 }

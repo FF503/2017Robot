@@ -33,35 +33,41 @@ public class RightPegRightStartRed extends CommandGroup {
     	addParallel(new RaiseGearPlacer());    	
 		//addSequential(new RunMotionProfileCommand(leftPinLeftStart, 2, 1, true));
     	addSequential(new DriveStraightDistanceCommand(58.5, 3.0, true));
+    	if (shoot){
+			if(dump){
+				RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperRed);
+			}
+			else{
+				RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.PegNearHopperRed);
+			}
+			addSequential(new ShootSequenceCommand(true));
+			addParallel(new ShootSequenceCommand(false));
+		}
 		addSequential(new GyroTurnCommand(-55));
 		addSequential(new DriveStraightDistanceCommand(36.0, 1.5, true));
 		addSequential(new AutonDriveCommand2());
 		addSequential(new PlaceGearCommand());
 		
 		if (dump){
-		//	addSequential(new RunMotionProfileCommand(dumpBinForward, 2, 1, false)); //1.5
-			addSequential(new DriveStraightDistanceCommand(24, 1.5, false));
+			addSequential(new DriveStraightDistanceCommand(12, 1.0, false));
+			addSequential(new GyroTurnCommand(-42, true));
+			addSequential(new DriveStraightDistanceCommand(90, 3.0, false));
+			/*addSequential(new DriveStraightDistanceCommand(24, 1.5, false));
 			addSequential(new GyroTurnCommand(-60, true));
-	    	addSequential(new DriveStraightDistanceCommand(60, 2.0,false));
+	    	addSequential(new DriveStraightDistanceCommand(45, 2.0,false));
 	    	addSequential(new GyroTurnCommand(30, false));
+			addSequential(new DriveStraightDistanceCommand(30.0, 1.0, false));*/
 			if(shoot){
-				RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperRed);
-				addSequential(new ShootSequenceCommand(true));
-				addParallel(new ShootSequenceCommand(false));
+				addSequential(new SetReadyToFire());
 			}
-			addSequential(new DriveStraightDistanceCommand(15.0, 1.0, false));
-			addSequential(new SetReadyToFire());
 			//addSequential(new RunMotionProfileCommand(hitBin, 2, 1, false));	//1
 		}
 		else if(shoot){
-			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.PegNearHopperRed);
-			addSequential(new ShootSequenceCommand(true));
-			addParallel(new ShootSequenceCommand(false));
+//			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.PegNearHopperRed);
+//			addSequential(new ShootSequenceCommand(true));
+//			addParallel(new ShootSequenceCommand(false));
 			addSequential(new DriveStraightDistanceCommand(12,1.0,false));
 			addSequential(new SetReadyToFire());
-		}
-		else{
-			addSequential(new DriveStraightDistanceCommand(12,1.0,false));
 		}
     }
 }
