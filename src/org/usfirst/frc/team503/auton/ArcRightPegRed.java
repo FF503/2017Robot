@@ -36,7 +36,7 @@ public class ArcRightPegRed extends CommandGroup {
         // arm.
     	
     	addParallel(new RaiseGearPlacer());
-    	addSequential(new ArcDriveCommand(175.0, -60.0, 30.0, 0.35, 3.5, true));
+    	addSequential(new ArcDriveCommand(195.0, -60.0, 30.0, 0.35, 3.5, true));//175 first run
     	if(shoot){
     		if(dump){
     	    	RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperRed);
@@ -49,10 +49,10 @@ public class ArcRightPegRed extends CommandGroup {
     	}
     	addSequential(new WaitCommand(0.25));
     	addSequential(new PlaceGearCommand());
-    	addSequential(new DriveStraightDistanceCommand(12, 0.5, false));
+    	addSequential(new DriveStraightDistanceCommand(24, 0.5, false));
 		if(dump){
-			addSequential(new GyroTurnCommand(-41, true));
-			addSequential(new DriveStraightDistanceCommand(90, 3.0, false));
+			addSequential(new GyroTurnCommand(-45, true));
+			addSequential(new DriveStraightDistanceCommand(88, 3.0, false));
 			if(shoot){
 				addSequential(new SetReadyToFire());
 			}

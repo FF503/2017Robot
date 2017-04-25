@@ -49,7 +49,7 @@ public class ArcLeftPegBlue extends CommandGroup {
     	addSequential(new WaitCommand(0.25));
     	addSequential(new PlaceGearCommand());
 		if(dump){
-			addSequential(new ArcDriveCommand(5.0, 30.0, 220.0, 0.25, 4.0, false));
+			addSequential(new ArcDriveCommand(5.0, 30.0, 200.0, 0.2, 4.0, false));//5.0,30.0,220.0,.25
 			if(shoot){
 				addSequential(new SetReadyToFire());
 			}

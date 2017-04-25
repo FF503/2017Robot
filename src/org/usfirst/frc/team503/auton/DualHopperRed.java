@@ -35,7 +35,7 @@ public class DualHopperRed extends CommandGroup {
     	
     	addParallel(new RaiseGearPlacer());    	
 		//addSequential(new DriveStraightDistanceCommand(110, 3.0,true));//120 at states
-    	addSequential(new ArcDriveCommand(270, 90, 130, .3, 3.0, false));
+    	addSequential(new ArcDriveCommand(280, 90, 88, .3, 3.0, false));
 		if(shoot){
 			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperRed);
 			addSequential(new ShootSequenceCommand(true));

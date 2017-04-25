@@ -84,8 +84,8 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final double REVERSE_LEFT_ENCODER = -1.0;
 	
 	public final double ARC_DRIVE_MAX = 0.8;
-	public final double ARC_DRIVE_P = .05;
-	public final double ARC_TURN_P = .04;
+	public final double ARC_DRIVE_P = .02;
+	public final double ARC_TURN_P = .06;//.04
 	public final double ARC_GYRO_TOLERANCE = 0.5;
 	public final double ARC_ANGLE_PER_INCH = 0.35;//.25
 	

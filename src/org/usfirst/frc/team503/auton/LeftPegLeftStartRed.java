@@ -74,7 +74,7 @@ public class LeftPegLeftStartRed extends CommandGroup {
 		else if(shoot){
 			addSequential(new DriveStraightDistanceCommand(24,1.0,false));
 			addSequential(new GyroTurnCommand(-55));
-			addSequential(new DriveStraightDistanceCommand(76, 4.0, false));
+			addSequential(new DriveStraightDistanceCommand(80, 4.0, false));
 			addSequential(new SetReadyToFire());
 		}
 		else{

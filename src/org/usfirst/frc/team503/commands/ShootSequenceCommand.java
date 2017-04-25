@@ -74,7 +74,7 @@ public class ShootSequenceCommand extends Command {
     		RobotState.getInstance().setTurretState(RobotState.TurretState.TAKING_HINT);
     		}*/
     		SmartDashboard.putBoolean("Deflector on target", DeflectorSubsystem.getInstance().isOnTarget());
-    		if(ShooterSubsystem.getInstance().isOnTarget() && DeflectorSubsystem.getInstance().isOnTarget() && RobotState.getInstance().getShooterStatus()){
+    		if(ShooterSubsystem.getInstance().isOnTarget() && DeflectorSubsystem.getInstance().isOnTarget() && RobotState.getInstance().getReadyToFire()){
     			if(TurretSubsystem.getInstance().getThread().getPiAlive()){
     				if(RobotState.getInstance().getTurretIsLocked()){
     					DeflectorSubsystem.getInstance().setMotorPower(0.0);

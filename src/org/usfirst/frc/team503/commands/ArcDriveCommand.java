@@ -55,15 +55,16 @@ public class ArcDriveCommand extends Command {
     	this.timeout = timeout;
     	this.reverse = reverse;
     	time = new Timer();
+    	GyroSubsystem.resetGyro();
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	GyroSubsystem.resetGyro();
     	time.start();
     	DrivetrainSubsystem.getInstance().percentVoltageMode();
      	DrivetrainSubsystem.getInstance().resetController(); 
     	DrivetrainSubsystem.getInstance().resetEncoders();
-    	GyroSubsystem.resetGyro();
     	thetaSetPoint = 0;
     	pK = Robot.bot.ARC_DRIVE_P; 
     	pMax = Robot.bot.ARC_DRIVE_MAX;		 				    // maximum power 
