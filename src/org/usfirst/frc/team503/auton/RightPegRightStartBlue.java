@@ -3,6 +3,7 @@ package org.usfirst.frc.team503.auton;
 import org.usfirst.frc.team503.commands.DriveStraightDistanceCommand;
 import org.usfirst.frc.team503.commands.GyroTurnCommand;
 import org.usfirst.frc.team503.commands.PlaceGearCommand;
+import org.usfirst.frc.team503.commands.PushFourthWallOutCommand;
 import org.usfirst.frc.team503.commands.RaiseGearPlacer;
 import org.usfirst.frc.team503.commands.SetReadyToFire;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
@@ -31,9 +32,9 @@ public class RightPegRightStartBlue extends CommandGroup {
         // arm.
     	
 
-    	addParallel(new RaiseGearPlacer());    	
+    	addParallel(new RaiseGearPlacer());   
 		//addSequential(new RunMotionProfileCommand(leftPinLeftStart, 2, 1, true));
-    	addSequential(new DriveStraightDistanceCommand(63, 3.0, true)); //58.5
+    	addSequential(new DriveStraightDistanceCommand(60.0, 3.0, true)); //60//58.5
     	if(shoot){
     		if(dump){
     		}
@@ -54,7 +55,7 @@ public class RightPegRightStartBlue extends CommandGroup {
 		else if(shoot){
 			addSequential(new DriveStraightDistanceCommand(24.0, 2.0, false));
 			addSequential(new GyroTurnCommand(60));
-			addSequential(new DriveStraightDistanceCommand(81.0,3.0,false));
+			addSequential(new DriveStraightDistanceCommand(88.0,3.0,false));
 			addSequential(new SetReadyToFire());
 		}
 		else{

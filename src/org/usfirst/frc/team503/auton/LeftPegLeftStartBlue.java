@@ -3,6 +3,7 @@ package org.usfirst.frc.team503.auton;
 import org.usfirst.frc.team503.commands.DriveStraightDistanceCommand;
 import org.usfirst.frc.team503.commands.GyroTurnCommand;
 import org.usfirst.frc.team503.commands.PlaceGearCommand;
+import org.usfirst.frc.team503.commands.PushFourthWallOutCommand;
 import org.usfirst.frc.team503.commands.RaiseGearPlacer;
 import org.usfirst.frc.team503.commands.SetReadyToFire;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
@@ -30,9 +31,9 @@ public class LeftPegLeftStartBlue extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
  
-    	addParallel(new RaiseGearPlacer());    	
+    	addParallel(new RaiseGearPlacer());  
 		//addSequential(new RunMotionProfileCommand(leftPinLeftStart, 2, 1, true));
-    	addSequential(new DriveStraightDistanceCommand(61, 2.0, true));//59.5
+    	addSequential(new DriveStraightDistanceCommand(61, 2.5, true));//59.5
     	if(shoot){
     		if(dump){
 				RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperBlue);

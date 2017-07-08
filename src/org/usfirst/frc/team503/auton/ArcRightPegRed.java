@@ -4,6 +4,7 @@ import org.usfirst.frc.team503.commands.ArcDriveCommand;
 import org.usfirst.frc.team503.commands.DriveStraightDistanceCommand;
 import org.usfirst.frc.team503.commands.GyroTurnCommand;
 import org.usfirst.frc.team503.commands.PlaceGearCommand;
+import org.usfirst.frc.team503.commands.PushFourthWallOutCommand;
 import org.usfirst.frc.team503.commands.RaiseGearPlacer;
 import org.usfirst.frc.team503.commands.SetReadyToFire;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
@@ -36,7 +37,8 @@ public class ArcRightPegRed extends CommandGroup {
         // arm.
     	
     	addParallel(new RaiseGearPlacer());
-    	addSequential(new ArcDriveCommand(195.0, -60.0, 30.0, 0.35, 3.5, true));//175 first run
+    	addParallel(new PushFourthWallOutCommand());
+    	addSequential(new ArcDriveCommand(205.0, -60.0, 30.0, 0.35, 3.5, true));//175 first run
     	if(shoot){
     		if(dump){
     	    	RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperRed);

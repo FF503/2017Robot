@@ -1,27 +1,28 @@
 package org.usfirst.frc.team503.commands;
 
-import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
+import org.usfirst.frc.team503.subsystems.IndexerSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ShiftToHighGear extends Command {
+public class PushFourthWallOutCommand extends Command {
 
-    public ShiftToHighGear() {
+    public PushFourthWallOutCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(IndexerSubsystem.getInstance());
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	DrivetrainSubsystem.getInstance().shiftGears(true);
+    	System.out.println("pumping");
+    	IndexerSubsystem.getInstance().pushFourthWallOut();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    
     }
 
     // Make this return true when this Command no longer needs to run execute()

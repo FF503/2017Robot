@@ -2,6 +2,7 @@ package org.usfirst.frc.team503.auton;
 
 import org.usfirst.frc.team503.commands.DriveStraightDistanceCommand;
 import org.usfirst.frc.team503.commands.PlaceGearCommand;
+import org.usfirst.frc.team503.commands.PushFourthWallOutCommand;
 import org.usfirst.frc.team503.commands.RaiseGearPlacer;
 import org.usfirst.frc.team503.commands.SetReadyToFire;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
@@ -38,7 +39,7 @@ public class CenterPegCenterStartBlue extends CommandGroup {
     			{5,13.5}
     	};
     	
-    	addParallel(new RaiseGearPlacer());    	
+    	addParallel(new RaiseGearPlacer());  
 		addSequential(new DriveStraightDistanceCommand(48,2.0,true));
 		if(shoot){
 			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.CenterPegBlue); 
@@ -49,7 +50,7 @@ public class CenterPegCenterStartBlue extends CommandGroup {
 		addSequential(new PlaceGearCommand());
 		
 		if(shoot){
-			addSequential(new DriveStraightDistanceCommand(64,2.0,false));//48
+			addSequential(new DriveStraightDistanceCommand(72,2.0,false));//48
 			addSequential(new SetReadyToFire());
 		}
 		else{

@@ -2,8 +2,8 @@ package org.usfirst.frc.team503.auton;
 
 import org.usfirst.frc.team503.commands.ArcDriveCommand;
 import org.usfirst.frc.team503.commands.DriveStraightDistanceCommand;
-import org.usfirst.frc.team503.commands.GyroTurnCommand;
 import org.usfirst.frc.team503.commands.PlaceGearCommand;
+import org.usfirst.frc.team503.commands.PushFourthWallOutCommand;
 import org.usfirst.frc.team503.commands.RaiseGearPlacer;
 import org.usfirst.frc.team503.commands.SetReadyToFire;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
@@ -35,7 +35,8 @@ public class ArcLeftPegBlue extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	addParallel(new RaiseGearPlacer());
-    	addSequential(new ArcDriveCommand(168.0, 60.0, 12.0, 0.35, 3.5, true));
+    	addParallel(new PushFourthWallOutCommand());
+    	addSequential(new ArcDriveCommand(180.0, 60.0, 20.0, 0.35, 3.5, true));
     	if(shoot){
     		if(dump){
     	    	RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperBlue);
@@ -49,7 +50,7 @@ public class ArcLeftPegBlue extends CommandGroup {
     	addSequential(new WaitCommand(0.25));
     	addSequential(new PlaceGearCommand());
 		if(dump){
-			addSequential(new ArcDriveCommand(5.0, 30.0, 200.0, 0.2, 4.0, false));//5.0,30.0,220.0,.25
+			addSequential(new ArcDriveCommand(25.0, 30.0, 150.0, 0.2, 4.0, false));//5.0,30.0,220.0,.25
 			if(shoot){
 				addSequential(new SetReadyToFire());
 			}

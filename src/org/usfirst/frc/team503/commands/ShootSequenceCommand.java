@@ -18,8 +18,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class ShootSequenceCommand extends Command {
-	double startTime, currTime;
-	boolean startHint, autonStart;
+	double startTime, currTime, endTime, shootStart;
+	int actuationNumber;
+	boolean startHint, autonStart, deflectorHold;
     public ShootSequenceCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -28,6 +29,8 @@ public class ShootSequenceCommand extends Command {
     	requires(DeflectorSubsystem.getInstance());
     	startHint = false;
     	autonStart = false;
+    	deflectorHold = false;
+    	actuationNumber = 0;
     }
     
     public ShootSequenceCommand(boolean autonStart){
@@ -36,6 +39,8 @@ public class ShootSequenceCommand extends Command {
     	requires(DeflectorSubsystem.getInstance());
     	startHint = false;
     	this.autonStart = autonStart;
+    	deflectorHold = false;
+    	actuationNumber = 0;
     }
 
     // Called just before this Command runs the first time
@@ -52,12 +57,13 @@ public class ShootSequenceCommand extends Command {
     //proof that ankith can't program
     //yeah whatever
     protected void execute() {
+		DeflectorSubsystem.getInstance().resetEncoder();
     	if(RobotState.getInstance().getState() == RobotState.State.TELEOP){
-    		DeflectorSubsystem.getInstance().resetEncoder();
         	SmartDashboard.putBoolean("Deflector on target", DeflectorSubsystem.getInstance().isOnTarget());
         	if(ShooterSubsystem.getInstance().isOnTarget() && DeflectorSubsystem.getInstance().isOnTarget() && RobotState.getInstance().getReadyToFire()){
-        		DeflectorSubsystem.getInstance().setMotorPower(0.0);
+//        		DeflectorSubsystem.getInstance().setMotorPower(0.0);
     			shoot();
+    			//actuateWall();
         	}
     		if (OI.getDPADUp()){
         		DeflectorSubsystem.getInstance().setSetpoint(DeflectorSubsystem.getInstance().getAngle() + 2.0);
@@ -75,15 +81,18 @@ public class ShootSequenceCommand extends Command {
     		}*/
     		SmartDashboard.putBoolean("Deflector on target", DeflectorSubsystem.getInstance().isOnTarget());
     		if(ShooterSubsystem.getInstance().isOnTarget() && DeflectorSubsystem.getInstance().isOnTarget() && RobotState.getInstance().getReadyToFire()){
-    			if(TurretSubsystem.getInstance().getThread().getPiAlive()){
+    			//DeflectorSubsystem.getInstance().setMotorPower(0.0);
+     			if(TurretSubsystem.getInstance().getThread().getPiAlive()){
     				if(RobotState.getInstance().getTurretIsLocked()){
-    					DeflectorSubsystem.getInstance().setMotorPower(0.0);
+    				//	DeflectorSubsystem.getInstance().setMotorPower(0.0);
     					shoot();
+    				//	actuateWall();
     				}
     			}
     			else {
-    				DeflectorSubsystem.getInstance().setMotorPower(0.0);
+    				//DeflectorSubsystem.getInstance().setMotorPower(0.0);
 					shoot();
+					//actuateWall();
     			}
     		}
     	}
@@ -95,7 +104,7 @@ public class ShootSequenceCommand extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	if(RobotState.getInstance().getState() == RobotState.State.TELEOP){
-            return OI.getShootRPMButton();
+            return OI.getShootEndButton();
     	}
     	else if(RobotState.getInstance().getState() == RobotState.State.AUTON){
     		return autonStart;
@@ -124,11 +133,50 @@ public class ShootSequenceCommand extends Command {
     	end();
     }
     
-    private void shoot(){
-    	IndexerSubsystem.getInstance().setMotorPower(0.7 * Robot.bot.REVERSE_INDEXER);//was 0.9 at states, 0.7 for testing
+    private void shoot() {
+    	IndexerSubsystem.getInstance().setMotorPower(0.6 * Robot.bot.REVERSE_INDEXER);//was 0.9 at states, 0.7 at worlds
 		IntakeSubsystem.getInstance().setMotorPower(-.75, -1.0);
+	/*	if(!deflectorHold){
+			DeflectorSubsystem.getInstance().setSetpoint(DeflectorSubsystem.getInstance().getAngle());
+			deflectorHold = true;
+		}*/
 		RobotState.getInstance().setIndexerStatus(true);
 		RobotState.getInstance().setIntakeStatus(true);
+		shootStart = Timer.getFPGATimestamp();
+		System.out.println("shootStart: " + shootStart);
+    }
+    
+    private void actuateWall(){
+    	currTime = Timer.getFPGATimestamp();
+    	System.out.println("in switch");
+    	System.out.println("actuationNumber: " + actuationNumber);
+    	switch(actuationNumber){
+    	case 0:
+    		if((currTime-shootStart)>3.0){
+        		IndexerSubsystem.getInstance().pushFourthWallOut();
+        		actuationNumber = 1;
+        		endTime = currTime;
+        		System.out.println("first actuation");
+        	}
+    		break;
+    	case 1:
+    		if((currTime-endTime)>0.1){
+    			IndexerSubsystem.getInstance().bringFourthWallIn();
+    			actuationNumber = 2;
+    			endTime = currTime;
+        		System.out.println("second actuation");
+    		}
+    		break;
+    	case 2:
+    		if((currTime-endTime)>0.1){
+    			IndexerSubsystem.getInstance().pushFourthWallOut();
+    			actuationNumber = 3;
+        		System.out.println("third actuation");
+    		}
+    	default:
+    		break;
+    	}
+    	
     }
 
 }

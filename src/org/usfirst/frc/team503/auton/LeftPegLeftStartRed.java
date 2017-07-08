@@ -3,6 +3,7 @@ package org.usfirst.frc.team503.auton;
 import org.usfirst.frc.team503.commands.DriveStraightDistanceCommand;
 import org.usfirst.frc.team503.commands.GyroTurnCommand;
 import org.usfirst.frc.team503.commands.PlaceGearCommand;
+import org.usfirst.frc.team503.commands.PushFourthWallOutCommand;
 import org.usfirst.frc.team503.commands.RaiseGearPlacer;
 import org.usfirst.frc.team503.commands.SetReadyToFire;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
@@ -49,15 +50,15 @@ public class LeftPegLeftStartRed extends CommandGroup {
     			{4.5,0}
     	};    
     	
-    	addParallel(new RaiseGearPlacer());    	
+    	addParallel(new RaiseGearPlacer());   
 		//addSequential(new RunMotionProfileCommand(leftPinLeftStart, 2, 1, true));
-    	addSequential(new DriveStraightDistanceCommand(58.5, 3.0, true));
+    	addSequential(new DriveStraightDistanceCommand(65.0, 2.5, true));
     	if(shoot && !dump){
     		RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.FarPegRed);
     		addSequential(new ShootSequenceCommand(true));
     		addParallel(new ShootSequenceCommand(false));
     	}
-		addSequential(new GyroTurnCommand(55));
+		addSequential(new GyroTurnCommand(60));
 		addSequential(new DriveStraightDistanceCommand(36,2.0,true));
 		addSequential(new AutonDriveCommand2());
 		addSequential(new PlaceGearCommand());
@@ -66,9 +67,9 @@ public class LeftPegLeftStartRed extends CommandGroup {
 		//	addSequential(new RunMotionProfileCommand(dumpBinForward, 2, 1, false)); //1.5
 			addSequential(new DriveStraightDistanceCommand(66, 3.5, false));
 			addSequential(new GyroTurnCommand(30, true));
-			addSequential(new DriveStraightDistanceCommand(44.4, 3.5, false));
+			addSequential(new DriveStraightDistanceCommand(63, 3.5, false));
 			if(shoot){
-				
+				addSequential(new SetReadyToFire());
 			}
 		}
 		else if(shoot){

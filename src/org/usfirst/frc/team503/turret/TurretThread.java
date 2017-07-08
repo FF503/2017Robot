@@ -57,8 +57,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  		startTime = Timer.getFPGATimestamp();
  		onTargetStartTime = startTime;
  		if(RobotState.getInstance().getState()==RobotState.State.AUTON){
- 			if(AutonSelector.getInstance().allianceChooser.getSelected() == AutonChoices.Alliances.RED){
- 				if(AutonSelector.getInstance().startPosChooser.getSelected() == AutonChoices.StartPosition.RIGHT){
+ 			if(AutonSelector.getInstance().allianceColor.getSelected() == AutonChoices.AllianceColor.RED){
+ 				if(AutonSelector.getInstance().startPos.getSelected() == AutonChoices.StartOptions.RIGHT){
  						if(AutonSelector.getInstance().binChooser.getSelected() == AutonChoices.BinPosition.RIGHT_BIN){
  							RobotState.getInstance().setTurretResetSide(true);
  						}
@@ -66,33 +66,33 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  							RobotState.getInstance().setTurretResetSide(false);
  						}
  				}
- 				else if(AutonSelector.getInstance().startPosChooser.getSelected() == AutonChoices.StartPosition.BIN){
+ 				else if(AutonSelector.getInstance().startPos.getSelected() == AutonChoices.StartOptions.BIN){
  					RobotState.getInstance().setTurretResetSide(true);
  				}
- 				else if (AutonSelector.getInstance().startPosChooser.getSelected() == AutonChoices.StartPosition.CENTER){
+ 				else if (AutonSelector.getInstance().startPos.getSelected() == AutonChoices.StartOptions.CENTER){
  					RobotState.getInstance().setTurretResetSide(false);
  				}
- 				else if (AutonSelector.getInstance().startPosChooser.getSelected() == AutonChoices.StartPosition.LEFT){
+ 				else if (AutonSelector.getInstance().startPos.getSelected() == AutonChoices.StartOptions.LEFT){
  					RobotState.getInstance().setTurretResetSide(false);
  				}
- 				else if(AutonSelector.getInstance().startPosChooser.getSelected() == AutonChoices.StartPosition.DUAL_BIN){
+ 				else if(AutonSelector.getInstance().startPos.getSelected() == AutonChoices.StartOptions.DUAL_BIN){
  					RobotState.getInstance().setTurretResetSide(true);
  				}
  			}
  			else{
- 				if(AutonSelector.getInstance().startPosChooser.getSelected() == AutonChoices.StartPosition.LEFT){
+ 				if(AutonSelector.getInstance().startPos.getSelected() == AutonChoices.StartOptions.LEFT){
 						RobotState.getInstance().setTurretResetSide(false);
 				}
-				else if(AutonSelector.getInstance().startPosChooser.getSelected() == AutonChoices.StartPosition.BIN){
+				else if(AutonSelector.getInstance().startPos.getSelected() == AutonChoices.StartOptions.BIN){
 					RobotState.getInstance().setTurretResetSide(false);
 				}
-				else if(AutonSelector.getInstance().startPosChooser.getSelected() == AutonChoices.StartPosition.CENTER){
+				else if(AutonSelector.getInstance().startPos.getSelected() == AutonChoices.StartOptions.CENTER){
 					RobotState.getInstance().setTurretResetSide(true);
 				}
-				else if(AutonSelector.getInstance().startPosChooser.getSelected() == AutonChoices.StartPosition.RIGHT){
+				else if(AutonSelector.getInstance().startPos.getSelected() == AutonChoices.StartOptions.RIGHT){
 					RobotState.getInstance().setTurretResetSide(true);
 				}
-				else if (AutonSelector.getInstance().startPosChooser.getSelected() == AutonChoices.StartPosition.DUAL_BIN){
+				else if (AutonSelector.getInstance().startPos.getSelected() == AutonChoices.StartOptions.DUAL_BIN){
 					RobotState.getInstance().setTurretResetSide(false);
 				}
  			}

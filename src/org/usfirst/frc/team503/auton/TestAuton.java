@@ -54,5 +54,6 @@ public class TestAuton extends CommandGroup {
     	/*addSequential(new AutonDriveCommand2());
     	;
     	*/
+    	addSequential(new DriveStraightDistanceCommand(120.0, 7.0, true));
    }
 }

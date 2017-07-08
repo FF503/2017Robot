@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.tables.ITable;
 
 public class AutonChoices{
 	
-	public enum Alliances implements Sendable {
+	public enum AllianceColor implements Sendable {
 		RED, BLUE,;
 
 		@Override
@@ -24,19 +24,8 @@ public class AutonChoices{
 		public String getSmartDashboardType() { return null; }
 	}
 	
-	public enum StartPosition implements Sendable {
+	public enum StartOptions implements Sendable {
 		LEFT, CENTER, RIGHT, BIN, DUAL_BIN;
-
-		@Override
-		public void initTable(ITable subtable) { }
-		@Override
-		public ITable getTable() { return null; }
-		@Override
-		public String getSmartDashboardType() { return null; }
-	}
-	
-	public enum DumpBin implements Sendable {
-		DUMP, DONT_DUMP;
 
 		@Override
 		public void initTable(ITable subtable) { }

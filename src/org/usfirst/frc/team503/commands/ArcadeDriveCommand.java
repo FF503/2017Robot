@@ -33,7 +33,6 @@ public class ArcadeDriveCommand extends Command {
     	else{
     		DrivetrainSubsystem.getInstance().arcadeDrive(OI.getDriverLeftYValue(), OI.getDriverLeftXValue(),false);
     	}
-      	
     }
 
     // Make this return true when this Command no longer needs to run execute()

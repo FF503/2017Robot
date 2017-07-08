@@ -24,7 +24,7 @@ public class SpinUpShooterCommand extends Command {
     		RobotState.getInstance().setShooterStatus(true);
     	}
     	else {
-    		if(OI.getShootRPMButton()){
+    		if(OI.getShootEndButton()){
     			if(RobotState.getInstance().getShooterStatus()){
     				ShooterSubsystem.getInstance().setMotorPower(0.0);
     				RobotState.getInstance().setShooterStatus(false);

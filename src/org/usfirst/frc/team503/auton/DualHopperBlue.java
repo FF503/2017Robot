@@ -1,6 +1,7 @@
 package org.usfirst.frc.team503.auton;
 
 import org.usfirst.frc.team503.commands.ArcDriveCommand;
+import org.usfirst.frc.team503.commands.PushFourthWallOutCommand;
 import org.usfirst.frc.team503.commands.RaiseGearPlacer;
 import org.usfirst.frc.team503.commands.SetReadyToFire;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
@@ -30,9 +31,10 @@ public class DualHopperBlue extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new RaiseGearPlacer());    	
+    	addParallel(new RaiseGearPlacer());    
+    	addParallel(new PushFourthWallOutCommand());
 		//addSequential(new DriveStraightDistanceCommand(110, 3.0,true));//120 at states
-    	addSequential(new ArcDriveCommand(270, -90, 130, .3, 3.0, false));
+    	addSequential(new ArcDriveCommand(300, -90, 98, .3, 3.0, false));
 		if(shoot){
 			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.FarHopperBlue);
 			addSequential(new ShootSequenceCommand(true));

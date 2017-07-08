@@ -45,6 +45,11 @@ public class DeflectorSubsystem extends Subsystem {
 	public static DeflectorSubsystem getInstance(){                                          
 		return instance;
 	}
+	
+	public void resetDeflector(){
+		deflectorMotor.setPosition(0.0);
+		deflectorMotor.setEncPosition(0);
+	}
 
 	public synchronized void setSetpoint(double target) {
 		SmartDashboard.putNumber("deflector target angle", target);
@@ -97,7 +102,7 @@ public class DeflectorSubsystem extends Subsystem {
 	                               
 	public void resetEncoder(){												
     	if(getLimitSwitch()){
-    		deflectorMotor.setPosition(0);
+    		deflectorMotor.setPosition(0.0);
     	}
 	}
 	

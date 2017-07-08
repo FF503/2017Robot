@@ -88,8 +88,12 @@ public class DrivetrainSubsystem extends Subsystem{
    }
  
    public double getAvgEncCounts() {
+	   //Left encoder slipping at MARC, return Robot.bot.REVERSE_LEFT_ENCODER * leftMaster.getEncPosition();
+	   
+	   //Change at MARC since right encoder was skipping counts FIXED
 	   return Robot.bot.REVERSE_RIGHT_ENCODER * rightMaster.getEncPosition();			   
-	 /*  if (Math.abs(-rightMaster.getEncPosition()) > Math.abs(leftMaster.getEncPosition())){
+	 
+	   /*  if (Math.abs(-rightMaster.getEncPosition()) > Math.abs(leftMaster.getEncPosition())){
 		   return (-rightMaster.getEncPosition());
 	   }
 	   else{

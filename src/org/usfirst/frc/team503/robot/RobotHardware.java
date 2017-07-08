@@ -111,4 +111,8 @@ public abstract class RobotHardware {
 	{
 		dummyBot = r;
 	}
+	
+	public boolean hasSpike(){
+		return false;
+	}
 }

@@ -33,6 +33,7 @@ public class ShooterSubsystem extends Subsystem {
 		shooterMotor.setF(Robot.bot.SHOOT_F);
 		shooterMotor.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_100Ms);
 		shooterMotor.SetVelocityMeasurementWindow(64);
+		shooterMotor.configMaxOutputVoltage(11.0);//9.0 at worlds
 	}
 	
 	private static ShooterSubsystem instance = new ShooterSubsystem();

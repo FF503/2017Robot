@@ -39,22 +39,22 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final boolean hasLowGoalLight = true;
 	public final int lowGoalLightPort = 6;
 	
-//	private final double TURRET_DIAMETER = 13.0;
-//	public final double TURRET_ROTATIONS_IN_RANGE = 12.203857421875;
-//	public final double TURRET_TOLERANCE = 0.75;
-//	public final double TURRET_TEETH_BETWEEN_LIMIT_SWITCHES = 8.5;
-//	public final double TURRET_TOTAL_TEETH = 156.0;
-//	public final double TURRET_DEGREES_BETWEEN_LIMIT_SWITCHES = TURRET_TEETH_BETWEEN_LIMIT_SWITCHES/TURRET_TOTAL_TEETH * 360;
-//	public final double TURRET_DEGREES_IN_RANGE = 360 - TURRET_DEGREES_BETWEEN_LIMIT_SWITCHES;
-//	public final double TURRET_DEGREES_PER_ROTATION = TURRET_DEGREES_IN_RANGE/TURRET_ROTATIONS_IN_RANGE;
 	private final double TURRET_DIAMETER = 13.0;
-	public double TURRET_ROTATIONS_IN_RANGE = 12.159912109375;
-	public double TURRET_TOLERANCE = 0.75;//1.0
-	public double TURRET_TEETH_BETWEEN_LIMIT_SWITCHES = 8.5;
+	public final double TURRET_ROTATIONS_IN_RANGE = 12.203857421875;
+	public final double TURRET_TOLERANCE = 0.75;
+	public final double TURRET_TEETH_BETWEEN_LIMIT_SWITCHES = 8.5;
 	public final double TURRET_TOTAL_TEETH = 156.0;
 	public final double TURRET_DEGREES_BETWEEN_LIMIT_SWITCHES = TURRET_TEETH_BETWEEN_LIMIT_SWITCHES/TURRET_TOTAL_TEETH * 360;
 	public final double TURRET_DEGREES_IN_RANGE = 360 - TURRET_DEGREES_BETWEEN_LIMIT_SWITCHES;
 	public final double TURRET_DEGREES_PER_ROTATION = TURRET_DEGREES_IN_RANGE/TURRET_ROTATIONS_IN_RANGE;
+//	private final double TURRET_DIAMETER = 13.0;
+//	public double TURRET_ROTATIONS_IN_RANGE = 12.159912109375;
+//	public double TURRET_TOLERANCE = 0.75;//1.0
+//	public double TURRET_TEETH_BETWEEN_LIMIT_SWITCHES = 8.5;
+//	public final double TURRET_TOTAL_TEETH = 156.0;
+//	public final double TURRET_DEGREES_BETWEEN_LIMIT_SWITCHES = TURRET_TEETH_BETWEEN_LIMIT_SWITCHES/TURRET_TOTAL_TEETH * 360;
+	//public final double TURRET_DEGREES_IN_RANGE = 360 - TURRET_DEGREES_BETWEEN_LIMIT_SWITCHES;
+	//public final double TURRET_DEGREES_PER_ROTATION = TURRET_DEGREES_IN_RANGE/TURRET_ROTATIONS_IN_RANGE;
 	public final double TURRET_CYCLE_TIME = .005; //.005 seconds
 
 	public final double REVERSE_UPPER_INTAKE = 1.0;
@@ -76,9 +76,9 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final double LEFT_DRIVE_F  = 0.2157; //.2157
 	public final double RIGHT_DRIVE_F = 0.2154; //.2154
 	
-	public final boolean REVERSE_LEFT_SENSOR = false;
+	public final boolean REVERSE_LEFT_SENSOR = true;
 	public final boolean REVERSE_RIGHT_SENSOR = false;
-	public final boolean REVERSE_LEFT_OUTPUT = false;
+	public final boolean REVERSE_LEFT_OUTPUT = true;
 	public final boolean REVERSE_RIGHT_OUTPUT = false;
 	public final double REVERSE_RIGHT_ENCODER = 1.0;
 	public final double REVERSE_LEFT_ENCODER = -1.0;
@@ -87,7 +87,6 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final double ARC_DRIVE_P = .02;
 	public final double ARC_TURN_P = .06;//.04
 	public final double ARC_GYRO_TOLERANCE = 0.5;
-	public final double ARC_ANGLE_PER_INCH = 0.35;//.25
 	
 	public final double SHOOT_P = 1.0;//1.0 //10.0 
 	public final double SHOOT_I = 0.0; //0.0
@@ -101,15 +100,15 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final double AUTON_DRIVE_P = 50;
 	public final double DRIVE_COEF = 1.0;
 	
-//	public final double DEFLECTOR_P = .035;
-//	public final double DEFLECTOR_I = 0.00004;
-//	public final double DEFLECTOR_D = 0.5;
-//	public final double DEFLECTOR_MAX_COUNTS = 8.71630859375;
-//	public final double DEFLECTOR_MIN_ANGLE = 17.0; 
-//	public final double DEFLECTOR_MAX_ANGLE = 41.0;
-//	public final double DEFLECTOR_COUNTS_PER_DEGREE = DEFLECTOR_MAX_COUNTS/(DEFLECTOR_MAX_ANGLE - DEFLECTOR_MIN_ANGLE);
-//	public final double DEFLECTOR_TOLERANCE = 1.0;
-//	public final boolean DEFLECTOR_REVERSE_SENSOR = true;
+	public final double DEFLECTOR_P = .035;
+	public final double DEFLECTOR_I = 0.00004;
+	public final double DEFLECTOR_D = 0.5;
+	public final double DEFLECTOR_MAX_COUNTS = 8.71630859375;
+	public final double DEFLECTOR_MIN_ANGLE = 17.0; 
+	public final double DEFLECTOR_MAX_ANGLE = 41.0;
+	public final double DEFLECTOR_COUNTS_PER_DEGREE = DEFLECTOR_MAX_COUNTS/(DEFLECTOR_MAX_ANGLE - DEFLECTOR_MIN_ANGLE);
+	public final double DEFLECTOR_TOLERANCE = 1.0;
+	public final boolean DEFLECTOR_REVERSE_SENSOR = true;
 
 	public double GYRO_P = 0.037;     //was 0.035
 	public double GYRO_I = 0.0;		//was 0.0
@@ -129,15 +128,15 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public double TURRET_I = 0.0;
 	public double TURRET_D = 5.0;	
 	
-	public final double DEFLECTOR_P = .25;
-	public final double DEFLECTOR_I = 0.0002;
-	public final double DEFLECTOR_D = 5.0;
-	public final double DEFLECTOR_MAX_COUNTS = 1.2353515625;// 12.252197265625;
-	public final double DEFLECTOR_MIN_ANGLE = 13.0;//15.0
-	public final double DEFLECTOR_MAX_ANGLE = 41.0;//46.0
-	public final double DEFLECTOR_COUNTS_PER_DEGREE = DEFLECTOR_MAX_COUNTS/(DEFLECTOR_MAX_ANGLE - DEFLECTOR_MIN_ANGLE);
-	public final double DEFLECTOR_TOLERANCE = 1.0;
-	public final boolean DEFLECTOR_REVERSE_SENSOR = true;
+	//public final double DEFLECTOR_P = .25;
+	//public final double DEFLECTOR_I = 0.0002;
+	//public final double DEFLECTOR_D = 5.0;
+	//public final double DEFLECTOR_MAX_COUNTS = 1.2353515625;// 12.252197265625;
+	//public final double DEFLECTOR_MIN_ANGLE = 13.0;//15.0
+	//public final double DEFLECTOR_MAX_ANGLE = 41.0;//46.0
+	//public final double DEFLECTOR_COUNTS_PER_DEGREE = DEFLECTOR_MAX_COUNTS/(DEFLECTOR_MAX_ANGLE - DEFLECTOR_MIN_ANGLE);
+	//public final double DEFLECTOR_TOLERANCE = 1.0;
+	//public final boolean DEFLECTOR_REVERSE_SENSOR = true;
 	
 	@Override
 	public void initialize(){

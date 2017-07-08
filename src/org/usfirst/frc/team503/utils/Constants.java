@@ -9,9 +9,9 @@ public class Constants {
 	public static final double DRIVE_PID_TOLERANCE = 1.0;
 	public static final double DRIVE_HEADING_TOLERANCE = 1.5;
 	public static final double GEAR_DEPLOY_TIME = 1.0;
-	public static final double GEAR_IR_THRESHOLD = 1.2;
+	public static final double GEAR_IR_THRESHOLD = 0.6;//1.2
 	public static final double GEAR_LIGHT_TIME = 5.0;
 	public static final double GEAR_VIBRATE_TIME = 1.0;
-	public static final double TURRET_OFFSET = -0.5;
+	public static final double TURRET_OFFSET = 0.0;//-0.5
 }
 

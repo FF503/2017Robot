@@ -24,7 +24,7 @@ public class ToggleShootRPMCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(OI.getShootRPMButton()){
+    	if(OI.getShootPowerButton()){
     		if(RobotState.getInstance().getShooterStatus()){
     			ShooterSubsystem.getInstance().setMotorPower(0);
         		RobotState.getInstance().setShooterStatus(false);

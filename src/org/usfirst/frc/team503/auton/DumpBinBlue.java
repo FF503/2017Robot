@@ -2,6 +2,7 @@ package org.usfirst.frc.team503.auton;
 
 import org.usfirst.frc.team503.commands.DriveStraightDistanceCommand;
 import org.usfirst.frc.team503.commands.GyroTurnCommand;
+import org.usfirst.frc.team503.commands.PushFourthWallOutCommand;
 import org.usfirst.frc.team503.commands.RaiseGearPlacer;
 import org.usfirst.frc.team503.commands.SetReadyToFire;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
@@ -29,8 +30,9 @@ public class DumpBinBlue extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
 
-    	addParallel(new RaiseGearPlacer());    	
-		addSequential(new DriveStraightDistanceCommand(65,2.5,true));//81 at states
+    	addParallel(new RaiseGearPlacer());  
+    	addParallel(new PushFourthWallOutCommand());
+		addSequential(new DriveStraightDistanceCommand(80,2.5,true));//65 at worlds //81 at states
 		if(shoot){
 			RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.HopperBlue);
 			addSequential(new ShootSequenceCommand(true));

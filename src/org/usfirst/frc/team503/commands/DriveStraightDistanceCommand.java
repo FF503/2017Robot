@@ -82,7 +82,7 @@ public class DriveStraightDistanceCommand extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     
-    	return DrivetrainSubsystem.getInstance().pidIsOnTarget() || time.get()>timeout || (Math.abs(DrivetrainSubsystem.getInstance().getPidOutput()) <= Constants.JOYSTICK_TOLERANCE && time.get()>0.75);
+    	return DrivetrainSubsystem.getInstance().pidIsOnTarget() || time.get()>timeout /*|| (Math.abs(DrivetrainSubsystem.getInstance().getPidOutput()) <= Constants.JOYSTICK_TOLERANCE && time.get()>0.75)*/;
     }
 
     // Called once after isFinished returns true

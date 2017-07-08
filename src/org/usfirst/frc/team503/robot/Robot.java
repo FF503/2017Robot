@@ -3,8 +3,8 @@ package org.usfirst.frc.team503.robot;
 
 import org.usfirst.frc.team503.auton.AutonSelector;
 import org.usfirst.frc.team503.auton.TestAuton;
-import org.usfirst.frc.team503.utils.NetworkTableCollecter;
 import org.usfirst.frc.team503.commands.ArcadeDriveCommand;
+import org.usfirst.frc.team503.commands.PushFourthWallOutCommand;
 import org.usfirst.frc.team503.commands.TeleopDeflectorCommand;
 import org.usfirst.frc.team503.subsystems.DeflectorSubsystem;
 import org.usfirst.frc.team503.subsystems.DrivetrainSubsystem;
@@ -16,6 +16,7 @@ import org.usfirst.frc.team503.subsystems.ShooterSubsystem;
 import org.usfirst.frc.team503.subsystems.TurretSubsystem;
 import org.usfirst.frc.team503.subsystems.UltrasonicSubsystem;
 import org.usfirst.frc.team503.utils.Logger;
+import org.usfirst.frc.team503.utils.NetworkTableCollecter;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -35,7 +36,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static RobotHardwarePracticeBot bot = null;
+	public static RobotHardwareCompBot bot = null;
 
 	private Command autonCommand = null; 
 	private NetworkTable table;
@@ -49,7 +50,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
         NetworkTable.globalDeleteAll(); //Removes unused garbage from SmartDashboard
         NetworkTable.initialize();      //Initialize Network Tables
-        bot = new RobotHardwarePracticeBot();
+        bot = new RobotHardwareCompBot();
 		bot.initialize();
 		bot.logSmartDashboard();         /*put name of selected bot on smartdashboard */
 		OI.initialize();
@@ -62,6 +63,7 @@ public class Robot extends IterativeRobot {
 		if (Robot.bot.hasLowGoalLight){
 			lightSolenoid = new Solenoid(Robot.bot.lowGoalLightPort);
 		}
+		DeflectorSubsystem.getInstance().resetDeflector();
 	}
  
 	/**
@@ -72,7 +74,8 @@ public class Robot extends IterativeRobot {
 		if (autonCommand != null){
 			autonCommand.cancel();
 		}
-	//	DrivetrainSubsystem.getInstance().stopTrapezoidControl();    	
+	//	DrivetrainSubsystem.getInstance().stopTrapezoidControl();   
+		AutonSelector.getInstance().putAutonChoosers();
 		DrivetrainSubsystem.getInstance().percentVoltageMode();
 		ShooterSubsystem.getInstance().setMotorPower(0.0);
 		IndexerSubsystem.getInstance().setMotorPower(0.0);
@@ -91,7 +94,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	/**
-	 * autonomousInit - fires when Auto mode is selected   nv
+	 * autonomousInit - fires when Auto mode is selected   
 	 */
 	@Override
 	public void autonomousInit() {	
@@ -105,7 +108,6 @@ public class Robot extends IterativeRobot {
 		NetworkTableCollecter collecter = new NetworkTableCollecter();
 		collecter.collectNetworkTableDate();
 		AutonSelector.getInstance().startAuton();
-		
 		//(new TestAuton()).start();
 	}
 
@@ -150,6 +152,7 @@ public class Robot extends IterativeRobot {
     		TurretSubsystem.getInstance().getThread().startTurret();
 //    		System.out.println("coming out of start turret teleop" + TurretSubsystem.getInstance().getThread().getStartTurret());
     		//(new TeleopTurretCommand()).start();
+    		//(new PushFourthWallOutCommand()).start();
         	(new TeleopDeflectorCommand()).start();
     	}
     	startTime = Timer.getFPGATimestamp();

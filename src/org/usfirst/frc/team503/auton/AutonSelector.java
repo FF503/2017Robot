@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class AutonSelector {
 
-	public SendableChooser<AutonChoices.Alliances> allianceChooser;
-	public SendableChooser<AutonChoices.StartPosition> startPosChooser;
+	public SendableChooser<AutonChoices.AllianceColor> allianceColor;
+	public SendableChooser<AutonChoices.StartOptions> startPos;
 	public SendableChooser<AutonChoices.Shoot> shootChooser;
 	public SendableChooser<AutonChoices.BinPosition> binChooser;
 	
@@ -23,10 +23,10 @@ public class AutonSelector {
 	 */
 	public AutonSelector(){
 		//All of the Auton Choosers
-		allianceChooser = new SendableChooser<>();
-		startPosChooser = new SendableChooser<>();
-		shootChooser = new SendableChooser<>();
-		binChooser = new SendableChooser<>();
+		allianceColor = new SendableChooser<AutonChoices.AllianceColor>();
+		startPos = new SendableChooser<AutonChoices.StartOptions>();
+		shootChooser = new SendableChooser<AutonChoices.Shoot>();
+		binChooser = new SendableChooser<AutonChoices.BinPosition>();
 	}
 	
 	private static AutonSelector instance = new AutonSelector();
@@ -41,15 +41,15 @@ public class AutonSelector {
 	public void putAutonChoosers() {
 		//The Alliance choices
 	
-		allianceChooser.addDefault("[R] Red", AutonChoices.Alliances.RED);
-		allianceChooser.addObject("[B] Blue", AutonChoices.Alliances.BLUE);
+		allianceColor.addDefault("[R] Red Alliance", AutonChoices.AllianceColor.RED);
+		allianceColor.addObject("[B] Blue Alliance", AutonChoices.AllianceColor.BLUE);
 		
 		//The gear position choices
-		startPosChooser.addObject("[L] Left Peg", AutonChoices.StartPosition.LEFT);
-		startPosChooser.addDefault("[C] Center Peg", AutonChoices.StartPosition.CENTER);
-		startPosChooser.addObject("[R] Right Peg", AutonChoices.StartPosition.RIGHT);
-		startPosChooser.addObject("[B] Bin", AutonChoices.StartPosition.BIN);
-		startPosChooser.addObject("[D] Dual Bin", AutonChoices.StartPosition.DUAL_BIN);
+		startPos.addObject("[L] Left Peg", AutonChoices.StartOptions.LEFT);
+		startPos.addDefault("[C] Center Peg", AutonChoices.StartOptions.CENTER);
+		startPos.addObject("[R] Right Peg", AutonChoices.StartOptions.RIGHT);
+		startPos.addObject("[B] Bin", AutonChoices.StartOptions.BIN);
+		startPos.addObject("[D] Dual Bin", AutonChoices.StartOptions.DUAL_BIN);
 		
 		
 		//Whether or not to shoot
@@ -62,8 +62,8 @@ public class AutonSelector {
 		binChooser.addDefault("[N] Don't dump any Bin", AutonChoices.BinPosition.NO_BIN);
 		
 		//Putting all of the SendableChoosers onto the SmartDashboard
-		SmartDashboard.putData("Choose Alliance", allianceChooser);
-		SmartDashboard.putData("Choose Gear Position", startPosChooser);
+		SmartDashboard.putData("Choose Alliance", allianceColor);
+		SmartDashboard.putData("Choose Gear Position", startPos);
 		SmartDashboard.putData("Shoot This auton?", shootChooser);
 		SmartDashboard.putData("Choose Bin to Dump", binChooser);
 	}
@@ -281,8 +281,8 @@ public class AutonSelector {
 //			break;
 //		}
 		
-		AutonChoices.Alliances allianceChoice = allianceChooser.getSelected();
-		AutonChoices.StartPosition gearPositionChoice = startPosChooser.getSelected();
+		AutonChoices.AllianceColor allianceChoice = allianceColor.getSelected();
+		AutonChoices.StartOptions gearPositionChoice = startPos.getSelected();
 		AutonChoices.Shoot shootChoice = shootChooser.getSelected();
 		AutonChoices.BinPosition binChoice = binChooser.getSelected();
 		

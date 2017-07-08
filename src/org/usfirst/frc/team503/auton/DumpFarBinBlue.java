@@ -2,6 +2,7 @@ package org.usfirst.frc.team503.auton;
 
 import org.usfirst.frc.team503.commands.DriveStraightDistanceCommand;
 import org.usfirst.frc.team503.commands.GyroTurnCommand;
+import org.usfirst.frc.team503.commands.PushFourthWallOutCommand;
 import org.usfirst.frc.team503.commands.RaiseGearPlacer;
 import org.usfirst.frc.team503.commands.SetReadyToFire;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
@@ -29,7 +30,8 @@ public class DumpFarBinBlue extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
 
-    	addParallel(new RaiseGearPlacer());    	
+    	addParallel(new RaiseGearPlacer()); 
+    	addParallel(new PushFourthWallOutCommand());
 		addSequential(new DriveStraightDistanceCommand(210,2.5,true));//81 at livonia //was 57
 		addSequential(new GyroTurnCommand(90));
 		if(shoot){

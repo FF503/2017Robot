@@ -3,6 +3,7 @@ package org.usfirst.frc.team503.auton;
 import org.usfirst.frc.team503.commands.ArcDriveCommand;
 import org.usfirst.frc.team503.commands.DriveStraightDistanceCommand;
 import org.usfirst.frc.team503.commands.GyroTurnCommand;
+import org.usfirst.frc.team503.commands.PushFourthWallOutCommand;
 import org.usfirst.frc.team503.commands.RaiseGearPlacer;
 import org.usfirst.frc.team503.commands.SetReadyToFire;
 import org.usfirst.frc.team503.commands.ShootSequenceCommand;
@@ -33,7 +34,8 @@ public class DualHopperRed extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	addParallel(new RaiseGearPlacer());    	
+    	addParallel(new RaiseGearPlacer());   
+    	addParallel(new PushFourthWallOutCommand());
 		//addSequential(new DriveStraightDistanceCommand(110, 3.0,true));//120 at states
     	addSequential(new ArcDriveCommand(280, 90, 88, .3, 3.0, false));
 		if(shoot){
