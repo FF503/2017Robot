@@ -34,7 +34,7 @@ public class RightPegRightStartBlue extends CommandGroup {
 
     	addParallel(new RaiseGearPlacer());   
 		//addSequential(new RunMotionProfileCommand(leftPinLeftStart, 2, 1, true));
-    	addSequential(new DriveStraightDistanceCommand(60.0, 3.0, true)); //60//58.5
+    	addSequential(new DriveStraightDistanceCommand(69.0, 2.5, true)); //60//58.5
     	if(shoot){
     		if(dump){
     		}

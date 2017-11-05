@@ -12,13 +12,11 @@ public class BringFourthWallInCommand extends Command {
     public BringFourthWallInCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(IndexerSubsystem.getInstance());
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	IndexerSubsystem.getInstance().bringFourthWallIn();
-    	System.out.println("bringing in");
     }
 
     // Called repeatedly when this Command is scheduled to run

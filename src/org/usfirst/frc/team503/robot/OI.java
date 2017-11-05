@@ -58,8 +58,8 @@ public class OI {
 	private static XboxController driverJoystick = new XboxController(0);
 	private static Joystick operatorJoystick = new Joystick(1);
 	
-	private static JoystickButton intakeButton = new JoystickButton(driverJoystick, 1);
-	private static JoystickButton intakeReverse = new JoystickButton(driverJoystick, 2);
+	private static JoystickButton climbButton = new JoystickButton(operatorJoystick, 3);
+	private static JoystickButton climbFasterButton = new JoystickButton(operatorJoystick, 4);
 	private static JoystickButton intakeGearButton = new JoystickButton(driverJoystick, 3);
 	private static JoystickButton reverseIntakeGearButton = new JoystickButton(driverJoystick, 4);
 	private static JoystickButton shiftToLowGearButton = new JoystickButton(driverJoystick,5);
@@ -76,13 +76,17 @@ public class OI {
 	
 	private static JoystickButton raiseGearMechButton = new JoystickButton(operatorJoystick, 1);
 	private static JoystickButton lowerGearMechButton = new JoystickButton(operatorJoystick, 2);
-	private static JoystickButton climbButton = new JoystickButton(operatorJoystick, 3);
-	private static JoystickButton climbFasterButton = new JoystickButton(operatorJoystick, 4);
+	private static JoystickButton intakeButton = new JoystickButton(driverJoystick, 1);
+	private static JoystickButton intakeReverse = new JoystickButton(driverJoystick, 2);
 	private static JoystickButton shootEndButton = new JoystickButton(operatorJoystick, 5);
 	private static JoystickButton pumpIndexerButton = new JoystickButton(operatorJoystick, 6);
 	private static JoystickButton decrementPreset = new JoystickButton(operatorJoystick, 7);
 	private static JoystickButton incrementPreset = new JoystickButton(operatorJoystick, 8);
 	private static JoystickButton resetAutonButton = new JoystickButton(operatorJoystick, 9);
+	
+	private static JoystickButton shootPowerButton = new JoystickButton(operatorJoystick, 6);
+	private static JoystickButton goToTurretPosition = new JoystickButton(operatorJoystick, 7);
+	private static JoystickButton goToDeflectorButton = new JoystickButton(operatorJoystick, 7);
 	
 	private static Button shootRPMTrigger = new Button(){
 		@Override
@@ -97,10 +101,6 @@ public class OI {
 			return operatorJoystick.getRawAxis(3) == 1.0;
 		}
 	};
-	
-	private static JoystickButton shootPowerButton = new JoystickButton(operatorJoystick, 6);
-	private static JoystickButton goToTurretPosition = new JoystickButton(operatorJoystick, 7);
-	private static JoystickButton goToDeflectorButton = new JoystickButton(operatorJoystick, 7);
 
 	public static void initialize(){
 		//shootPowerButton.whenPressed(new ToggleShootRPMCommand());
@@ -146,7 +146,6 @@ public class OI {
 	public static void vibrateDriverController(){
 		driverJoystick.setRumble(RumbleType.kLeftRumble, 0.5);
 		driverJoystick.setRumble(RumbleType.kRightRumble, 0.5);
-		System.out.println("vibrating");
 	}
 	
 	public static void stopVibrateDriverController(){

@@ -52,13 +52,13 @@ public class LeftPegLeftStartRed extends CommandGroup {
     	
     	addParallel(new RaiseGearPlacer());   
 		//addSequential(new RunMotionProfileCommand(leftPinLeftStart, 2, 1, true));
-    	addSequential(new DriveStraightDistanceCommand(65.0, 2.5, true));
+    	addSequential(new DriveStraightDistanceCommand(60.0, 2.5, true));
     	if(shoot && !dump){
     		RobotState.getInstance().setShootingPreset(RobotState.ShootingPresets.FarPegRed);
     		addSequential(new ShootSequenceCommand(true));
     		addParallel(new ShootSequenceCommand(false));
     	}
-		addSequential(new GyroTurnCommand(60));
+		addSequential(new GyroTurnCommand(50));
 		addSequential(new DriveStraightDistanceCommand(36,2.0,true));
 		addSequential(new AutonDriveCommand2());
 		addSequential(new PlaceGearCommand());

@@ -41,7 +41,6 @@ public class IndexerSubsystem extends Subsystem {
 	}
 	
 	public void pushFourthWallOut(){
-		System.out.println("pumping in method");
 		//fourthWallSpike.set(Value.kOn);
 		if(Robot.bot.hasFourthWallSolenoid){
 			fourthWallSolenoid.set(1.0);
@@ -49,7 +48,6 @@ public class IndexerSubsystem extends Subsystem {
 	}
 	
 	public void bringFourthWallIn(){
-		System.out.println("bringing in method");
 		if(Robot.bot.hasFourthWallSolenoid){
 			fourthWallSolenoid.set(0.0);
 		}

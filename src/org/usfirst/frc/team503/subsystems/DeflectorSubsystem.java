@@ -2,6 +2,7 @@ package org.usfirst.frc.team503.subsystems;
 
 import org.usfirst.frc.team503.robot.OI;
 import org.usfirst.frc.team503.robot.Robot;
+import org.usfirst.frc.team503.robot.RobotState;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
@@ -61,11 +62,14 @@ public class DeflectorSubsystem extends Subsystem {
 		    deflectorMotor.changeControlMode(CANTalon.TalonControlMode.Position);
 		    deflectorMotor.clearIAccum();
 			deflectorMotor.setSetpoint((target-Robot.bot.DEFLECTOR_MIN_ANGLE) * Robot.bot.DEFLECTOR_COUNTS_PER_DEGREE * -1.0);
+			RobotState.getInstance().setDeflectorSetpoint(-deflectorMotor.getSetpoint());
+			SmartDashboard.putNumber("deflector setpoint in method", -deflectorMotor.getSetpoint());
 		}
 	}					
 	
 	public synchronized double getSetpoint() {
-	    return -deflectorMotor.getSetpoint();
+		return RobotState.getInstance().getDeflectorSetpoint();
+	    //return -deflectorMotor.getSetpoint();
 	}
 	
 	public synchronized double getError() {    
@@ -73,7 +77,9 @@ public class DeflectorSubsystem extends Subsystem {
 	}
 	
 	public synchronized boolean isOnTarget() {
-	    return (deflectorMotor.getControlMode() == CANTalon.TalonControlMode.Position && Math.abs(getError()) < (Robot.bot.DEFLECTOR_TOLERANCE * Robot.bot.DEFLECTOR_COUNTS_PER_DEGREE));
+		SmartDashboard.putBoolean("Deflector error is less", Math.abs(DeflectorSubsystem.getInstance().getError())<(Robot.bot.DEFLECTOR_TOLERANCE * Robot.bot.DEFLECTOR_COUNTS_PER_DEGREE));
+		SmartDashboard.putBoolean("Deflector control mode", deflectorMotor.getControlMode() == CANTalon.TalonControlMode.Position);
+	    return (Math.abs(getError()) < (Robot.bot.DEFLECTOR_TOLERANCE * Robot.bot.DEFLECTOR_COUNTS_PER_DEGREE));
 	}
 										
 	public synchronized void setMotorPower(double deflectorPower){
@@ -106,7 +112,7 @@ public class DeflectorSubsystem extends Subsystem {
     	}
 	}
 	
-	public void sendDashboardData(){
+	public synchronized void sendDashboardData(){
 		SmartDashboard.putBoolean("Deflector limit switch", DeflectorSubsystem.getInstance().getLimitSwitch());
 		SmartDashboard.putNumber("Deflector encoder", DeflectorSubsystem.getInstance().getPosition());
 		SmartDashboard.putNumber("Deflector error", DeflectorSubsystem.getInstance().getError());

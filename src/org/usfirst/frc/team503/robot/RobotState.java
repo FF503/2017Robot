@@ -42,6 +42,7 @@ public class RobotState extends Subsystem {
 	private boolean turretHasReset;
 	private boolean intakeGearRunning;
     private double gyroAngle;	
+    private double deflectorSetpoint;
 	
 	
 	public RobotState() {
@@ -71,6 +72,7 @@ public class RobotState extends Subsystem {
 		dumpBin = DumpBin.DONT_DUMP_BIN;
 		shoot = Shoot.DONT_SHOOT;
 		gyroAngle = 0.0;		
+		deflectorSetpoint = 0.0;
 	}	
 	
 	private static RobotState instance = new RobotState();
@@ -171,6 +173,14 @@ public class RobotState extends Subsystem {
 		return gyroAngle;
 	}
 
+	public double getDeflectorSetpoint(){
+		return deflectorSetpoint;
+	}
+	
+	public void setDeflectorSetpoint(double setpoint){
+		deflectorSetpoint = setpoint;
+	}
+	
 	public void setReadyToFire(boolean r){
 		readyToFire = r;
 	}

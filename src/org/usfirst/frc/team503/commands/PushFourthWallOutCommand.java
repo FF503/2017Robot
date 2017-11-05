@@ -12,12 +12,10 @@ public class PushFourthWallOutCommand extends Command {
     public PushFourthWallOutCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(IndexerSubsystem.getInstance());
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	System.out.println("pumping");
     	IndexerSubsystem.getInstance().pushFourthWallOut();
     }
 

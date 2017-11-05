@@ -126,7 +126,9 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 //	public double TURRET_D = 5.0;	
 	public double TURRET_P = 0.38;
 	public double TURRET_I = 0.0;
-	public double TURRET_D = 5.0;	
+	public double TURRET_D = 5.0;
+	public boolean hasFourthWallSolenoid = false;
+	public int fourthWallSparkID = 503503503;	
 	
 	//public final double DEFLECTOR_P = .25;
 	//public final double DEFLECTOR_I = 0.0002;

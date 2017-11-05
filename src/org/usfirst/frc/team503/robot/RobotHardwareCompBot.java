@@ -93,14 +93,14 @@ public class RobotHardwareCompBot extends RobotHardware {
 	public double GYRO_D = 0.08; //.06	
 	public double GYRO_TOLERANCE = 1.0;
 		
-	public final double DEFLECTOR_P = 0.25;//0.1;//.25 at worlds;
-	public final double DEFLECTOR_I = 0.0002;
-	public final double DEFLECTOR_D = 5.0;
+	public final double DEFLECTOR_P = 0.52; //.25 at worlds;
+	public final double DEFLECTOR_I = 0.0003; //.0002
+	public final double DEFLECTOR_D = 5.0; //5.0
 	public final double DEFLECTOR_MAX_COUNTS = 1.2353515625;// 12.252197265625;
 	public final double DEFLECTOR_MIN_ANGLE = 13.0;//15.0
 	public final double DEFLECTOR_MAX_ANGLE = 41.0;//46.0
 	public final double DEFLECTOR_COUNTS_PER_DEGREE = DEFLECTOR_MAX_COUNTS/(DEFLECTOR_MAX_ANGLE - DEFLECTOR_MIN_ANGLE);
-	public final double DEFLECTOR_TOLERANCE = 0.3;//1.0;
+	public final double DEFLECTOR_TOLERANCE = 1.0;//0.3//1.0;
 	public final boolean DEFLECTOR_REVERSE_SENSOR = true;
 	
 	public final double DISTANCE_BETWEEN_ULTRASONICS = 13.7;

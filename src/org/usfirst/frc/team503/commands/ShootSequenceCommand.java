@@ -60,7 +60,7 @@ public class ShootSequenceCommand extends Command {
 		DeflectorSubsystem.getInstance().resetEncoder();
     	if(RobotState.getInstance().getState() == RobotState.State.TELEOP){
         	SmartDashboard.putBoolean("Deflector on target", DeflectorSubsystem.getInstance().isOnTarget());
-        	if(ShooterSubsystem.getInstance().isOnTarget() && DeflectorSubsystem.getInstance().isOnTarget() && RobotState.getInstance().getReadyToFire()){
+        	if(ShooterSubsystem.getInstance().isOnTarget() && /*DeflectorSubsystem.getInstance().isOnTarget() &&*/ RobotState.getInstance().getReadyToFire()){
 //        		DeflectorSubsystem.getInstance().setMotorPower(0.0);
     			shoot();
     			//actuateWall();
@@ -80,7 +80,7 @@ public class ShootSequenceCommand extends Command {
     		RobotState.getInstance().setTurretState(RobotState.TurretState.TAKING_HINT);
     		}*/
     		SmartDashboard.putBoolean("Deflector on target", DeflectorSubsystem.getInstance().isOnTarget());
-    		if(ShooterSubsystem.getInstance().isOnTarget() && DeflectorSubsystem.getInstance().isOnTarget() && RobotState.getInstance().getReadyToFire()){
+    		if(ShooterSubsystem.getInstance().isOnTarget() && /*DeflectorSubsystem.getInstance().isOnTarget() &&*/ RobotState.getInstance().getReadyToFire()){
     			//DeflectorSubsystem.getInstance().setMotorPower(0.0);
      			if(TurretSubsystem.getInstance().getThread().getPiAlive()){
     				if(RobotState.getInstance().getTurretIsLocked()){
